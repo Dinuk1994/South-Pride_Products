@@ -1,0 +1,1 @@
+bcryptjs , mongoose , dotenv , cors , express , cloudinary, cookie-parser, jsonwebtoken, multer ,nodemon
