@@ -1,9 +1,9 @@
 import express from "express"
 import mongoose from "mongoose"
 
-const ConnectToDB=async=>{
+const ConnectToDB=async()=>{
     try {
-        mongoose.connect(process.env.MONGODB);
+        await mongoose.connect(process.env.MONGODB);
         console.log("Connected to Database");
         
     } catch (error) {

@@ -8,19 +8,28 @@ import authRouter from "./routes/auth.routes.js";
 const app = express();
 dotenv.config()
 
+const PORT = process.env.PORT || 5000
+
 app.use(cors({
     origin: ["http://localhost:5173"],
+    methods: ['GET', 'POST', 'DELETE', 'PUT'],
+    allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "Cache-control",
+        "Expires",
+        "Prigma"
+    ],
     credentials: true
 }))
 
-const PORT = process.env.PORT || 5000
 
 app.use(express.json());
 app.use(cookieParser());
 
 const router = express.Router()
 
-app.use("/api/auth",authRouter)
+app.use("/api/auth", authRouter)
 
 app.listen(PORT, () => {
     ConnectToDB();
