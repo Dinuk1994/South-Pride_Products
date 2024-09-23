@@ -13,25 +13,45 @@ import Account from "./pages/shopping/Account";
 import CheckOut from "./pages/shopping/CheckOut";
 import Home from "./pages/shopping/Home";
 import Listing from "./pages/shopping/Listing";
+import CheckAuth from "./components/common/CheckAuth";
+
 
 
 export default function App() {
+  const isAuthenticate = true;
+  const user = {
+    role : "admin"
+  }
+
   return (
     <div>
       {/* <h1>Header Component</h1> */}
       <Routes>
-        <Route path="/auth" element={<AuthLayout />}>
+        <Route path="/auth" element={
+          <CheckAuth isAuthenticate={isAuthenticate} user={user}>
+            <AuthLayout />
+          </CheckAuth>
+        }>
           <Route path="login" element={<LoginElement />} />
           <Route path="register" element={<RegisterElement />} />
         </Route>
-        <Route path="/admin" element={<AdminLayout />}>
+
+        <Route path="/admin" element={
+          <CheckAuth isAuthenticate={isAuthenticate} user={user}>
+            <AdminLayout />
+          </CheckAuth>
+        }>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="features" element={<Features />} />
           <Route path="Orders" element={<Orders />} />
           <Route path="Products" element={<Products />} />
         </Route>
 
-        <Route path="/shopping" element={<ShoppingLayout />} >
+        <Route path="/shopping" element={
+          <CheckAuth isAuthenticate={isAuthenticate} user={user}>
+            <ShoppingLayout />
+          </CheckAuth>
+        } >
           <Route path="account" element={<Account/>}/>
           <Route path="checkout" element={<CheckOut/>}/>
           <Route path="home" element={<Home/>}/>
