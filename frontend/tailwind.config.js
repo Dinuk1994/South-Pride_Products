@@ -9,6 +9,8 @@ export default {
     colors: {
       AuthBackground: "#697565",
       AuthText: "#EEDF7A",
+      NotFound : "#D91656",
+      NotAvailbaleBG : "#FFBE98"
     },
     fontFamily: {
       southFont: ["Kanit", "sans-serif"],
