@@ -18,11 +18,8 @@ import CheckAuth from "./components/common/CheckAuth";
 
 
 export default function App() {
-  const isAuthenticate = true;
-  const user = {
-    role : "admin"
-  }
-
+  const isAuthenticate = false;
+  const user = null
   return (
     <div>
       {/* <h1>Header Component</h1> */}
