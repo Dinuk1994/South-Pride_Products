@@ -11,7 +11,6 @@ const initialState = {
 };
 
 
-
 const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -31,6 +30,7 @@ const authSlice = createSlice({
                 state.isAuthenticate = true;
                 state.user = action.payload
                 toast.success("User Registerd Successfull")
+
             })
             .addCase(registerUser.rejected, (state, action) => {
                 state.isLoading = false;

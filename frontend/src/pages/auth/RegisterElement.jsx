@@ -5,8 +5,7 @@ import { MdEmail } from "react-icons/md";
 import { useState } from "react";
 import { registerUser } from "../../api/apiService";
 import { useDispatch } from "react-redux"
-
-
+import { useNavigate } from "react-router-dom";
 
 const RegisterElement = () => {
 
@@ -17,6 +16,7 @@ const RegisterElement = () => {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -26,11 +26,13 @@ const RegisterElement = () => {
     }));
   }
 
-  function submitData(e) {
+  async function submitData(e) {
     e.preventDefault()
-    dispatch(registerUser(registerData));
-    
-    console.log(registerData)
+    const success = await dispatch(registerUser(registerData))
+    if(registerUser.fulfilled.match(success)){
+      navigate("/auth/login")
+    }
+
   }
 
 
