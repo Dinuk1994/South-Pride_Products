@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    fullName : {
-        type : String,
-        required : true,
-        trim : true
-    },
     userName : {
         type : String,
         required : true,
@@ -24,13 +19,10 @@ const userSchema = new mongoose.Schema({
         unique : true
     },
     role : {
-        type : Number,
-        default : 0
+        type : String,
+        default : "user"
     },
-    cart : {
-        type : Array,
-        default : []
-    }
+    
 },{timestamps : true})
 
 const User = mongoose.model("User" , userSchema);

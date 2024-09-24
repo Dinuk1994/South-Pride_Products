@@ -6,7 +6,7 @@ import { generateRefreshToken } from "../utils/generateRefreshToken.js";
 
 export const signin = async (req, res) => {
     try {
-        const { fullName, userName, email, password } = req.body;
+        const { userName, email, password } = req.body;
         const user = await User.findOne({ email })
         if (user) return res.status(400).json({ error: "User is already exists" })
         if (password.length < 6) return res.status(400).json({ error: "Password must be at least 6 characters" })
@@ -14,7 +14,6 @@ export const signin = async (req, res) => {
         const hashPassword = await bcrypt.hash(password, 10)
 
         const newUser = new User({
-            fullName,
             userName,
             email,
             password: hashPassword

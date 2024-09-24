@@ -15,7 +15,7 @@ const AuthLayout = () => {
       <div className='w-7/12 mobile:w-full bg-AuthBackground pt-20 mobile:pt-11'>
         <div className='flex justify-center'>
           <label 
-            className="text-[50px] text-nowrap font-serif mobile:text-[25px] text-AuthText font-semibold" 
+            className="text-[50px] text-nowrap font-serif mobile:text-[25px] text-AuthText font-semibold tablet:text-[30px]" 
             htmlFor="">
             SOUTH PRIDE PRODUCTS
           </label>

@@ -27,8 +27,6 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-const router = express.Router()
-
 app.use("/api/auth", authRouter)
 
 app.listen(PORT, () => {
