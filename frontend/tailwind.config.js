@@ -12,6 +12,7 @@ export default {
         AuthText: "#EEDF7A",
         NotFound: "#D91656",
         NotAvailbaleBG: "#C96868",
+        AdminHeader : "#3A6D8C"
       },
       fontFamily: {
         southFont: ["Kanit", "sans-serif"],

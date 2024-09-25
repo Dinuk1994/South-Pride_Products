@@ -2,7 +2,7 @@ import express from "express"
 import User from "../model/user.model.js";
 import bcrypt from "bcryptjs"
 import { GenerateAccessToken } from "../utils/generateAccessToken.js";
-import { generateRefreshToken } from "../utils/generateRefreshToken.js";
+
 
 export const signin = async (req, res) => {
     try {
@@ -20,7 +20,6 @@ export const signin = async (req, res) => {
         })
         if (newUser) {
             const accessToken = GenerateAccessToken(newUser._id)
-            generateRefreshToken(newUser._id,res)
             await newUser.save()
             return res.status(200).json({ msg: "User Register success", accessToken })
         } else {
@@ -45,7 +44,7 @@ export const login = async (req, res) => {
         if (!checkPassword) return res.status(400).json({ msg: "Invalid Password" })
 
         const accessToken = GenerateAccessToken(user._id, user.role , user.email)
-        generateRefreshToken(user._id,res)
+       
 
         res.cookie('accessToken',accessToken,{httpOnly : true,secure : false}).json({
             user,
