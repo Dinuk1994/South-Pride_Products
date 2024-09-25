@@ -14,13 +14,20 @@ import CheckOut from "./pages/shopping/CheckOut";
 import Home from "./pages/shopping/Home";
 import Listing from "./pages/shopping/Listing";
 import CheckAuth from "./components/common/CheckAuth";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { checkAuth } from "./api/checkAuth";
 
 
 
 export default function App() {
 
   const{user , isAuthenticate} = useSelector(state =>state.auth)
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(checkAuth())
+  },[dispatch])
 
   return (
     <div>
