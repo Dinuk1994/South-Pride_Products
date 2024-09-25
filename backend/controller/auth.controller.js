@@ -44,7 +44,7 @@ export const login = async (req, res) => {
         const checkPassword = await bcrypt.compare(password, user.password)
         if (!checkPassword) return res.status(400).json({ msg: "Invalid Password" })
 
-        const accessToken = GenerateAccessToken(user._id)
+        const accessToken = GenerateAccessToken(user._id, user.role , user.email)
         generateRefreshToken(user._id,res)
 
         res.cookie('accessToken',accessToken,{httpOnly : true,secure : false}).json({

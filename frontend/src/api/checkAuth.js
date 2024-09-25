@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+
 export const checkAuth = createAsyncThunk(
     'auth/checkAuth', 
-    async (authData, thunkAPI) => {
+    async (thunkAPI) => {
         try {
             const res = await fetch("/api/auth/check-auth", {
                 credentials: 'include', 
@@ -13,11 +14,15 @@ export const checkAuth = createAsyncThunk(
             });
             
             const data = await res.json();
-
+            console.log(data);
+            
+            
             if (!res.ok) {
                 throw new Error(data.error);
             }
             return data;
+            
+            
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);
         }

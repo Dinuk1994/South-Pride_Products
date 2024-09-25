@@ -17,17 +17,21 @@ import CheckAuth from "./components/common/CheckAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./api/checkAuth";
+import LoadingComponent from "./components/sample/LoadingComponent";
 
 
 
 export default function App() {
 
-  const{user , isAuthenticate} = useSelector(state =>state.auth)
+  const{user , isAuthenticate, isLoading} = useSelector(state =>state.auth)
   const dispatch = useDispatch();
 
   useEffect(()=>{
     dispatch(checkAuth())
+  
   },[dispatch])
+
+  if(isLoading) return <><LoadingComponent/></>
 
   return (
     <div>
