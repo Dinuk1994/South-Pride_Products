@@ -22,7 +22,7 @@ export const signin = async (req, res) => {
             const accessToken = GenerateAccessToken(newUser._id)
             generateRefreshToken(newUser._id,res)
             await newUser.save()
-            return res.status(200).json({ msg: "User saved success", accessToken })
+            return res.status(200).json({ msg: "User Register success", accessToken })
         } else {
             return res.status(400).json({ error: "Invalid User Data" })
         }
@@ -47,14 +47,11 @@ export const login = async (req, res) => {
         const accessToken = GenerateAccessToken(user._id)
         generateRefreshToken(user._id,res)
 
-        if (user) {
-            if (user.role === 1) {
-                return res.status(200).json({ msg: "Admin Logged In" ,accessToken})
-            }
-            if (user.role === 0) {
-                return res.status(200).json({ msg: "User Logged In" ,accessToken})
-            }
-        }
+        res.cookie('accessToken',accessToken,{httpOnly : true,secure : false}).json({
+            user,
+            msg : "Login Success",   
+        })
+    
     } catch (error) {
         return res.status(500).json({ msg: "Internal Server Error" })
     }

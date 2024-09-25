@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser } from "../../api/apiService";
+import { registerUser } from "../../api/registerUser";
 import toast from "react-hot-toast";
+import { loginUser } from "../../api/loginUser";
 
 const initialState = {
     isAuthenticate: false,
@@ -38,6 +39,22 @@ const authSlice = createSlice({
                 state.user = null
                 state.error = action.payload;
                 toast.error(action.payload); 
+            })
+            .addCase(loginUser.pending,(state)=>{
+                state.isLoading = true
+            })
+            .addCase(loginUser.fulfilled,(state,action)=>{
+                state.isLoading = false;
+                state.isAuthenticate = true;
+                state.user = action.payload.user
+                toast.success("Login Successfull")
+            })
+            .addCase(loginUser.rejected,(state,action)=>{
+                state.isLoading = false;
+                state.isAuthenticate = false;
+                state.user = null
+                state.error = action.payload;              
+                toast.error("Invalid Credentials");
             })
     }
 })

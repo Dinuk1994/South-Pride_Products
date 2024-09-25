@@ -1,14 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
 export const registerUser = createAsyncThunk(
-    "auth/register", async (userdata, thunkAPI) => {
+    "auth/register", async (registerData, thunkAPI) => {
         try {
             const res = await fetch("/api/auth/signin", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(userdata)
+                body: JSON.stringify(registerData)
             })
 
             const data = await res.json();

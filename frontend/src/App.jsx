@@ -14,12 +14,14 @@ import CheckOut from "./pages/shopping/CheckOut";
 import Home from "./pages/shopping/Home";
 import Listing from "./pages/shopping/Listing";
 import CheckAuth from "./components/common/CheckAuth";
+import { useSelector } from "react-redux";
 
 
 
 export default function App() {
-  const isAuthenticate = false;
-  const user = null
+
+  const{user , isAuthenticate} = useSelector(state =>state.auth)
+
   return (
     <div>
       {/* <h1>Header Component</h1> */}
