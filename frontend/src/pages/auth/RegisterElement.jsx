@@ -46,7 +46,7 @@ const RegisterElement = () => {
             <InputField name="email" value={registerData.email} onChange={handleChange} className="grow" type="email" image={<MdEmail className="text-gray-500" />} placeholder="Email" />
             <InputField name="password" value={registerData.password} onChange={handleChange} className="grow" type="password" image={<FaKey className="text-gray-500" />} placeholder="Password" />
             <InputField className="grow" type="password" image={<FaKey className="text-gray-500" />} placeholder="Confirm password" />
-            <label className="text-white" htmlFor="signin">Already have an account? <a className="hover:underline ml-2 text-blue-950" href="login">Login</a></label>
+            <label className="text-white" htmlFor="signin">Already have an account? <a className="hover:underline ml-2 text-yellow-500" href="login">Login</a></label>
             <button className="btn btn-active text-lg font-semibold text-white btn-accent hover:bg-green-600">Register</button>
           </div>
 

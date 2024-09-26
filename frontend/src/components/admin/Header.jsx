@@ -1,11 +1,14 @@
 
 import { IoMdLogOut } from "react-icons/io";
 
+import MobileDrawer from "./MobileDrawer";
+
 const Header = () => {
   return (
     <div>
       <div className="navbar bg-AdminHeader ">
         <div className="flex-1">
+          <div className="desktop-or-laptop:hidden"><MobileDrawer/></div>
           <a className="pl-3 text-xl text-white mobile:text-sm font-bold">Administration - <span className="text-yellow-200 mobile:text-sm text-nowrap">South Pride Products</span></a>
         </div>
         <div className="flex-none">

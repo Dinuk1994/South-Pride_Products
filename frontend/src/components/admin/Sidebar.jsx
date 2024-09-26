@@ -1,7 +1,8 @@
 import { MdAdminPanelSettings } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
-import { GiBasket } from "react-icons/gi";import 
-{ MdProductionQuantityLimits } from "react-icons/md";
+import { GiBasket } from "react-icons/gi";
+import { MdProductionQuantityLimits } from "react-icons/md";
+import { MdOutlineFeaturedPlayList } from "react-icons/md";
 
 const Sidebar = () => {
   return (
@@ -33,7 +34,7 @@ const Sidebar = () => {
         </div>
         <div className="flex justify-center">
           <a href="/admin/features" className="btn btn-ghost flex justify-start  group w-44">
-            <LuLayoutDashboard className="text-white text-xl group-hover:text-yellow-300" />
+            <MdOutlineFeaturedPlayList className="text-white text-xl group-hover:text-yellow-300" />
             <span className="text-white text-lg font-bold group-hover:text-yellow-300">Features</span>
           </a>
         </div>

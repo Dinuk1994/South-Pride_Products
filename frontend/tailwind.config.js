@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        AuthBackground: "#697565",
+        AuthBackground: "#353E55",
         AuthText: "#EEDF7A",
         NotFound: "#D91656",
         NotAvailbaleBG: "#C96868",
