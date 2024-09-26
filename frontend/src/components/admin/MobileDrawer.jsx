@@ -10,7 +10,6 @@ const MobileDrawer = () => {
             <div className="drawer">
                 <input id="my-drawer" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
-                    {/* Page content here */}
                     <GiHamburgerMenu
                         className="size-8 cursor-pointer text-white"
                         onClick={() => {
@@ -21,7 +20,7 @@ const MobileDrawer = () => {
                 </div>
                 <div className="drawer-side">
                     <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
-                    <ul className="menu bg-slate-500 text-base-content min-h-full mt-16 w-48 p-4">
+                    <ul className="menu bg-slate-500 text-base-content min-h-full mt-16 fixed w-48 p-4">
                         <div className="flex justify-center">
                             <MdAdminPanelSettings className="text-green-500 size-8" />
                             <label className="flex items-center ml-1 text-white text-lg font-semibold" htmlFor="">Admin Panel</label>
