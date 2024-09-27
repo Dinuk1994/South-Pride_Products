@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ImageUploader } from "../atoms/ImageUploader";
+import toast from 'react-hot-toast';
 
 const ProductDrawer = () => {
     const [productData, setProductData] = useState({
@@ -8,7 +9,7 @@ const ProductDrawer = () => {
         category: "",
         salePrice: "",
         stockQty: "",
-        image: [] 
+        image: [],
     });
 
     const handleChange = (e) => {
@@ -19,24 +20,44 @@ const ProductDrawer = () => {
         }));
     };
 
-    const handleImageChange = (images) => {
-        setProductData((prevData) => ({
-            ...prevData,
-            image: [...prevData.image, ...images], 
-        }));
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const folderName = `southpride/${productData.category}/${productData.productName.replace(/\s+/g, '_')}`;
+
+        console.log("Folder Name:", folderName);  
+        console.log("Selected Category:", productData.category);
+
+        const uploadPromises = productData.image.map((file) => {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", "south_pride_products");
+            formData.append("folder", folderName);
+
+            return fetch("https://api.cloudinary.com/v1_1/doyd9gnzc/image/upload", {
+                method: "POST",
+                body: formData,
+            }).then((response) => response.json());
+        });
+
+        try {
+            const uploadedImages = await Promise.all(uploadPromises);
+            const imageUrls = uploadedImages.map((img) => img.secure_url);
+
+            const finalProductData = {
+                ...productData,
+                image: imageUrls,
+            };
+
+            console.log("Final product data:", finalProductData);
+            toast.success("Product added successfully with images!");
+        } catch (error) {
+            console.error("Error uploading images:", error);
+            toast.error("Error uploading images. Please try again.");
+        }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();     
-        const imageUrls = productData.image.map((file) => URL.createObjectURL(file));  
-        const productDataWithImages = {
-            ...productData,
-            image: imageUrls, 
-        };
-    
-        console.log(productDataWithImages);
-    };
-    
+
     return (
         <div>
             <div className="drawer drawer-end">
@@ -78,9 +99,15 @@ const ProductDrawer = () => {
                                     </div>
 
                                     <label className="mt-3 font-semibold text-lg mobile:text-sm">Add Images</label>
-                                    <ImageUploader setImages={handleImageChange} />
-
-                                    <button type="submit" className="btn btn-outline mobile:mt-2 hover:!text-white mobile:text-sm text-lg font-!semibold btn-accent">Add Product</button>
+                                    <ImageUploader
+                                        setImages={(images) => {
+                                            console.log("Images received from uploader:", images);
+                                            setProductData((prevData) => ({ ...prevData, image: Array.isArray(images) ? images : [] }));
+                                        }}
+                                    />
+                                    <button type="submit" className="btn btn-outline mobile:mt-2 hover:!text-white mobile:text-sm">
+                                        Add Product
+                                    </button>
                                 </div>
                             </form>
                         </div>
