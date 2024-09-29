@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FileInput, Label, Button } from "flowbite-react";
 
-export function ImageUploader({ setImages }) {
+export function ImageUploader( { setImages, resetImages }) {
     const [imageFiles, setImageFiles] = useState([]);
 
     const handleFileChange = (event) => {
@@ -20,6 +21,13 @@ export function ImageUploader({ setImages }) {
         setImageFiles(updatedFiles);
         setImages(updatedFiles);
     };
+
+    useEffect(() => {
+        if (resetImages) {
+            setImageFiles([]);
+            setImages([]);
+        }
+    }, [resetImages]); 
 
     return (
         <div className="flex flex-col items-center w-full">

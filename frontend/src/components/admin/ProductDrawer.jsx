@@ -9,8 +9,9 @@ const ProductDrawer = () => {
     const [weightInput, setWeightInput] = useState("");
     const [stockQtyInput, setStockQtyInput] = useState("");
     const [itemSalePrice, setItemSalePrice] = useState("");
+    const [resetImages, setResetImages] = useState(false);
 
-    const dispatch  = useDispatch();
+    const dispatch = useDispatch();
 
     const [productData, setProductData] = useState({
         productName: "",
@@ -42,7 +43,7 @@ const ProductDrawer = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         if (
             !productData.productName ||
             !productData.description ||
@@ -53,31 +54,31 @@ const ProductDrawer = () => {
             toast.error("Please fill in all required fields before submitting.");
             return;
         }
-    
+
         const folderName = `southpride/${productData.category}/${productData.productName.replace(/\s+/g, '_')}`;
         setLoading(true);
-    
+
         console.log("Category:", productData.category);
-    
+
         const uploadPromises = productData.images.map((file) => {
             const formData = new FormData();
             formData.append("file", file);
             formData.append("upload_preset", "south_pride_products");
             formData.append("folder", folderName);
-    
+
             return fetch("https://api.cloudinary.com/v1_1/doyd9gnzc/image/upload", {
                 method: "POST",
                 body: formData,
             }).then((response) => response.json());
         });
-    
+
         try {
             const uploadedImages = await Promise.all(uploadPromises);
             console.log("Uploaded Images Response:", uploadedImages);
-    
+
             const imageUrls = uploadedImages.map((img) => img.secure_url);
             console.log("Image URLs:", imageUrls);
-    
+
             const finalProductData = {
                 ...productData,
                 weightStock: productData.weightStock.map(item => ({
@@ -87,10 +88,24 @@ const ProductDrawer = () => {
                 })),
                 images: imageUrls,
             };
-    
+
             console.log("Final Product Data:", finalProductData);
-    
+
             dispatch(addProduct(finalProductData));
+
+            setProductData({
+                productName: "",
+                description: "",
+                category: "",
+                weightStock: [],
+                images: [],
+            });
+            setWeightInput('');
+            setStockQtyInput('');
+            setItemSalePrice('');
+            setResetImages(true);
+
+
         } catch (error) {
             console.error("Error uploading images:", error);
             toast.error("Error uploading images. Please try again.");
@@ -98,7 +113,7 @@ const ProductDrawer = () => {
             setLoading(false);
         }
     };
-    
+
 
 
     return (
@@ -158,7 +173,7 @@ const ProductDrawer = () => {
                                     <div className="grid grid-cols-2 gap-y-2 mobile:gap-y-1 mt-3">
                                         <div className="col-span-1 mr-1">
                                             <label className="mt-3 font-semibold text-gray-500 text-base mobile:text-sm">Sale Price</label>
-                                            <input type="number" value={itemSalePrice} onChange={(e)=>setItemSalePrice(e.target.value)} placeholder="Sale price" className="input mt-1 mobile:text-sm input-bordered h-10 mobile:h-8 w-full" />
+                                            <input type="number" value={itemSalePrice} onChange={(e) => setItemSalePrice(e.target.value)} placeholder="Sale price" className="input mt-1 mobile:text-sm input-bordered h-10 mobile:h-8 w-full" />
                                         </div>
 
                                     </div>
@@ -193,6 +208,7 @@ const ProductDrawer = () => {
                                             console.log("Images received from uploader:", images);
                                             setProductData((prevData) => ({ ...prevData, images: Array.isArray(images) ? images : [] }));
                                         }}
+                                        resetImages={resetImages} // Pass resetImages prop
                                     />
 
                                     <button

@@ -34,9 +34,7 @@ const adminProductSlice = createSlice({
             .addCase(allProducts.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.products = action.payload;
-                //console.log("Fetched products from store:", action.payload);  
-            })
-            
+            })     
             .addCase(allProducts.rejected,(state,action)=>{
                 state.isLoading = false
                 toast.error(action.payload)
