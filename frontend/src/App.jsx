@@ -16,8 +16,9 @@ import Listing from "./pages/shopping/Listing";
 import CheckAuth from "./components/common/CheckAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { checkAuth } from "./api/checkAuth";
+
 import LoadingComponent from "./components/sample/LoadingComponent";
+import { checkAuth } from "./api/authApi/checkAuth";
 
 
 

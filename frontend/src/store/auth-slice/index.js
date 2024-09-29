@@ -1,9 +1,12 @@
  
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser } from "../../api/registerUser";
+
 import toast from "react-hot-toast";
-import { loginUser } from "../../api/loginUser";
-import { checkAuth } from "../../api/checkAuth";
+
+
+import { registerUser } from "../../api/authApi/registerUser";
+import { loginUser } from "../../api/authApi/loginUser";
+import { checkAuth } from "../../api/authApi/checkAuth";
 
 const initialState = {
     isAuthenticate: false,

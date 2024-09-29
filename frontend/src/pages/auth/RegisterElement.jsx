@@ -3,9 +3,10 @@ import { FaUser } from "react-icons/fa";
 import { FaKey } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useState } from "react";
-import { registerUser } from "../../api/registerUser";
+
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../../api/authApi/registerUser";
 
 const RegisterElement = () => {
 

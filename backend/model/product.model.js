@@ -11,6 +11,10 @@ const weightStockSchema = mongoose.Schema({
         type : Number,
         required : true
     }
+    ,salePrice : {
+        type : Number,
+        required : true
+    }
 })
 
 const productSchema = mongoose.Schema({
@@ -27,11 +31,13 @@ const productSchema = mongoose.Schema({
         type : String,
         required : true
     },
-    salePrice:{
-        type : Number,
+    images : {
+        type : [],
         required : true
     },
     weightStock : [weightStockSchema]
+},{
+    timestamps : true
 })
 
 const Product = mongoose.model("Product" , productSchema);

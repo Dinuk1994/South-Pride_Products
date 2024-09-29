@@ -4,7 +4,8 @@ import { FaKey } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../api/loginUser";
+import { loginUser } from "../../api/authApi/loginUser";
+
 
 const LoginElement = () => {
 
