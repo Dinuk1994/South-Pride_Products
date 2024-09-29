@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const addProduct = createAsyncThunk(
    "product/addNewProduct", async(newProductData , thunkAPI)=>{
         try {
-            const res = await fetch("http://localhost:8000/admin/add-product",{
+            const res = await fetch("/api/admin/add-product",{
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json"

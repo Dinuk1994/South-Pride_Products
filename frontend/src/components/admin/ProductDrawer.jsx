@@ -91,7 +91,6 @@ const ProductDrawer = () => {
             console.log("Final Product Data:", finalProductData);
     
             dispatch(addProduct(finalProductData));
-            //toast.success("Product added successfully with images!");
         } catch (error) {
             console.error("Error uploading images:", error);
             toast.error("Error uploading images. Please try again.");
