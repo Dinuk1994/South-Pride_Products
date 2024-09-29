@@ -3,12 +3,16 @@ import { ImageUploader } from "../atoms/ImageUploader";
 import toast from 'react-hot-toast';
 
 const ProductDrawer = () => {
+    const [loading, setLoading] = useState(false);
+    const [weightInput, setWeightInput] = useState("");
+    const [stockQtyInput, setStockQtyInput] = useState("");
+
     const [productData, setProductData] = useState({
         productName: "",
         description: "",
         category: "",
         salePrice: "",
-        stockQty: "",
+        weightStock: [],
         image: [],
     });
 
@@ -20,13 +24,37 @@ const ProductDrawer = () => {
         }));
     };
 
+    const handleAddWeightStock = () => {
+        if (weightInput && stockQtyInput) {
+            setProductData((prevData) => ({
+                ...prevData,
+                weightStock: [...prevData.weightStock, { weight: weightInput, stockQty: stockQtyInput }],
+            }));
+            setWeightInput('');
+            setStockQtyInput('');
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const folderName = `southpride/${productData.category}/${productData.productName.replace(/\s+/g, '_')}`;
 
-        console.log("Folder Name:", folderName);  
-        console.log("Selected Category:", productData.category);
+        if (
+            !productData.productName ||
+            !productData.description ||
+            !productData.category ||
+            !productData.salePrice ||
+            productData.weightStock.length === 0 ||
+            productData.image.length === 0
+        ) {
+            toast.error("Please fill in all required fields before submitting.");
+            return;
+        }
+
+        const folderName = `southpride/${productData.category}/${productData.productName.replace(/\s+/g, '_')}`;
+        setLoading(true);
+
+        console.log(productData.category);
 
         const uploadPromises = productData.image.map((file) => {
             const formData = new FormData();
@@ -46,6 +74,11 @@ const ProductDrawer = () => {
 
             const finalProductData = {
                 ...productData,
+                salePrice : Number(productData.salePrice),
+                weightStock: productData.weightStock.map(item => ({
+                    weight: Number(item.weight),  
+                    stockQty: Number(item.stockQty)  
+                })),
                 image: imageUrls,
             };
 
@@ -54,6 +87,8 @@ const ProductDrawer = () => {
         } catch (error) {
             console.error("Error uploading images:", error);
             toast.error("Error uploading images. Please try again.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -70,43 +105,97 @@ const ProductDrawer = () => {
                     <div className="menu bg-base-300 text-base-content min-h-full w-[500px] mobile:w-[320px] mobile:mr-28 p-4">
                         <div className="flex justify-start">
                             <form onSubmit={handleSubmit}>
-                                <div className="grid grid-cols-1 gap-y-2 mobile:gap-y-1 p-2 w-full">
+                                <div className="grid grid-cols-1 gap-y-1 mobile:gap-y-1 p-2 w-full">
                                     <label className="text-2xl font-semibold text-gray-700">Add New Product</label>
 
-                                    <label className="mt-3 font-semibold text-lg mobile:text-sm">Product Name</label>
+                                    <label className="mt-3 font-semibold text-gray-500 text-base mobile:text-sm">Product Name</label>
                                     <input type="text" name="productName" onChange={handleChange} value={productData.productName} placeholder="Enter product name" className="input mobile:text-sm input-bordered h-10 mobile:h-8 w-full" />
 
-                                    <label className="mt-3 font-semibold text-lg mobile:text-sm">Description</label>
+                                    <label className="mt-3 font-semibold text-gray-500 text-base mobile:text-sm">Description</label>
                                     <textarea name="description" onChange={handleChange} value={productData.description} placeholder="Enter product description" className="input mobile:text-sm input-bordered h-20 mobile:h-16 w-full" />
 
-                                    <label className="mt-3 font-semibold text-lg mobile:text-sm">Category</label>
-                                    <select name="category" value={productData.category} onChange={handleChange} className="select h-10 mobile:h-8 w-full">
-                                        <option disabled>Category</option>
+                                    <label className="mt-3 font-semibold text-gray-500 text-base mobile:text-sm">Category</label>
+                                    <select name="category" value={productData.category} onChange={handleChange} className="select text-gray-500 text-base h-10 mobile:h-8 w-full">
+                                        <option value="" disabled>Category</option>
                                         <option>Spices</option>
                                         <option>Nuts</option>
                                         <option>Other</option>
                                     </select>
 
                                     <div className="grid grid-cols-2 gap-y-2 mobile:gap-y-1 mt-3">
-                                        <div className="col-span-1">
-                                            <label className="mt-3 font-semibold text-lg mobile:text-sm">Sale Price</label>
+                                        <div className="col-span-1 mr-1">
+                                            <label className="mt-3 font-semibold text-gray-500 text-base mobile:text-sm">Sale Price</label>
                                             <input type="number" name="salePrice" onChange={handleChange} value={productData.salePrice} placeholder="Sale price" className="input mt-1 mobile:text-sm input-bordered h-10 mobile:h-8 w-full" />
                                         </div>
-                                        <div className="col-span-1">
-                                            <label className="mt-3 font-semibold text-lg mobile:text-sm">Stock Qty</label>
-                                            <input type="number" name="stockQty" onChange={handleChange} value={productData.stockQty} placeholder="Stock Qty" className="input mt-1 mobile:text-sm input-bordered h-10 mobile:h-8 w-full" />
+
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-y-2 mobile:gap-y-1 mt-3">
+                                        <div className="col-span-1 mr-1">
+                                            <label className="mt-3 font-semibold text-gray-500 text-base mobile:text-sm">Product Weight</label>
+                                            <input
+                                                type="number"
+                                                value={weightInput}
+                                                onChange={(e) => setWeightInput(e.target.value)}
+                                                placeholder="Product weight"
+                                                className="input mt-1 mobile:text-sm input-bordered h-10 mobile:h-8 w-full"
+                                            />
+                                        </div>
+                                        <div className="col-span-1 ml-1">
+                                            <label className="mt-3 font-semibold text-gray-500 text-base mobile:text-sm">Stock Quantity</label>
+                                            <input
+                                                type="number"
+                                                value={stockQtyInput}
+                                                onChange={(e) => setStockQtyInput(e.target.value)}
+                                                placeholder="Stock Quantity"
+                                                className="input mt-1 mobile:text-sm input-bordered h-10 mobile:h-8 w-full"
+                                            />
                                         </div>
                                     </div>
 
-                                    <label className="mt-3 font-semibold text-lg mobile:text-sm">Add Images</label>
+                                    <div className="grid grid-cols-10">
+                                        <div className="col-span-3 flex items-center">
+                                            <button type="button" onClick={handleAddWeightStock} className="btn btn-outline flex items-center mt-2 justify-center text-sm hover:!text-white btn-accent">Add Stock</button>
+                                        </div>
+                                        <div className="col-span-7">
+                                            <ul className="mt-2 grid grid-cols-3 mobile:grid mobile:grid-cols-2 gap-4">
+                                                {productData.weightStock.length > 0 && productData.weightStock.map((item, index) => (
+                                                    item.weight && item.stockQty ? (
+                                                        <li key={index} className="mt-1">
+                                                            <div className="flex mobile:ml-4 items-center justify-between text-nowrap">                       
+                                                                <span>{item.weight}g :</span>
+                                                                <span>{item.stockQty}</span>
+                                                                {index !== productData.weightStock.length - 1 && <span>|</span>}
+                                                            </div>
+                                                        </li>
+                                                    ) : null 
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+
+                                    <label className="mt-3 font-semibold text-gray-500 text-base mobile:text-sm">Add Images</label>
                                     <ImageUploader
                                         setImages={(images) => {
                                             console.log("Images received from uploader:", images);
                                             setProductData((prevData) => ({ ...prevData, image: Array.isArray(images) ? images : [] }));
                                         }}
                                     />
-                                    <button type="submit" className="btn btn-outline mobile:mt-2 hover:!text-white mobile:text-sm">
-                                        Add Product
+
+                                    <button
+                                        type="submit"
+                                        className={`btn btn-outline flex items-center justify-center text-lg mobile:text-sm hover:!text-white btn-accent`}
+                                        disabled={loading}
+                                    >
+                                        {loading ? (
+                                            <>
+                                                <span className="loading loading-spinner"></span>
+                                            </>
+                                        ) : (
+                                            "Add Product"
+                                        )}
                                     </button>
                                 </div>
                             </form>
