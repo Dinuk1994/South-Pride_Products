@@ -15,7 +15,6 @@ const initialState = {
     error: null,
 };
 
-
 const authSlice = createSlice({
     name: "auth",
     initialState,

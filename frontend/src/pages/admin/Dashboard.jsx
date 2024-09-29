@@ -1,4 +1,5 @@
-import { useDispatch } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
 import ProductDrawer from "../../components/admin/ProductDrawer";
 import { useEffect } from "react";
 import { allProducts } from "../../api/productAPI/allProducts";
@@ -7,9 +8,15 @@ const Dashboard = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(allProducts())
-  }, [dispatch]);
+  const products = useSelector((state) => state.adminProducts.products);
+
+  
+ useEffect(()=>{
+  dispatch(allProducts()) 
+ },[dispatch])
+
+ console.log(products);
+ 
 
   return (
     <div className="flex w-full">
