@@ -64,7 +64,7 @@ const ProductCard = ({ product }) => {
                         </>
                     )}
                 </figure>
-                <div className="card-body">
+                <div className="card-body text-gray-500">
                     <h2 className="card-title">{product.productName}</h2>
                     <p className="mobile:text-sm text-pretty">{product.description}</p>
                     <div className="card-actions justify-end">

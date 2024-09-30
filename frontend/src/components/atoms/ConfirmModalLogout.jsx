@@ -5,7 +5,7 @@ import { IoIosWarning } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../api/authApi/logoutUser";
 import { useNavigate } from "react-router-dom";
-const ConfirmModal = ({ confirmRef }) => {
+const ConfirmModalLogout = ({ confirmRef }) => {
 
     const dispatch = useDispatch();
 
@@ -41,4 +41,4 @@ const ConfirmModal = ({ confirmRef }) => {
     )
 }
 
-export default ConfirmModal
+export default ConfirmModalLogout

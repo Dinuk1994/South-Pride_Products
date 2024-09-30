@@ -1,8 +1,8 @@
 import { IoMdLogOut } from "react-icons/io";
 import MobileDrawer from "./MobileDrawer";
 import { useSelector } from "react-redux";
-import ConfirmModal from "../atoms/ConfirmModal";
 import {  useRef } from "react";
+import ConfirmModalLogout from "../atoms/ConfirmModalLogout";
 
 
 const Header = () => {
@@ -65,7 +65,7 @@ const Header = () => {
         </div>
       </div>
       <div>
-        <ConfirmModal  confirmRef={confirmRef}/>
+        <ConfirmModalLogout  confirmRef={confirmRef}/>
       </div>
     </div>
   );
