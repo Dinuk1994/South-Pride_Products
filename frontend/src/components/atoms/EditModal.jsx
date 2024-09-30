@@ -1,25 +1,34 @@
-/* eslint-disable no-unused-vars */
+
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { updateProduct } from '../../api/productAPI/updateProduct';
+import ConfirmModalUpdate from './ConfirmModalUpdate';
 
 const EditModal = ({ modalRef, closeModal, product }) => {
     const [weightStock, setWeightStock] = useState([]);
-    const [images, setImages] = useState([]); 
-    const [newImages, setNewImages] = useState([]); 
+    const [images, setImages] = useState([]);
+    const [newImages, setNewImages] = useState([]);
     const [productName, setProductName] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
     const [loading, setLoading] = useState(false);
 
+    const confirmRef = useRef();
+
     const dispatch = useDispatch();
+
+    const confirm = () => {
+        if (confirmRef.current) {
+            confirmRef.current.showModal();
+        }
+    }
 
     useEffect(() => {
         if (product) {
             setWeightStock(product.weightStock);
-            setImages(product.images); 
+            setImages(product.images);
             setProductName(product.productName);
             setDescription(product.description);
             setCategory(product.category);
@@ -38,7 +47,7 @@ const EditModal = ({ modalRef, closeModal, product }) => {
 
     const handleImageUpload = (e) => {
         const uploadedFiles = Array.from(e.target.files);
-        setNewImages((prevImages) => [...prevImages, ...uploadedFiles]); 
+        setNewImages((prevImages) => [...prevImages, ...uploadedFiles]);
     };
 
     const handleDeleteImage = (index) => {
@@ -46,8 +55,10 @@ const EditModal = ({ modalRef, closeModal, product }) => {
         setImages(updatedImages);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+
+
+    const handleSubmit = async () => {
+    
         const folderName = `southpride/${category}/${productName.replace(/\s+/g, '_')}`;
         setLoading(true);
 
@@ -75,15 +86,15 @@ const EditModal = ({ modalRef, closeModal, product }) => {
                     weight: Number(item.weight),
                     stockQty: Number(item.stockQty),
                 })),
-                images: [...images, ...imageUrls], 
+                images: [...images, ...imageUrls],
             };
 
             await dispatch(updateProduct({ id: product?._id, newUpdatedData: updatedProductData })).unwrap();
             toast.success("Product updated successfully");
 
             setWeightStock([]);
-            setImages([]); 
-            setNewImages([]); 
+            setImages([]);
+            setNewImages([]);
             setProductName('');
             setDescription('');
             setCategory('');
@@ -91,12 +102,22 @@ const EditModal = ({ modalRef, closeModal, product }) => {
         } catch (error) {
             console.error("Error uploading images:", error);
             toast.error("Error uploading images. Please try again.");
-            
+
         } finally {
             setLoading(false);
-            window.location.href="/admin/products"
+            window.location.href = "/admin/products"
         }
     };
+
+    const handleConfirmSubmit = async (e) => {
+        modalRef.current.close();
+        e.preventDefault();
+        console.log("Confirm submit called");
+        await handleSubmit();
+        toast.success("Product updated successfully");
+        window.location.href = "/admin/products";
+    };
+    
 
     if (!product) {
         return null;
@@ -191,13 +212,13 @@ const EditModal = ({ modalRef, closeModal, product }) => {
                             {newImages.map((image, index) => (
                                 <div key={index} className="mt-3 ">
                                     <img
-                                        src={URL.createObjectURL(image)} // Display the uploaded file directly
+                                        src={URL.createObjectURL(image)} 
                                         alt={`New Product Image ${index + 1}`}
                                         className="w-full h-20 object-cover border-2 border-gray-500"
                                     />
                                     <button
                                         type="button"
-                                        onClick={() => handleDeleteImage(images.length + index)} // Handle delete for new images
+                                        onClick={() => handleDeleteImage(images.length + index)} 
                                         className="mt-1 btn btn-error text-white btn-xs"
                                     >
                                         Delete
@@ -205,17 +226,19 @@ const EditModal = ({ modalRef, closeModal, product }) => {
                                 </div>
                             ))}
                         </div>
-                        
+
                         <label className="mt-3 font-semibold text-gray-500 text-base mobile:text-sm">Upload New Images</label>
                         <input type="file" multiple accept="image/*" onChange={handleImageUpload} className="file-input file-input-bordered w-full mobile:w-full" />
-                        
+
                         <div className="modal-action mt-5">
-                            <button type="button" onClick={closeModal} className="btn">Cancel</button>
-                            <button type="submit" className={`btn ${loading ? 'loading' : ''}`}>Update Product</button>
+                            <button type="button" onClick={closeModal} className="btn hover:bg-red-400">Discard</button>
+                            <button type="button" onClick={confirm} className='btn hover:bg-blue-400'>Update Product</button>
                         </div>
                     </form>
                 </div>
             </dialog>
+
+            <ConfirmModalUpdate confirmRef={confirmRef} onConfirm={handleConfirmSubmit} loading={loading}  />
         </div>
     );
 };

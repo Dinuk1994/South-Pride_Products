@@ -65,10 +65,10 @@ const ProductCard = ({ product }) => {
                     )}
                 </figure>
                 <div className="card-body text-gray-500">
-                    <h2 className="card-title">{product.productName}</h2>
-                    <p className="mobile:text-sm text-pretty">{product.description}</p>
+                    <h2 className="card-title text-wrap">{product.productName}</h2>
+                    <p className="mobile:text-sm text-pretty ">{product.description}</p>
                     <div className="card-actions justify-end">
-                        <button className="btn btn-accent text-white hover:text-black" onClick={openModal}>Edit Product</button>
+                        <button className="btn bg-blue-400 text-white hover:text-black" onClick={openModal}>Edit Product</button>
                     </div>
                 </div>
             </div>
