@@ -114,8 +114,6 @@ const ProductDrawer = () => {
         }
     };
 
-
-
     return (
         <div>
             <div className="drawer drawer-end">

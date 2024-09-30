@@ -1,25 +1,20 @@
 import { IoMdLogOut } from "react-icons/io";
 import MobileDrawer from "./MobileDrawer";
-import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
-import { logoutUser } from "../../api/authApi/logoutUser";
+import { useSelector } from "react-redux";
+import ConfirmModal from "../atoms/ConfirmModal";
+import {  useRef } from "react";
+
 
 const Header = () => {
   const userEmail = useSelector((state) => state.auth.user.email);
+  const confirmRef = useRef();
 
-  const dispatch = useDispatch();
-
-  const handleLogOut = async () => {
-    try {
-      await dispatch(logoutUser()).unwrap();
-  
-      toast.success("Logout Successful");
-      window.location.href = "/auth/login"; 
-    } catch (error) {
-      toast.error("Logout Failed", error.message);
-      console.log(error);
+  const confirm = async () => {
+    if (confirmRef.current) {
+      confirmRef.current.showModal();
     }
   };
+
   
 
   return (
@@ -52,7 +47,7 @@ const Header = () => {
             </div>
           </div>
           <label
-            className="text-[15px] mobile:text-[10px] mobile:ml-0 ml-2 text-yellow-200"
+            className="text-[15px] mobile:text-[10px] mobile:ml-0 ml-2 mr-2 text-yellow-200"
             htmlFor=""
           >
             {userEmail}
@@ -60,7 +55,7 @@ const Header = () => {
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
-              onClick={handleLogOut}
+              onClick={confirm}
               role="button"
               className="btn group btn-ghost btn-circle avatar hover:text-white hover:bg-red-500"
             >
@@ -68,6 +63,9 @@ const Header = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <ConfirmModal  confirmRef={confirmRef}/>
       </div>
     </div>
   );

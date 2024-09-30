@@ -6,7 +6,7 @@ import { MdOutlineFeaturedPlayList } from "react-icons/md";
 
 const Sidebar = () => {
   return (
-    <div className="grid grid-cols-1">
+    <div className="grid grid-cols-1 ">
       <div className="flex justify-center pt-8">
         <a href="/admin/dashboard" className="btn btn-ghost flex items-center space-x-2">
           <MdAdminPanelSettings className="text-green-500 size-10" />
