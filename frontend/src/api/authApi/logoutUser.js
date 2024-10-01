@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 export const logoutUser = createAsyncThunk(
     'auth/logout' , async (thunkAPI) => {
@@ -16,7 +17,7 @@ export const logoutUser = createAsyncThunk(
             if(!res.ok){
                 throw new Error(data.error)
             }
-
+            toast.success("User logout success!")
             return data;
             
         } catch (error) {

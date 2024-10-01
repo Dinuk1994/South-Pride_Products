@@ -19,24 +19,27 @@ import { useEffect } from "react";
 
 import LoadingComponent from "./components/sample/LoadingComponent";
 import { checkAuth } from "./api/authApi/checkAuth";
+import AllProducts from "./pages/shopping/sub-pages/AllProducts";
+import Nuts from "./pages/shopping/sub-pages/Nuts";
+import Spices from "./pages/shopping/sub-pages/Spices";
+import OtherProducts from "./pages/shopping/sub-pages/OtherProducts";
 
 
 
 export default function App() {
 
-  const{user , isAuthenticate, isLoading} = useSelector(state =>state.auth)
+  const { user, isAuthenticate, isLoading } = useSelector(state => state.auth)
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(checkAuth())
-  
-  },[dispatch])
 
-  if(isLoading) return <><LoadingComponent/></>
+  }, [dispatch])
+
+  if (isLoading) return <><LoadingComponent /></>
 
   return (
     <div>
-      {/* <h1>Header Component</h1> */}
       <Routes>
         <Route path="/auth" element={
           <CheckAuth isAuthenticate={isAuthenticate} user={user}>
@@ -63,12 +66,17 @@ export default function App() {
             <ShoppingLayout />
           </CheckAuth>
         } >
-          <Route path="account" element={<Account/>}/>
-          <Route path="checkout" element={<CheckOut/>}/>
-          <Route path="home" element={<Home/>}/>
-          <Route path="listing" element={<Listing/>}/>
+          <Route path="account" element={<Account />} />
+          <Route path="checkout" element={<CheckOut />} />
+          <Route path="home" element={<Home />}>
+            <Route path="all-products" element={<AllProducts />} />
+            <Route path="nuts" element={<Nuts />} />
+            <Route path="spices" element={<Spices />} />
+            <Route path="other" element={<OtherProducts />} />
+          </Route>
+          <Route path="listing" element={<Listing />} />
         </Route>
-        <Route path="*" element={<NotFound/>}/>
+        <Route path="*" element={<NotFound />} />
 
       </Routes>
 

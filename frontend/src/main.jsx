@@ -9,7 +9,7 @@ import { Toaster } from 'react-hot-toast'
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Provider store={store}>
-      <Toaster position="top-right"/>
+      <Toaster position="top-center"/>
       <App />
     </Provider>
   </BrowserRouter>

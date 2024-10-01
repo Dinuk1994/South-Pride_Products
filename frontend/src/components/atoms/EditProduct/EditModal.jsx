@@ -3,8 +3,11 @@
 import { useState, useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { updateProduct } from '../../api/productAPI/updateProduct';
+import { updateProduct } from '../../../api/productAPI/updateProduct';
+import { removeProduct } from '../../../api/productAPI/deleteProduct';
 import ConfirmModalUpdate from './ConfirmModalUpdate';
+import DiscardModalUpdate from './DiscardModalUpdate';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 const EditModal = ({ modalRef, closeModal, product }) => {
     const [weightStock, setWeightStock] = useState([]);
@@ -16,12 +19,26 @@ const EditModal = ({ modalRef, closeModal, product }) => {
     const [loading, setLoading] = useState(false);
 
     const confirmRef = useRef();
+    const DiscardRef = useRef();
+    const deleteRef = useRef();
 
     const dispatch = useDispatch();
 
     const confirm = () => {
         if (confirmRef.current) {
             confirmRef.current.showModal();
+        }
+    }
+
+    const discard = () => {
+        if (DiscardRef.current) {
+            DiscardRef.current.showModal();
+        }
+    }
+
+    const deleteProduct = ()=>{
+        if(deleteRef.current){
+            deleteRef.current.showModal();
         }
     }
 
@@ -58,7 +75,7 @@ const EditModal = ({ modalRef, closeModal, product }) => {
 
 
     const handleSubmit = async () => {
-    
+
         const folderName = `southpride/${category}/${productName.replace(/\s+/g, '_')}`;
         setLoading(true);
 
@@ -112,12 +129,16 @@ const EditModal = ({ modalRef, closeModal, product }) => {
     const handleConfirmSubmit = async (e) => {
         modalRef.current.close();
         e.preventDefault();
-        console.log("Confirm submit called");
         await handleSubmit();
-        toast.success("Product updated successfully");
         window.location.href = "/admin/products";
     };
-    
+
+    const deletePrductConfirm = async(e)=>{
+        e.preventDefault();
+        await dispatch(removeProduct({id : product._id})).then(()=>{
+            window.location.href = "/admin/products";
+        })
+    }
 
     if (!product) {
         return null;
@@ -212,13 +233,13 @@ const EditModal = ({ modalRef, closeModal, product }) => {
                             {newImages.map((image, index) => (
                                 <div key={index} className="mt-3 ">
                                     <img
-                                        src={URL.createObjectURL(image)} 
+                                        src={URL.createObjectURL(image)}
                                         alt={`New Product Image ${index + 1}`}
                                         className="w-full h-20 object-cover border-2 border-gray-500"
                                     />
                                     <button
                                         type="button"
-                                        onClick={() => handleDeleteImage(images.length + index)} 
+                                        onClick={() => handleDeleteImage(images.length + index)}
                                         className="mt-1 btn btn-error text-white btn-xs"
                                     >
                                         Delete
@@ -231,14 +252,17 @@ const EditModal = ({ modalRef, closeModal, product }) => {
                         <input type="file" multiple accept="image/*" onChange={handleImageUpload} className="file-input file-input-bordered w-full mobile:w-full" />
 
                         <div className="modal-action mt-5">
-                            <button type="button" onClick={closeModal} className="btn hover:bg-red-400">Discard</button>
-                            <button type="button" onClick={confirm} className='btn hover:bg-blue-400'>Update Product</button>
+                            <button type="button" onClick={deleteProduct} className="btn bg-red-400 hover:bg-red-600 text-white flex mr-20">Delete Product</button>
+                            <button type="button" onClick={discard} className="btn hover:bg-red-400 hover:text-white">Discard</button>
+                            <button type="button" onClick={confirm} className='btn hover:bg-blue-400 hover:text-white'>Update Product</button>
                         </div>
                     </form>
                 </div>
             </dialog>
 
-            <ConfirmModalUpdate confirmRef={confirmRef} onConfirm={handleConfirmSubmit} loading={loading}  />
+            <ConfirmModalUpdate confirmRef={confirmRef} onConfirm={handleConfirmSubmit} loading={loading} />
+            <DiscardModalUpdate discardRef={DiscardRef} closeModal={closeModal} />
+            <ConfirmDeleteModal deleteRef={deleteRef} onConfirmDelete={deletePrductConfirm} />
         </div>
     );
 };

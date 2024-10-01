@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { registerUser } from "../../api/authApi/registerUser";
 import { loginUser } from "../../api/authApi/loginUser";
 import { checkAuth } from "../../api/authApi/checkAuth";
+import { logoutUser } from "../../api/authApi/logoutUser";
 
 const initialState = {
     isAuthenticate: false,
@@ -75,6 +76,16 @@ const authSlice = createSlice({
                 state.error = action.payload;
             
             })
+            .addCase(logoutUser.pending,(state)=>{
+                state.isLoading = true
+            })
+            .addCase(logoutUser.fulfilled,(state)=>{
+                state.isLoading = false;
+                state.isAuthenticate = false;
+                state.user = null
+                state.error = null;
+            })
+            
             
     }
 })

@@ -1,10 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 export const updateProduct = createAsyncThunk(
     "product/updateProduct",
     async ({ id, newUpdatedData }, thunkAPI) => {
         try {
-            const res = await fetch(`http://localhost:8000/api/admin/update-product/${id}`, {
+            const res = await fetch(`/api/admin/update-product/${id}`, {
                 method: "PUT", 
                 headers: {
                     "Content-Type": "application/json",
@@ -17,6 +18,7 @@ export const updateProduct = createAsyncThunk(
             }
 
             const data = await res.json();
+            toast.success("Product updated successfully");
             return data;
 
         } catch (error) {

@@ -11,8 +11,7 @@ const ConfirmModalLogout = ({ confirmRef }) => {
 
     const logout =async () => {
         try {
-            await dispatch(logoutUser())
-            toast.success("User logout success!")
+            await dispatch(logoutUser())       
             window.location.href = "/auth/login"; 
         } catch (error) {
             toast.error("Failed to logout")

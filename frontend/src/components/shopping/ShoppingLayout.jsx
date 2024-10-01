@@ -4,8 +4,10 @@ import Header from "./Header"
 const ShoppingLayout = () => {
   return (
     <div className="flex flex-col overflow-hidden">
-      <Header/>
-        <main>
+      <div >
+        <Header/>
+      </div>
+        <main className="h-screen">
           <Outlet/>
         </main>
     </div>

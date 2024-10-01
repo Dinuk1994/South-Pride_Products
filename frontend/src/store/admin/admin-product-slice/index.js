@@ -21,8 +21,8 @@ const adminProductSlice = createSlice({
             .addCase(addProduct.fulfilled , (state,action)=>{
                 state.isLoading = false,
                 state.products= action.payload
-                console.log(action.payload);            
-                toast.success("Product added successfull")
+                //console.log(action.payload);            
+              
             })
             .addCase(addProduct.rejected,(state,action)=>{
                 state.isLoading = false

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState,useRef, useEffect} from 'react';
-import EditModal from './EditModal';
+import EditModal from './EditProduct/EditModal';
+
 
 const ProductCard = ({ product }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
