@@ -36,8 +36,8 @@ const EditModal = ({ modalRef, closeModal, product }) => {
         }
     }
 
-    const deleteProduct = ()=>{
-        if(deleteRef.current){
+    const deleteProduct = () => {
+        if (deleteRef.current) {
             deleteRef.current.showModal();
         }
     }
@@ -133,9 +133,9 @@ const EditModal = ({ modalRef, closeModal, product }) => {
         window.location.href = "/admin/products";
     };
 
-    const deletePrductConfirm = async(e)=>{
+    const deletePrductConfirm = async (e) => {
         e.preventDefault();
-        await dispatch(removeProduct({id : product._id})).then(()=>{
+        await dispatch(removeProduct({ id: product._id })).then(() => {
             window.location.href = "/admin/products";
         })
     }
@@ -177,6 +177,8 @@ const EditModal = ({ modalRef, closeModal, product }) => {
                             <option disabled>{product.category}</option>
                             <option>Spices</option>
                             <option>Nuts</option>
+                            <option>Herbs</option>
+                            <option>Baking</option>
                             <option>Other</option>
                         </select>
 

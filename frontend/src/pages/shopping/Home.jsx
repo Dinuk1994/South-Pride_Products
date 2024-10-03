@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect ,useState } from 'react';
 import { Tabs, Tab, useMediaQuery } from "@mui/material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import SouthPrideProductLogo from "../../assets/South-Pride-Products.png"
 import { CarouselElement } from '../../components/atoms/CarouselElement';
+import { useDispatch } from 'react-redux';
+import { allProducts } from '../../api/productAPI/allProducts';
+import LoadingComponent from '../../components/sample/LoadingComponent';
 
 const LinkTab = (props) => {
   const isMobile = useMediaQuery('(max-width:600px)');
@@ -34,6 +37,9 @@ const LinkTab = (props) => {
 const Home = () => {
   const [value, setValue] = React.useState(0);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  const [loading , setLoading] = useState (true)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -43,11 +49,18 @@ const Home = () => {
     if (location.pathname === '/shopping/home') {
       navigate('/shopping/home/all-products');
     }
-  }, [navigate]);
+    dispatch(allProducts())
+    setLoading(false)
+  }, [navigate,dispatch]);
+
+  if(loading){
+    return <LoadingComponent/>
+  }
+
 
   return (
-    <div className="grid grid-cols-12">
-      <div className="col-span-2 h-screen mobile:hidden bg-base-200">
+    <div className="grid grid-cols-12 h-screen overflow-y-auto ">
+      <div className="col-span-2 mobile:hidden bg-base-200">
         <img src={SouthPrideProductLogo} alt="south_pride_logo" />
         <div className='grid grid-cols-1 px-5 gap-y-5'>
           <div className='btn btn-ghost bg-shoppingBtn hover:bg-hoverShoppingBtn rounded-xl text-white shadow-lg shadow-gray-500'>
@@ -67,12 +80,12 @@ const Home = () => {
 
       </div>
 
-      <div className="col-span-10 mobile:col-span-12  h-screen  ">
-        <div className='grid grid-cols-1'>
+      <div className="col-span-10 mobile:col-span-12 overflow-y-auto mb-4 ">
+        <div className='grid grid-cols-1 '>
           <div className=' '>
             <CarouselElement />
           </div>
-          <div className=' bg-base-300'>
+          <div className=''>
             <div className='mt-5'>
               <Tabs
                 value={value}

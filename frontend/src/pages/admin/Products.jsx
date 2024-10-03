@@ -2,7 +2,8 @@ import ProductDrawer from "../../components/admin/ProductDrawer";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { allProducts } from "../../api/productAPI/allProducts";
-import ProductCard from "../../components/atoms/productCard";
+import ProductCard from "../../components/atoms/ProductCard";
+
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const Products = () => {
                 <option>Spices</option>
                 <option>Nuts</option>
                 <option>Herbs</option>
-                <option>Baking Supplies</option>
+                <option>Baking</option>
                 <option>Other</option>
               </select>
             </div>

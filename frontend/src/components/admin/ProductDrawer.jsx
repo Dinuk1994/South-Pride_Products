@@ -145,7 +145,7 @@ const ProductDrawer = () => {
                                         <option>Spices</option>
                                         <option>Nuts</option>
                                         <option>Herbs</option>
-                                        <option>Baking Supplies</option>
+                                        <option>Baking</option>
                                         <option>Other</option>
                                     </select>
 
