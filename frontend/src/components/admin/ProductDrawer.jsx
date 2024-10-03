@@ -144,6 +144,8 @@ const ProductDrawer = () => {
                                         <option value="" disabled>Category</option>
                                         <option>Spices</option>
                                         <option>Nuts</option>
+                                        <option>Herbs</option>
+                                        <option>Baking Supplies</option>
                                         <option>Other</option>
                                     </select>
 
@@ -210,7 +212,7 @@ const ProductDrawer = () => {
                                             console.log("Images received from uploader:", images);
                                             setProductData((prevData) => ({ ...prevData, images: Array.isArray(images) ? images : [] }));
                                         }}
-                                        resetImages={resetImages} // Pass resetImages prop
+                                        resetImages={resetImages}
                                     />
 
                                     <button

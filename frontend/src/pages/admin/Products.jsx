@@ -8,9 +8,9 @@ const Products = () => {
   const dispatch = useDispatch();
 
   const products = useSelector((state) => state.adminProducts.products);
-  const [selectedCategory , setSelectedCategory] =useState("All Categories")
+  const [selectedCategory, setSelectedCategory] = useState("All Categories")
 
-  const handleCategoryChange=(e)=>{
+  const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
   }
 
@@ -19,15 +19,15 @@ const Products = () => {
     dispatch(allProducts());
   }, [dispatch]);
 
-  const filteredProducts = products.filter((product)=>{
-    if(selectedCategory === "All Categories"){
+  const filteredProducts = products.filter((product) => {
+    if (selectedCategory === "All Categories") {
       return true;
     }
     return product.category === selectedCategory
   })
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full overflow-scroll">
       <div className="flex w-11/12">
         <div className="grid grid-cols-1">
           <div className="grid grid-cols-5">
@@ -40,17 +40,19 @@ const Products = () => {
               <select
                 className="select select-bordered w-full max-w-xs"
                 value={selectedCategory}
-                onChange={handleCategoryChange}       
+                onChange={handleCategoryChange}
               >
                 <option disabled>Select Category</option>
                 <option>All Categories</option>
                 <option>Spices</option>
                 <option>Nuts</option>
+                <option>Herbs</option>
+                <option>Baking Supplies</option>
                 <option>Other</option>
               </select>
             </div>
           </div>
-          <div className="mt-10 gap-y-5 gap-x-36 mobile:gap-x-32 ml-5 mobile:ml-3 mb-10 grid grid-cols-4 mobile:grid mobile:grid-cols-2">
+          <div className="mt-10 gap-y-5 gap-x-36 w-full  mobile:gap-x-32 ml-5 mobile:ml-3  mb-10 grid grid-cols-4 mobile:grid mobile:grid-cols-2">
             {filteredProducts && filteredProducts.length > 0 ? (
               filteredProducts.map((product, index) => (
                 <ProductCard key={index} product={product} />

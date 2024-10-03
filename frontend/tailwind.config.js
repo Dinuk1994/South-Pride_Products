@@ -19,7 +19,9 @@ export default {
         NotAvailbaleBG: "#C96868",
         AdminHeader: "#3A6D8C",
         ShoppingHeader: "#697565",
-        headerText: "#FFDB5C"
+        headerText: "#FFDB5C",
+        shoppingBtn : "#54C392",
+        hoverShoppingBtn : "#15B392"
       },
       fontFamily: {
         southFont: ["Kanit", "sans-serif"],

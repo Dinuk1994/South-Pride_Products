@@ -1,6 +1,17 @@
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import SouthPrideProducts from "../../assets/South-Pride-Products.png"
+import { useRef } from "react";
+import ConfirmModalLogout from "../atoms/ConfirmModalLogout";
 const Header = () => {
+
+  const confirmRef = useRef();
+
+  const confirm=()=>{
+    if(confirmRef.current){
+        confirmRef.current.showModal();
+    }
+  }
+
   return (
     <div>
       <div className="navbar bg-ShoppingHeader">
@@ -46,11 +57,12 @@ const Header = () => {
                 </a>
               </li>
               <li><a>Settings</a></li>
-              <li><a>Logout</a></li>
+              <li onClick={confirm}><a>Logout</a></li>
             </ul>
           </div>
         </div>
       </div>
+      <ConfirmModalLogout confirmRef={confirmRef} />
     </div>
   )
 }

@@ -23,6 +23,8 @@ import AllProducts from "./pages/shopping/sub-pages/AllProducts";
 import Nuts from "./pages/shopping/sub-pages/Nuts";
 import Spices from "./pages/shopping/sub-pages/Spices";
 import OtherProducts from "./pages/shopping/sub-pages/OtherProducts";
+import Baking from "./pages/shopping/sub-pages/Baking";
+import Herbs from "./pages/shopping/sub-pages/Herbs";
 
 
 
@@ -72,6 +74,8 @@ export default function App() {
             <Route path="all-products" element={<AllProducts />} />
             <Route path="nuts" element={<Nuts />} />
             <Route path="spices" element={<Spices />} />
+            <Route path="baking" element={<Baking />} />
+            <Route path="herbs" element={<Herbs />} />
             <Route path="other" element={<OtherProducts />} />
           </Route>
           <Route path="listing" element={<Listing />} />

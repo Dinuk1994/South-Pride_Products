@@ -160,12 +160,12 @@ const EditModal = ({ modalRef, closeModal, product }) => {
                         />
 
                         <label className="mt-3 font-semibold text-gray-500 text-base mobile:text-sm">Description</label>
-                        <input
+                        <textarea
                             type="text"
                             name="description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            className="input mobile:text-sm input-bordered h-10 mobile:h-8 w-full"
+                            className="input mobile:text-sm input-bordered h-auto mobile:h-8 w-full"
                         />
 
                         <label className="mt-3 font-semibold text-gray-500 text-base mobile:text-sm">Category</label>

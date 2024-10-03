@@ -1,13 +1,16 @@
 /* eslint-disable react/prop-types */
-import { useState,useRef, useEffect} from 'react';
+import { useState, useRef, useEffect } from 'react';
 import EditModal from './EditProduct/EditModal';
-
+import { useSelector } from 'react-redux';
 
 const ProductCard = ({ product }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [selectedProduct, setSelectedProduct] = useState(null); 
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [selectedWeight, setSelectedWeight] = useState(product.weightStock[0]);
+    const [isHovered, setIsHovered] = useState(false); // New state for hover
     const modalRef = useRef();
 
+    const user = useSelector((state) => state.auth.user)
 
     const nextImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.images.length);
@@ -19,32 +22,38 @@ const ProductCard = ({ product }) => {
         );
     };
 
-    const openModal =()=>{
+    const openModal = () => {
         setSelectedProduct(product);
         console.log(product);
-        
-    }
+    };
 
-    const closeModal=()=>{
-        if(modalRef.current){
+    const closeModal = () => {
+        if (modalRef.current) {
             modalRef.current.close();
         }
-        setSelectedProduct(null)
-    }
+        setSelectedProduct(null);
+    };
 
-    useEffect(()=>{
-        if(selectedProduct && modalRef.current){
-            modalRef.current.showModal()
+    const handleWeightChange = (event) => {
+        const selectedWeightObject = product.weightStock.find(
+            (weightObj) => weightObj.weight === parseInt(event.target.value)
+        );
+        setSelectedWeight(selectedWeightObject);
+    };
+
+    useEffect(() => {
+        if (selectedProduct && modalRef.current) {
+            modalRef.current.showModal();
         }
-    },[selectedProduct])
-
+        console.log(user.role);
+    }, [user, selectedProduct]);
 
     return (
         <div>
-            <div className="card bg-base-200 mobile:-z-10  w-72 mobile:h-80 h-[400px] mobile:w-44 shadow-xl">
-                <figure className="relative">
+            <div className="card bg-base-200 mobile:-z-10 w-72 mobile:h-80 h-[400px]  mobile:w-44 shadow-xl">
+                <figure className="relative h-48 w-full">
                     <img
-                        className="w-full h-48 object-cover"
+                        className="w-full h-full object-cover"
                         src={product.images[currentImageIndex]}
                         alt={product.productName}
                     />
@@ -65,16 +74,68 @@ const ProductCard = ({ product }) => {
                         </>
                     )}
                 </figure>
-                <div className="card-body text-gray-500">
-                    <h2 className="card-title text-wrap">{product.productName}</h2>
-                    <p className="mobile:text-sm text-pretty ">{product.description}</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn bg-blue-400 text-white hover:text-black" onClick={openModal}>Edit Product</button>
+                <div className="card-body h-auto -mt-7 text-gray-500">
+                    <h2 className="card-title text-wrap">{product?.productName}</h2>
+
+                    <p
+                        className="mobile:text-sm text-pretty relative"
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                    >
+                        {product.description.length > 25 ? `${product.description.slice(0, 25)}...` : product.description}
+                    </p>
+
+                    {isHovered && (
+                        <div className="absolute left-0 top-10 bg-black bg-opacity-75 text-white text-xs p-2 shadow-lg border border-gray-300 rounded-md z-50 w-full">
+                            <p>{product.description}</p>
+                        </div>
+
+                    )}
+
+                    <div className="mb-4 grid grid-cols-8">
+                        <div className='col-span-4 flex items-center'>
+                            <label htmlFor="weight-select" className="block text-sm font-medium">
+                                Select Weight:
+                            </label>
+                        </div>
+                        <div className='col-span-4'>
+                            <select
+                                id="weight-select"
+                                value={selectedWeight.weight}
+                                onChange={handleWeightChange}
+                                className="mt-1 block w-auto p-2 border border-gray-300 rounded-md"
+                            >
+                                {product.weightStock.map((weightObj) => (
+                                    <option key={weightObj.weight} value={weightObj.weight}>
+                                        {weightObj.weight}g
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 ">
+                        <div className='col-span-1 '>
+                            <p className="mobile:text-sm text-pretty">Price: ${selectedWeight.salePrice}</p>
+                            <p className="mobile:text-sm text-pretty">Quantity: {selectedWeight.stockQty}</p>
+                        </div>
+                        <div className=' col-span-1 '>
+                            {user.role === "admin" ? (
+                                <button className="btn justify-end bg-blue-400 text-white hover:text-black" onClick={openModal}>
+                                    Edit Product
+                                </button>
+                            ) : (
+                                <button className="btn justify-end bg-blue-400 text-white hover:text-black" >
+                                    Buy Product
+                                </button>
+                            )}
+
+                        </div>
                     </div>
                 </div>
             </div>
-        
-          <EditModal modalRef={modalRef} closeModal={closeModal} product={selectedProduct}/>
+
+            <EditModal modalRef={modalRef} closeModal={closeModal} product={selectedProduct} />
         </div>
     );
 };

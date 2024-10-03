@@ -1,19 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { FileInput, Label, Button } from "flowbite-react";
+import { FileInput, Label } from "flowbite-react";
+import { IoMdClose } from "react-icons/io";
 
-export function ImageUploader( { setImages, resetImages }) {
+export function ImageUploader({ setImages, resetImages }) {
     const [imageFiles, setImageFiles] = useState([]);
 
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
         const updatedFiles = [...imageFiles, ...files];
 
-        setImages(updatedFiles); 
+        setImages(updatedFiles);
         setImageFiles(updatedFiles);
 
-        event.target.value = null; 
+        event.target.value = null;
     };
 
     const handleDelete = (index) => {
@@ -27,7 +28,7 @@ export function ImageUploader( { setImages, resetImages }) {
             setImageFiles([]);
             setImages([]);
         }
-    }, [resetImages]); 
+    }, [resetImages]);
 
     return (
         <div className="flex flex-col items-center w-full">
@@ -72,25 +73,13 @@ export function ImageUploader( { setImages, resetImages }) {
                             alt={`Uploaded ${index + 1}`}
                             className="w-full h-full object-cover rounded-md"
                         />
-                        <Button
-                            className="absolute top-0 right-0 rounded-full p-1"
-                            onClick={() => handleDelete(index)}
-                        >
-                            <svg
-                                className="h-4 w-4 text-white"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
+                        <button>
+                            <IoMdClose
+                                className="absolute text-black bg-white  top-0 right-0 rounded-full bg-transparent hover:bg-transparent "
+                                onClick={() => handleDelete(index)}
                             >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
-                        </Button>
+                            </IoMdClose>
+                        </button>
                     </div>
                 ))}
             </div>
