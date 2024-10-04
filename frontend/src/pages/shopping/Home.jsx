@@ -60,9 +60,9 @@ const Home = () => {
 
   return (
     <div className="grid grid-cols-12 h-screen overflow-y-auto ">
-      <div className="col-span-2 mobile:hidden bg-base-200">
+      <div className="col-span-2 mobile:hidden bg-base-200 ">
         <img src={SouthPrideProductLogo} alt="south_pride_logo" />
-        <div className='grid grid-cols-1 px-5 gap-y-5'>
+        <div className='grid grid-cols-1 px-5 gap-y-5 '>
           <div className='btn btn-ghost bg-shoppingBtn hover:bg-hoverShoppingBtn rounded-xl text-white shadow-lg shadow-gray-500'>
             About
           </div>

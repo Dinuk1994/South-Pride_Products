@@ -50,7 +50,7 @@ const ProductCard = ({ product }) => {
 
     return (
         <div>
-            <div className="card bg-base-200 mobile:-z-10 w-72 mobile:h-80 h-[400px]  mobile:w-44 shadow-xl">
+            <div className="card bg-base-200 mobile:-z-10 w-72 mobile:h-80 h-[400px]  mobile:w-48 shadow-xl">
                 <figure className="relative h-48 w-full">
                     <img
                         className="w-full h-full object-cover"
@@ -75,7 +75,7 @@ const ProductCard = ({ product }) => {
                     )}
                 </figure>
                 <div className="card-body h-auto -mt-7 text-gray-500">
-                    <h2 className="card-title text-wrap">{product?.productName}</h2>
+                    <h2 className="card-title text-wrap mobile:text-sm">{product?.productName}</h2>
 
                     <p
                         className="mobile:text-sm text-pretty relative"
@@ -86,7 +86,7 @@ const ProductCard = ({ product }) => {
                     </p>
 
                     {isHovered && (
-                        <div className="absolute left-0 top-10 bg-black bg-opacity-75 text-white text-xs p-2 shadow-lg border border-gray-300 rounded-md z-50 w-full">
+                        <div className="absolute left-0 top-10 bg-black bg-opacity-75 text-white text-xs p-2 shadow-lg border border-gray-300 rounded-md z-50 w-full mobile:text-xs">
                             <p>{product.description}</p>
                         </div>
 
@@ -94,7 +94,7 @@ const ProductCard = ({ product }) => {
 
                     <div className="mb-4 grid grid-cols-8">
                         <div className='col-span-4 flex items-center'>
-                            <label htmlFor="weight-select" className="block text-sm font-medium">
+                            <label htmlFor="weight-select" className="block text-sm font-medium mobile:text-xs">
                                 Select Weight:
                             </label>
                         </div>
@@ -103,7 +103,7 @@ const ProductCard = ({ product }) => {
                                 id="weight-select"
                                 value={selectedWeight.weight}
                                 onChange={handleWeightChange}
-                                className="mt-1 block w-auto p-2 border border-gray-300 rounded-md"
+                                className="mt-1 block w-auto p-2 border border-gray-300 rounded-md mobile:text-xs"
                             >
                                 {product.weightStock.map((weightObj) => (
                                     <option key={weightObj.weight} value={weightObj.weight}>
@@ -114,10 +114,10 @@ const ProductCard = ({ product }) => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 ">
-                        <div className='col-span-1 '>
-                            <p className="mobile:text-sm text-pretty">Price: ${selectedWeight.salePrice}</p>
-                            <p className="mobile:text-sm text-pretty">Quantity: {selectedWeight.stockQty}</p>
+                    <div className="grid grid-cols-2 mobile:grid-cols-5">
+                        <div className='col-span-1 mobile:col-span-3'>
+                            <p className="mobile:text-xs text-pretty ">Price: ${selectedWeight.salePrice}</p>
+                            <p className="mobile:text-xs text-pretty">Quantity: {selectedWeight.stockQty}</p>
                         </div>
                         <div className=' col-span-1 '>
                             {user.role === "admin" ? (
@@ -125,7 +125,7 @@ const ProductCard = ({ product }) => {
                                     Edit Product
                                 </button>
                             ) : (
-                                <button className="btn justify-end bg-blue-400 text-white hover:text-black" >
+                                <button className="btn mobile:col-span-2 justify-end bg-blue-400 text-white hover:text-black mobile:text-xs " >
                                     Buy Product
                                 </button>
                             )}
