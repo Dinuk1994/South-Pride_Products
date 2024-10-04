@@ -26,8 +26,6 @@ import OtherProducts from "./pages/shopping/sub-pages/OtherProducts";
 import Baking from "./pages/shopping/sub-pages/Baking";
 import Herbs from "./pages/shopping/sub-pages/Herbs";
 
-
-
 export default function App() {
 
   const { user, isAuthenticate, isLoading } = useSelector(state => state.auth)

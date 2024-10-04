@@ -2,13 +2,15 @@
 import { useState, useRef, useEffect } from 'react';
 import EditModal from './EditProduct/EditModal';
 import { useSelector } from 'react-redux';
+import DetailModal from './detailModal';
 
 const ProductCard = ({ product }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [selectedWeight, setSelectedWeight] = useState(product.weightStock[0]);
-    const [isHovered, setIsHovered] = useState(false); // New state for hover
+    const [isHovered, setIsHovered] = useState(false); 
     const modalRef = useRef();
+    const detailModalRef = useRef();
 
     const user = useSelector((state) => state.auth.user)
 
@@ -21,6 +23,12 @@ const ProductCard = ({ product }) => {
             prevIndex === 0 ? product.images.length - 1 : prevIndex - 1
         );
     };
+
+    const openDetailModal = () =>{
+        if(detailModalRef.current){
+            detailModalRef.current.showModal();
+        }
+    }
 
     const openModal = () => {
         setSelectedProduct(product);
@@ -50,7 +58,7 @@ const ProductCard = ({ product }) => {
 
     return (
         <div>
-            <div className="card bg-base-200 mobile:-z-10 w-72 mobile:h-80 h-[400px]  mobile:w-48 shadow-xl">
+            <div onClick={openDetailModal} className="card bg-base-200 mobile:-z-10 w-72 mobile:h-80 h-[400px]  mobile:w-48 shadow-xl">
                 <figure className="relative h-48 w-full">
                     <img
                         className="w-full h-full object-cover"
@@ -61,13 +69,13 @@ const ProductCard = ({ product }) => {
                         <>
                             <button
                                 className="absolute left-2 top-1/2 transform -translate-y-1/2 btn btn-ghost text-white p-1 rounded-full"
-                                onClick={prevImage}
+                                onClick={(e) => { e.stopPropagation(); prevImage(); }} 
                             >
                                 ❮
                             </button>
                             <button
                                 className="absolute right-2 top-1/2 transform -translate-y-1/2 btn btn-ghost text-white p-1 rounded-full"
-                                onClick={nextImage}
+                                onClick={(e)=>{e.stopPropagation();nextImage();}}
                             >
                                 ❯
                             </button>
@@ -98,10 +106,11 @@ const ProductCard = ({ product }) => {
                                 Select Weight:
                             </label>
                         </div>
-                        <div className='col-span-4'>
+                        <div className='col-span-4 '>
                             <select
                                 id="weight-select"
                                 value={selectedWeight.weight}
+                                onClick={(e)=>{e.stopPropagation();}}
                                 onChange={handleWeightChange}
                                 className="mt-1 block w-auto p-2 border border-gray-300 rounded-md mobile:text-xs"
                             >
@@ -125,7 +134,7 @@ const ProductCard = ({ product }) => {
                                     Edit Product
                                 </button>
                             ) : (
-                                <button className="btn mobile:col-span-2 justify-end bg-blue-400 text-white hover:text-black mobile:text-xs " >
+                                <button onClick={(e)=>{e.stopPropagation()}} className="btn mobile:col-span-2 justify-end bg-blue-400 text-white hover:text-black mobile:text-xs " >
                                     Buy Product
                                 </button>
                             )}
@@ -136,6 +145,9 @@ const ProductCard = ({ product }) => {
             </div>
 
             <EditModal modalRef={modalRef} closeModal={closeModal} product={selectedProduct} />
+            {
+                user.role === "user" ? (<DetailModal detailModal={detailModalRef} product={product}/>) : (null)
+            }
         </div>
     );
 };

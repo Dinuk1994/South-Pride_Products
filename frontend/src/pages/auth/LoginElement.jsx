@@ -6,7 +6,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../api/authApi/loginUser";
 
-
 const LoginElement = () => {
 
     const [loginData, setLoginData] = useState({
@@ -24,10 +23,9 @@ const LoginElement = () => {
         }))
     }
 
-
     function submitData(e) {
         e.preventDefault();
-        dispatch(loginUser(loginData))
+       dispatch(loginUser(loginData))
     }
 
     return (
