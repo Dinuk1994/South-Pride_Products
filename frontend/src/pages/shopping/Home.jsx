@@ -73,6 +73,9 @@ const Home = () => {
             Return Policies
           </div>
           <div className='btn btn-ghost bg-shoppingBtn hover:bg-hoverShoppingBtn rounded-xl text-white shadow-lg shadow-gray-500'>
+            Reviews
+          </div>
+          <div className='btn btn-ghost bg-shoppingBtn hover:bg-hoverShoppingBtn rounded-xl text-white shadow-lg shadow-gray-500'>
             Contact us
           </div>
 

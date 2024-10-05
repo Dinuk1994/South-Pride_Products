@@ -134,8 +134,8 @@ const ProductCard = ({ product }) => {
                                     Edit Product
                                 </button>
                             ) : (
-                                <button onClick={(e)=>{e.stopPropagation()}} className="btn mobile:col-span-2 justify-end bg-blue-400 text-white hover:text-black mobile:text-xs " >
-                                    Buy Product
+                                <button onClick={(e)=>{e.stopPropagation()}} className="btn mobile:col-span-2 justify-end bg-blue-400 hover:bg-blue-600 text-white  mobile:text-xs " >
+                                    Add to cart
                                 </button>
                             )}
 
