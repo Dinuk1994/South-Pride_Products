@@ -152,4 +152,37 @@ export const updateCartItems = async (req, res) => {
 };
 
 
+export const deleteCartItem = async(req,res)=>{
+   try {
+      const {userId} = req.params
+      const {cartItems} = req.body
+
+      if(!userId){
+         return res.status(404).json({msg : "User Id required"})
+      }
+
+      if(!Array.isArray(cartItems) || cartItems.length === 0){
+         return res.status(400).json({msg : "Cart items required"})
+      }
+
+      const cart = await Cart.findOne({userId})
+
+      if(!cart){
+         return res.status(404).json({msg : "Cart not found"})
+      }
+
+
+      cartItems.forEach(item => {
+        cart.cartItems = cart.cartItems.filter(ci => !(ci.productId.toString()===item.productId && ci.weight === item.weight))
+      
+      })
+      await cart.save();
+
+      return res.status(200).json({msg : "Cart item deleted successfully",cart})
+      
+   } catch (error) {
+      return res.status(500).json({msg : "Internal server error",error})
+   }
+}
+
 
