@@ -119,17 +119,17 @@ export const updateCartItems = async (req, res) => {
          return res.status(404).json({ msg: "Cart not found" });
       }
 
-      // Update cart items
+
       cartItems.forEach(item => {
          const existingItem = cart.cartItems.find(ci => 
             ci.productId.toString() === item.productId && ci.weight === item.weight
          );
 
          if (existingItem) {
-            // Update quantity if item exists
+     
             existingItem.quantity = item.quantity;
          } else {
-            // Add new item if it doesn't exist
+
             cart.cartItems.push({
                productId: item.productId,
                quantity: item.quantity,
@@ -139,7 +139,7 @@ export const updateCartItems = async (req, res) => {
          }
       });
 
-      // Remove items with quantity 0
+
       cart.cartItems = cart.cartItems.filter(item => item.quantity > 0);
 
       await cart.save();
