@@ -10,6 +10,15 @@ const CartItemSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    weight : {
+        type : Number,
+        required : true
+    },
+    salePrice : {
+        type : Number,
+        required : true
+    }
+
 
 })
 
