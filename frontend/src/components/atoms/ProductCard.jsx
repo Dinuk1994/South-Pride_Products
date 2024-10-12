@@ -3,16 +3,38 @@ import { useState, useRef, useEffect } from 'react';
 import EditModal from './EditProduct/EditModal';
 import { useSelector } from 'react-redux';
 import DetailModal from './detailModal';
+import AddCartConfirmModal from './Shopping/AddCartConfirlModal';
 
 const ProductCard = ({ product }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [selectedWeight, setSelectedWeight] = useState(product.weightStock[0]);
-    const [isHovered, setIsHovered] = useState(false); 
+    const [isHovered, setIsHovered] = useState(false);
     const modalRef = useRef();
     const detailModalRef = useRef();
+    const cartConfirmRef = useRef();
+
+   
 
     const user = useSelector((state) => state.auth.user)
+
+     const [cartProducts , setCartProducts] = useState({
+        userId : null,
+        productId : null,
+        quantity : null,
+        selectedWeight : null
+    })
+
+    const setCartItem = ()=>{
+        setCartProducts({
+            userId : user.id,
+            productId : product._id,
+            quantity : 1,
+            selectedWeight : selectedWeight.weight,
+            availableQty : selectedWeight.stockQty
+        })
+    }
+
 
     const nextImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.images.length);
@@ -24,10 +46,12 @@ const ProductCard = ({ product }) => {
         );
     };
 
-    const openDetailModal = () =>{
-        if(detailModalRef.current){
+    const openDetailModal = () => {
+        if (detailModalRef.current) {
             detailModalRef.current.showModal();
         }
+        console.log(product);
+        
     }
 
     const openModal = () => {
@@ -42,19 +66,31 @@ const ProductCard = ({ product }) => {
         setSelectedProduct(null);
     };
 
-    const handleWeightChange = (event) => {
+    const openCartConfirmModal = (e) => {
+        e.stopPropagation()
+        setCartItem();
+        if (cartConfirmRef.current) {
+            cartConfirmRef.current.showModal();
+        }
+    }
+
+    const handleWeightChange = (e) => {
         const selectedWeightObject = product.weightStock.find(
-            (weightObj) => weightObj.weight === parseInt(event.target.value)
+            (weightObj) => weightObj.weight === parseInt(e.target.value)
         );
         setSelectedWeight(selectedWeightObject);
     };
 
+
+
     useEffect(() => {
-        if (selectedProduct && modalRef.current) {
+        if (selectedProduct && modalRef.current && cartProducts.productId ) {
             modalRef.current.showModal();
         }
         console.log(user.role);
-    }, [user, selectedProduct]);
+        console.log(cartProducts);  
+
+    }, [user, selectedProduct,cartProducts]);
 
     return (
         <div>
@@ -69,13 +105,13 @@ const ProductCard = ({ product }) => {
                         <>
                             <button
                                 className="absolute left-2 top-1/2 transform -translate-y-1/2 btn btn-ghost text-white p-1 rounded-full"
-                                onClick={(e) => { e.stopPropagation(); prevImage(); }} 
+                                onClick={(e) => { e.stopPropagation(); prevImage(); }}
                             >
                                 ❮
                             </button>
                             <button
                                 className="absolute right-2 top-1/2 transform -translate-y-1/2 btn btn-ghost text-white p-1 rounded-full"
-                                onClick={(e)=>{e.stopPropagation();nextImage();}}
+                                onClick={(e) => { e.stopPropagation(); nextImage(); }}
                             >
                                 ❯
                             </button>
@@ -110,7 +146,7 @@ const ProductCard = ({ product }) => {
                             <select
                                 id="weight-select"
                                 value={selectedWeight.weight}
-                                onClick={(e)=>{e.stopPropagation();}}
+                                onClick={(e) => { e.stopPropagation(); }}
                                 onChange={handleWeightChange}
                                 className="mt-1 block w-auto p-2 border border-gray-300 rounded-md mobile:text-xs"
                             >
@@ -134,7 +170,7 @@ const ProductCard = ({ product }) => {
                                     Edit Product
                                 </button>
                             ) : (
-                                <button onClick={(e)=>{e.stopPropagation()}} className="btn mobile:col-span-2 justify-end bg-blue-400 hover:bg-blue-600 text-white  mobile:text-xs " >
+                                <button onClick={openCartConfirmModal} className="btn mobile:col-span-2 justify-end bg-blue-400 hover:bg-blue-600 text-white  mobile:text-xs " >
                                     Add to cart
                                 </button>
                             )}
@@ -146,8 +182,9 @@ const ProductCard = ({ product }) => {
 
             <EditModal modalRef={modalRef} closeModal={closeModal} product={selectedProduct} />
             {
-                user.role === "user" ? (<DetailModal detailModal={detailModalRef} product={product}/>) : (null)
+                user.role === "user" ? (<DetailModal detailModal={detailModalRef} product={product} />) : (null)
             }
+            <AddCartConfirmModal addToCartRef={cartConfirmRef} product={product} user={user} cartProduct={cartProducts}/>
         </div>
     );
 };

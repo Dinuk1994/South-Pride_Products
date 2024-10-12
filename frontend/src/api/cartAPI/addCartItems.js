@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const addCartItems = createAsyncThunk(
-    "cart/addCartItems", async(userId,productId,quantity,selectedWeight , thunkAPI)=>{
+    "cart/addCartItems", async(userId,productId,quantity,selectedWeight,thunkAPI)=>{
         try {
             
             const res = await fetch("/api/cart/addToCart",{
