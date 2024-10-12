@@ -1,13 +1,36 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DetailCarousel } from "./DetailCarousel"
 import { IoStar } from "react-icons/io5";
 import { IoStarHalf } from "react-icons/io5";
+import AddCartConfirmModal from "./Shopping/AddCartConfirmModal";
+import { useSelector } from "react-redux";
 
-const DetailModal = ({ detailModal, product }) => {
+const DetailModal = ({ detailModal, product ,cartProducts,user }) => {
+    const cartConfirmRef = useRef();
 
     const [selectedWeight, setSelectedWeight] = useState(product.weightStock[0]);
+
+    const [cartProduct,setCartProduct]=useState({    
+        userId : null,
+        productId : null,
+        quantity : null,
+        selectedWeight : null
+    })
+
+    const setCartItem = ()=>{
+        if(user){
+            setCartProduct({
+                userId: user._id,
+                productId: product._id,
+                quantity: 1,
+                selectedWeight: selectedWeight.weight,
+                availableQty: selectedWeight.stockQty
+            })
+        }
+    }
 
     const handleWeightChange = (event) => {
         const selectedWeightObject = product.weightStock.find(
@@ -15,6 +38,16 @@ const DetailModal = ({ detailModal, product }) => {
         );
         setSelectedWeight(selectedWeightObject);
     };
+
+    const openCartConfirmModal=(e)=>{
+        console.log({"UserID" : user._id});
+        setCartItem()
+        console.log(cartProduct);
+        e.preventDefault()
+        if(cartConfirmRef.current){
+            cartConfirmRef.current.showModal();
+        }
+    }
 
     return (
         <div>
@@ -67,7 +100,7 @@ const DetailModal = ({ detailModal, product }) => {
                                             <p className="mobile:text-xs text-pretty">Quantity: {selectedWeight.stockQty}</p>
                                         </div>
                                     </div>
-                                    <div className="btn btn-ghost mt-2 bg-blue-400 hover:bg-blue-600 hover:text-white">
+                                    <div onClick={openCartConfirmModal} className="btn btn-ghost mt-2 bg-blue-400 hover:bg-blue-600 hover:text-white">
                                         Add to cart
                                     </div>
                                 </div>
@@ -76,6 +109,7 @@ const DetailModal = ({ detailModal, product }) => {
                     </div>
                 </div>
             </dialog>
+            <AddCartConfirmModal addToCartRef={cartConfirmRef} product={product} user={user} cartProduct={cartProduct} />
         </div>
     )
 }

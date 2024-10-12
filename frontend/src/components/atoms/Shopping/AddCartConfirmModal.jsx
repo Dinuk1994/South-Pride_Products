@@ -44,7 +44,7 @@ const AddCartConfirmModal = ({ addToCartRef, loading, product, user, cartProduct
                             <FaQuestionCircle className="size-8 items-center text-blue-600" />
                             <h3 className="font-semibold text-lg text-gray-800 ml-5 flex items-center">
                                 Do you want to add
-                                <span className="px-2 text-red-500">{product.productName}</span>
+                                <span className="px-2 text-red-500">{product?.productName}</span>
                                 to your cart?
                             </h3>
                         </div>

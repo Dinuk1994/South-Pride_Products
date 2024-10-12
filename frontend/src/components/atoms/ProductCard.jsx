@@ -82,9 +82,7 @@ const ProductCard = ({ product }) => {
         );
         setSelectedWeight(selectedWeightObject);
     };
-
-
-
+    
     useEffect(() => {
         if (selectedProduct && modalRef.current && cartProducts.productId) {
             modalRef.current.showModal();
@@ -184,7 +182,7 @@ const ProductCard = ({ product }) => {
 
             <EditModal modalRef={modalRef} closeModal={closeModal} product={selectedProduct} />
             {
-                user.role === "user" ? (<DetailModal detailModal={detailModalRef} product={product} />) : (null)
+                user.role === "user" ? (<DetailModal  detailModal={detailModalRef} product={product} user={user} cartProduct={cartProducts}/>) : (null)
             }
             <AddCartConfirmModal addToCartRef={cartConfirmRef} product={product} user={user} cartProduct={cartProducts} />
         </div>
