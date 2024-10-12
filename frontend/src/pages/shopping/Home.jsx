@@ -11,7 +11,6 @@ const LinkTab = (props) => {
   const isMobile = useMediaQuery('(max-width:600px)');
 
 
-
   return (
     <Tab
       component={Link}
@@ -34,6 +33,8 @@ const LinkTab = (props) => {
   );
 };
 
+
+
 const Home = () => {
   const [value, setValue] = React.useState(0);
   const navigate = useNavigate();
@@ -46,11 +47,14 @@ const Home = () => {
   };
 
   useEffect(() => {
+
     if (location.pathname === '/shopping/home') {
       navigate('/shopping/home/all-products');
     }
     dispatch(allProducts())
     setLoading(false)
+
+    
   }, [navigate,dispatch]);
 
   if(loading){

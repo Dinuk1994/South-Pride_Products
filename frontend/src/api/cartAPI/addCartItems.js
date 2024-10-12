@@ -1,15 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const addCartItems = createAsyncThunk(
-    "cart/addCartItems", async(userId,productId,quantity,selectedWeight,thunkAPI)=>{
+    "cart/addCartItems", async(cartItem,thunkAPI)=>{
         try {
             
-            const res = await fetch("/api/cart/addToCart",{
+            const res = await fetch("http://localhost:8000/api/cart/addToCart",{
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json"
                 },
-                body : JSON.stringify({userId,productId,quantity,selectedWeight})              
+                body : JSON.stringify(cartItem)              
             })
             const data = await res.json();
 

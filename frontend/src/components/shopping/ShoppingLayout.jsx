@@ -2,7 +2,9 @@ import { Outlet } from "react-router-dom"
 import Header from "./Header"
 import Footer from "./Footer"
 
+
 const ShoppingLayout = () => {
+
   return (
     <div className="flex flex-col overflow-hidden">
       <div >
@@ -13,7 +15,7 @@ const ShoppingLayout = () => {
       </main>
       <hr className="border-t-2 border-gray-300" />
       <div>
-          <Footer/>
+        <Footer />
       </div>
     </div>
   )

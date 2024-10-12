@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import EditModal from './EditProduct/EditModal';
 import { useSelector } from 'react-redux';
 import DetailModal from './detailModal';
-import AddCartConfirmModal from './Shopping/AddCartConfirlModal';
+import AddCartConfirmModal from './Shopping/AddCartConfirmModal';
 
 const ProductCard = ({ product }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -14,25 +14,27 @@ const ProductCard = ({ product }) => {
     const detailModalRef = useRef();
     const cartConfirmRef = useRef();
 
-   
 
     const user = useSelector((state) => state.auth.user)
 
-     const [cartProducts , setCartProducts] = useState({
-        userId : null,
-        productId : null,
-        quantity : null,
-        selectedWeight : null
+    const [cartProducts, setCartProducts] = useState({
+        userId: null,
+        productId: null,
+        quantity: null,
+        selectedWeight: null
     })
 
-    const setCartItem = ()=>{
-        setCartProducts({
-            userId : user.id,
-            productId : product._id,
-            quantity : 1,
-            selectedWeight : selectedWeight.weight,
-            availableQty : selectedWeight.stockQty
-        })
+    const setCartItem = () => {
+        if (user) {
+            setCartProducts({
+                userId: user._id,
+                productId: product._id,
+                quantity: 1,
+                selectedWeight: selectedWeight.weight,
+                availableQty: selectedWeight.stockQty
+            })
+        }
+
     }
 
 
@@ -51,7 +53,7 @@ const ProductCard = ({ product }) => {
             detailModalRef.current.showModal();
         }
         console.log(product);
-        
+
     }
 
     const openModal = () => {
@@ -84,13 +86,13 @@ const ProductCard = ({ product }) => {
 
 
     useEffect(() => {
-        if (selectedProduct && modalRef.current && cartProducts.productId ) {
+        if (selectedProduct && modalRef.current && cartProducts.productId) {
             modalRef.current.showModal();
         }
-        console.log(user.role);
-        console.log(cartProducts);  
-
-    }, [user, selectedProduct,cartProducts]);
+        console.log(user._id);
+        console.log({ "before Render ": cartProducts });
+        console.log({ "user": user });
+    }, [user, selectedProduct, cartProducts]);
 
     return (
         <div>
@@ -184,7 +186,7 @@ const ProductCard = ({ product }) => {
             {
                 user.role === "user" ? (<DetailModal detailModal={detailModalRef} product={product} />) : (null)
             }
-            <AddCartConfirmModal addToCartRef={cartConfirmRef} product={product} user={user} cartProduct={cartProducts}/>
+            <AddCartConfirmModal addToCartRef={cartConfirmRef} product={product} user={user} cartProduct={cartProducts} />
         </div>
     );
 };

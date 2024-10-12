@@ -20,9 +20,9 @@ const cartSlice = createSlice({
             state.cartItems = action.payload
             toast.success("Product added to cart")
         })
-        .addCase(addCartItems.rejected ,(state,action)=>{
+        .addCase(addCartItems.rejected ,(state)=>{
             state.isLoading = false
-            toast.error(action.payload)
+            toast.error("Prduct added failed")
         })
 
     }
