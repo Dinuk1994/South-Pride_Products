@@ -11,6 +11,7 @@ const Products = () => {
   const products = useSelector((state) => state.adminProducts.products);
   const [selectedCategory, setSelectedCategory] = useState("All Categories")
 
+
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
   }
@@ -20,12 +21,15 @@ const Products = () => {
     dispatch(allProducts());
   }, [dispatch]);
 
-  const filteredProducts = products.filter((product) => {
-    if (selectedCategory === "All Categories") {
-      return true;
-    }
-    return product.category === selectedCategory
-  })
+  const filteredProducts = Array.isArray(products)
+  ? products.filter((product) => {
+      if (selectedCategory === "All Categories") {
+        return true;
+      }
+      return product.category === selectedCategory;
+    })
+  : [];
+
 
   return (
     <div className="flex w-full overflow-scroll">

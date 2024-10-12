@@ -1,5 +1,6 @@
 
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
+import CartItem from "../atoms/Shopping/CartItem";
 const CartDrawer = () => {
     return (
         <div>
@@ -15,10 +16,10 @@ const CartDrawer = () => {
                 </div>
                 <div className="drawer-side">
                     <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-                    <ul className="menu  text-base-content min-h-full w-96 p-4 bg-slate-300">
+                    <ul className="menu  text-base-content min-h-full w-[450px] mobile:w-[350px] p-4 bg-slate-300">
                         <label htmlFor="" className="font-semibold text-2xl mt-2 text-gray-500">Your Cart</label>
-                        <div className="flex gap-y-4 mt-6 ">
-
+                        <div className="grid gap-y-4 mt-6  w-full">
+                            <CartItem/>
                         </div>
                         <div className="flex mt-6 gap-y-3">
                             <div className="grid grid-cols-2 w-full">

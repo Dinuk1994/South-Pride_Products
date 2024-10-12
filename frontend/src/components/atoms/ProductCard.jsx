@@ -58,6 +58,9 @@ const ProductCard = ({ product }) => {
 
     const openModal = () => {
         setSelectedProduct(product);
+        if (modalRef.current) {
+            modalRef.current.showModal();
+        }
         console.log(product);
     };
 
