@@ -34,7 +34,7 @@ const CartItem = ({item}) => {
         }
     };
     
-    console.log(item);
+    //console.log(item);
     
 
     useEffect(()=>{

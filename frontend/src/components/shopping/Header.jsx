@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
 import SouthPrideProducts from "../../assets/South-Pride-Products.png"

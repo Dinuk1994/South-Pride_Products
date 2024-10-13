@@ -1,12 +1,12 @@
-/* eslint-disable no-unused-vars */
+ 
 /* eslint-disable react/prop-types */
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { DetailCarousel } from "./DetailCarousel"
 import { IoStar } from "react-icons/io5";
 import { IoStarHalf } from "react-icons/io5";
 import AddCartConfirmModal from "./Shopping/AddCartConfirmModal";
-import { useSelector } from "react-redux";
+
 
 const DetailModal = ({ detailModal, product ,user }) => {
     const cartConfirmRef = useRef();
@@ -23,7 +23,7 @@ const DetailModal = ({ detailModal, product ,user }) => {
     const setCartItem = ()=>{
         if(user){
             setCartProduct({
-                userId: user._id,
+                userId: user?.id,
                 productId: product._id,
                 quantity: 1,
                 selectedWeight: selectedWeight.weight,
@@ -39,10 +39,13 @@ const DetailModal = ({ detailModal, product ,user }) => {
         setSelectedWeight(selectedWeightObject);
     };
 
+    console.log("DetailModal",user?.id);
+    
+
     const openCartConfirmModal=(e)=>{
         console.log({"UserID" : user._id});
         setCartItem()
-        console.log(cartProduct);
+        //console.log(cartProduct);
         e.preventDefault()
         if(cartConfirmRef.current){
             cartConfirmRef.current.showModal();
@@ -109,7 +112,7 @@ const DetailModal = ({ detailModal, product ,user }) => {
                     </div>
                 </div>
             </dialog>
-            <AddCartConfirmModal detailModalRef={detailModal} addToCartRef={cartConfirmRef} product={product} user={user} cartProduct={cartProduct} />
+            <AddCartConfirmModal addToCartRef={cartConfirmRef}  detailModalRef={detailModal}  product={product} user={user} cartProduct={cartProduct} />
         </div>
     )
 }

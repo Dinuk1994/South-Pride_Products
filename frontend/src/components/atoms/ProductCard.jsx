@@ -27,16 +27,14 @@ const ProductCard = ({ product }) => {
     const setCartItem = () => {
         if (user) {
             setCartProducts({
-                userId: user._id,
+                userId: user?.id,
                 productId: product._id,
                 quantity: 1,
                 selectedWeight: selectedWeight.weight,
                 availableQty: selectedWeight.stockQty
             })
         }
-
     }
-
 
     const nextImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.images.length);

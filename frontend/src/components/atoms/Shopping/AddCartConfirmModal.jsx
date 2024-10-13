@@ -1,11 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { FaQuestionCircle } from "react-icons/fa";
-import { useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { addCartItems } from "../../../api/cartAPI/addCartItems";
+import toast from "react-hot-toast";
+import { getCartItems } from "../../../api/cartAPI/getCartItems";
 
-const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct , detailModalRef }) => {
+const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct, detailModalRef,user }) => {
+
+    const cartItems = useSelector((state) => state.cart.cartItems)
+
 
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
@@ -23,18 +28,29 @@ const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct , det
         }
     };
 
-    const addCartItem = (e)=>{
+    const addCartItem = (e) => {
         e.preventDefault();
-        const {availableQty , ...rest} = cartProduct
+        const { availableQty, ...rest } = cartProduct
         const updatedCartItem = {
-            ...rest , 
-           quantity : quantity
+            ...rest,
+            quantity: quantity
         }
-        dispatch(addCartItems(updatedCartItem))
-        console.log(updatedCartItem);   
-        addToCartRef.current.close()
-        detailModalRef.current.close()
+        dispatch(addCartItems(updatedCartItem)).then(() => {
+            dispatch(getCartItems({ id: user.id })); 
+        });
+        console.log(updatedCartItem);
+        setTimeout(() => {
+            addToCartRef.current.close()
+            detailModalRef.current.close()
+        }, 1000)
+
     }
+
+    useEffect(() => {
+        if (cartItems) {
+            console.log({ "cart Items in Drawer": cartItems });
+        }
+    }, [cartItems]);
 
     return (
         <div>
