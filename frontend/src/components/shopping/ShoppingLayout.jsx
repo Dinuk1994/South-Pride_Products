@@ -13,30 +13,18 @@ const ShoppingLayout = () => {
   const dispatch = useDispatch();
 
 
-  useEffect(() => {
-    if (user.id === undefined) {
-      window.location.href = "/shopping/home";
-    }
-  }, [user.id]); 
-
-  useEffect(() => {
-   
-    console.log("User ID:", user?.id);
-    
+  useEffect(() => { 
+        
     if (user && user?.id) {
       dispatch(getCartItems({ id: user.id }));
     }
   }, [user, user?.id, dispatch]);
   
-  
-
-
-  console.log(cartItems);
 
   return (
     <div className="flex flex-col overflow-hidden">
       <div >
-        <Header />
+        <Header cartItems={cartItems}/>
       </div>
       <main className="h-screen">
         <Outlet />

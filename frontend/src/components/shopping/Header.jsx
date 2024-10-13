@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 
 import SouthPrideProducts from "../../assets/South-Pride-Products.png"
 import { useRef } from "react";
 import ConfirmModalLogout from "../atoms/ConfirmModalLogout";
 import CartDrawer from "./CartDrawer";
-const Header = () => {
+const Header = ({cartItems}) => {
 
   const confirmRef = useRef();
 
@@ -22,7 +24,7 @@ const Header = () => {
         </div>
         <div className="flex-none">
           <div className="dropdown dropdown-end mr-8 mobile:mr-2">
-            <CartDrawer />
+            <CartDrawer cartItems={cartItems} />
           </div>
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">

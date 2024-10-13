@@ -30,9 +30,7 @@ const cartSlice = createSlice({
         })
         .addCase(getCartItems.fulfilled,(state,action)=>{
             state.isLoading = false,
-            state.cartItems = action.payload
-            console.log({"Payload": action.payload});
-            
+            state.cartItems = action.payload          
         })
         .addCase(getCartItems.rejected,(state)=>{
             state.isLoading = false

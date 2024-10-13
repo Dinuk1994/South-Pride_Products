@@ -1,7 +1,12 @@
+ 
+/* eslint-disable react/prop-types */
 
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import CartItem from "../atoms/Shopping/CartItem";
-const CartDrawer = () => {
+const CartDrawer = ({ cartItems}) => {
+
+    console.log({ "cart Items in Drawer": cartItems });
+
     return (
         <div>
             <div className="drawer drawer-end z-50">
@@ -19,7 +24,14 @@ const CartDrawer = () => {
                     <ul className="menu  text-base-content min-h-full w-[450px] mobile:w-[350px] p-4 bg-slate-300">
                         <label htmlFor="" className="font-semibold text-2xl mt-2 text-gray-500">Your Cart</label>
                         <div className="grid gap-y-4 mt-6  w-full">
-                            <CartItem/>
+                            {Array.isArray(cartItems?.data) && cartItems.data.length > 0 ? (
+                                cartItems.data.map((item, index) => (
+                                    <CartItem key={index} item={item} />
+                                ))
+                            ) : (
+                                <p>Your cart is empty</p>
+                            )}
+
                         </div>
                         <div className="flex mt-6 gap-y-3">
                             <div className="grid grid-cols-2 w-full">
