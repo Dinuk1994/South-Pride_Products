@@ -14,7 +14,7 @@ const Baking = () => {
   const bakingProducts = products.filter((product) => {
     return product.category === "Baking"
   })
-  console.log(bakingProducts);
+  //console.log(bakingProducts);
   
 
   return (

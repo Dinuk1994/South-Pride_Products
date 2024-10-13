@@ -15,7 +15,7 @@ const AllProducts = () => {
   }, [dispatch])
 
 
-  console.log(products);
+  //console.log(products);
 
   return (
     <div className=" p-5 h-screen">

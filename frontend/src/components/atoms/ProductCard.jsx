@@ -90,9 +90,9 @@ const ProductCard = ({ product }) => {
         if (selectedProduct && modalRef.current && cartProducts.productId) {
             modalRef.current.showModal();
         }
-        console.log(user._id);
-        console.log({ "before Render ": cartProducts });
-        console.log({ "user": user });
+        // console.log(user._id);
+        // console.log({ "before Render ": cartProducts });
+        // console.log({ "user": user });
     }, [user, selectedProduct, cartProducts]);
 
     return (
