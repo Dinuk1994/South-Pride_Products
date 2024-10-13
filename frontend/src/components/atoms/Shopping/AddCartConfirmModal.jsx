@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { addCartItems } from "../../../api/cartAPI/addCartItems";
 
-const AddCartConfirmModal = ({ addToCartRef, loading, product, user, cartProduct }) => {
+const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct , detailModalRef }) => {
 
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
@@ -33,6 +33,7 @@ const AddCartConfirmModal = ({ addToCartRef, loading, product, user, cartProduct
         dispatch(addCartItems(updatedCartItem))
         console.log(updatedCartItem);   
         addToCartRef.current.close()
+        detailModalRef.current.close()
     }
 
     return (

@@ -8,7 +8,7 @@ import { IoStarHalf } from "react-icons/io5";
 import AddCartConfirmModal from "./Shopping/AddCartConfirmModal";
 import { useSelector } from "react-redux";
 
-const DetailModal = ({ detailModal, product ,cartProducts,user }) => {
+const DetailModal = ({ detailModal, product ,user }) => {
     const cartConfirmRef = useRef();
 
     const [selectedWeight, setSelectedWeight] = useState(product.weightStock[0]);
@@ -109,7 +109,7 @@ const DetailModal = ({ detailModal, product ,cartProducts,user }) => {
                     </div>
                 </div>
             </dialog>
-            <AddCartConfirmModal addToCartRef={cartConfirmRef} product={product} user={user} cartProduct={cartProduct} />
+            <AddCartConfirmModal detailModalRef={detailModal} addToCartRef={cartConfirmRef} product={product} user={user} cartProduct={cartProduct} />
         </div>
     )
 }
