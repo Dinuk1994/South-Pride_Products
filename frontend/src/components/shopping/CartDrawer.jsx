@@ -5,8 +5,8 @@ import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import CartItem from "../atoms/Shopping/CartItem";
 const CartDrawer = ({ cartItems}) => {
 
-    console.log({ "cart Items in Drawer": cartItems });
 
+    const cartItemCount = Array.isArray(cartItems?.data) ? cartItems.data.length : 0;
     return (
         <div>
             <div className="drawer drawer-end z-50">
@@ -15,7 +15,7 @@ const CartDrawer = ({ cartItems}) => {
                     <label htmlFor="my-drawer-4" className="drawer-button cursor-pointer p-2 ">
                         <div className="indicator -z-10">
                             <MdOutlineLocalGroceryStore className="text-white size-6 " />
-                            <span className="badge badge-sm indicator-item">8</span>
+                            <span className="badge badge-sm indicator-item">{cartItemCount}</span>
                         </div>
                     </label>
                 </div>

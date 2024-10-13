@@ -11,7 +11,7 @@ const CartItem = ({item}) => {
     const products = useSelector((state)=>state.adminProducts.products)
 
     const checkIds = () => {
-        console.log("Products:", products);
+        //console.log("Products:", products);
         if (!products || !Array.isArray(products)) {
             console.error("Products array is undefined or not an array");
             return;
