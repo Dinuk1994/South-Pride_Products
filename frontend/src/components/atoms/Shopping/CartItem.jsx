@@ -51,8 +51,8 @@ const CartItem = ({item}) => {
 
 
     return (
-        <div className="flex-grow">
-            <div className="w-full bg-base-300 rounded-lg h-20 border-2  border-gray-400">
+        <div className="flex-grow ">
+            <div className="w-full bg-base-300 rounded-lg h-20 border-2 shadow-lg shadow-gray-500  border-gray-400">
                 <div className="grid grid-cols-12 mobile:grid-cols-8 h-full">
                     <div className="col-span-2  w-full flex justify-center h-full items-center">
                         <img src={item.images[0]} alt="" className="size-16 ml-1 rounded-lg" />

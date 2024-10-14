@@ -4,7 +4,7 @@ export const addCartItems = createAsyncThunk(
     "cart/addCartItems", async(cartItem,thunkAPI)=>{
         try {
             
-            const res = await fetch("http://localhost:8000/api/cart/addToCart",{
+            const res = await fetch("/api/cart/addToCart",{
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json"

@@ -20,7 +20,7 @@ const CartDrawer = ({ cartItems}) => {
                 <div className="drawer-side">
                     <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu  text-base-content min-h-full w-[450px] mobile:w-[350px] p-4 bg-slate-300">
-                        <label htmlFor="" className="font-semibold text-2xl mt-2 text-gray-500">Your Cart</label>
+                        <label htmlFor="" className="font-semibold text-2xl mt-2 text-gray-500">Your Cart ({cartItems.data?.length})</label>
                         <div className="grid gap-y-4 mt-6  w-full">
                             {Array.isArray(cartItems?.data) && cartItems.data.length > 0 ? (
                                 cartItems.data.map((item, index) => (
