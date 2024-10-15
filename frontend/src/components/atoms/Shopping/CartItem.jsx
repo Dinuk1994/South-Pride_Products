@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useRef } from 'react';
 import { useSelector } from 'react-redux';
+import DeleteCartItemModal from './Modals/DeleteCartItemModal';
 
 
 const CartItem = ({item}) => {
     const [quantity, setQuantity] = useState(item.quantity);
     const [availableQty , setAvailableQty] = useState()
-
+    const deleteCartItemRef = useRef();
+ 
     const products = useSelector((state)=>state.adminProducts.products)
 
     const checkIds = () => {
@@ -49,6 +51,12 @@ const CartItem = ({item}) => {
     }
     const decrement = () => setQuantity(quantity > 0 ? quantity - 1 : 0);
 
+    const openDeleteCartItemModal = ()=>{
+        if(deleteCartItemRef.current){
+            deleteCartItemRef.current.showModal();
+        }
+    }
+
 
     return (
         <div className="flex-grow ">
@@ -72,7 +80,7 @@ const CartItem = ({item}) => {
                         <label htmlFor="">Rs.{item.salePrice}</label>
                     </div>
                     <div className='relative col-span-2 p-2'>
-                        <button className='absolute top-0 right-0 mt-1 mr-1 text-white bg-red-400 rounded-md hover:bg-red-600 pb-[7px] pl-[5px] p-1 w-4 h-4 flex items-center justify-center'>
+                        <button onClick={openDeleteCartItemModal} className='absolute top-0 right-0 mt-1 mr-1 text-white bg-red-400 rounded-md hover:bg-red-600 pb-[7px] pl-[5px] p-1 w-4 h-4 flex items-center justify-center'>
                             ×
                         </button>
                         <div className='absolute btn top-6 right-0 mt-1 mr-0 text-white bg-blue-400 rounded-md hover:bg-blue-600 p-1 w-16 h-8 flex items-center justify-center'>
@@ -80,9 +88,10 @@ const CartItem = ({item}) => {
                         </div>
                     </div>
 
-
+                <DeleteCartItemModal deleteCartItemRef={deleteCartItemRef} item={item}/>
                 </div>
             </div>
+     
         </div>
     );
 };

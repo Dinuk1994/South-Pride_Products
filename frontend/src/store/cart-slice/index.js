@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { addCartItems } from "../../api/cartAPI/addCartItems";
 import toast from "react-hot-toast";
 import { getCartItems } from "../../api/cartAPI/getCartItems";
+import { deleteItem } from "../../api/cartAPI/deleteItem";
 
 const initialState = {
     cartItems : [],
@@ -34,6 +35,18 @@ const cartSlice = createSlice({
         })
         .addCase(getCartItems.rejected,(state)=>{
             state.isLoading = false
+        })
+        .addCase(deleteItem.pending,(state)=>{
+            state.isLoading = true
+        })
+        .addCase(deleteItem.fulfilled,(state,action)=>{
+            state.isLoading = false
+            state.cartItems = action.payload
+            toast.success("Product deleted from cart")
+        })
+        .addCase(deleteItem.rejected,(state)=>{
+            state.isLoading = false
+            toast.error("Product delete failed")
         })
 
     }
