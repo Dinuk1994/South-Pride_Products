@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import EditModal from './EditProduct/EditModal';
 import { useSelector } from 'react-redux';
 import DetailModal from './detailModal';
-import AddCartConfirmModal from './Shopping/AddCartConfirmModal';
+import AddCartConfirmModal from './Shopping/Modals/AddCartConfirmModal';
 
 const ProductCard = ({ product }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);

@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { DetailCarousel } from "./DetailCarousel"
 import { IoStar } from "react-icons/io5";
 import { IoStarHalf } from "react-icons/io5";
-import AddCartConfirmModal from "./Shopping/AddCartConfirmModal";
+import AddCartConfirmModal from "./Shopping/Modals/AddCartConfirmModal";
 
 
 const DetailModal = ({ detailModal, product ,user }) => {

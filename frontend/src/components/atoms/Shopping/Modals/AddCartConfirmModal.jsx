@@ -3,9 +3,9 @@
 import { FaQuestionCircle } from "react-icons/fa";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { addCartItems } from "../../../api/cartAPI/addCartItems";
+import { addCartItems } from "../../../../api/cartAPI/addCartItems";
 import toast from "react-hot-toast";
-import { getCartItems } from "../../../api/cartAPI/getCartItems";
+import { getCartItems } from "../../../../api/cartAPI/getCartItems";
 
 const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct, detailModalRef,user }) => {
 
@@ -41,7 +41,7 @@ const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct, deta
         console.log(updatedCartItem);
         setTimeout(() => {
             addToCartRef.current.close()
-            detailModalRef.current.close()
+            detailModalRef?.current.close()
         }, 1000)
 
     }

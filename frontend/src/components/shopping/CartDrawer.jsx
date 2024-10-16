@@ -23,7 +23,10 @@ const CartDrawer = ({ cartItems}) => {
                         <label htmlFor="" className="font-semibold text-2xl mt-2 text-gray-500">Your Cart ({cartItems.data?.length})</label>
                         <div className="grid gap-y-4 mt-6  w-full">
                             {Array.isArray(cartItems?.data) && cartItems.data.length > 0 ? (
-                                cartItems.data.map((item, index) => (
+                                cartItems.data
+                                .slice()
+                                .reverse()
+                                .map((item, index) => (
                                     <CartItem key={index} item={item} />
                                 ))
                             ) : (

@@ -1,16 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { useEffect, useState,useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import DeleteCartItemModal from './Modals/DeleteCartItemModal';
+import { UpdateCartConfirmModal } from './Modals/updateCartConfirmModal';
 
 
-const CartItem = ({item}) => {
+const CartItem = ({ item }) => {
     const [quantity, setQuantity] = useState(item.quantity);
-    const [availableQty , setAvailableQty] = useState()
+    const [availableQty, setAvailableQty] = useState()
     const deleteCartItemRef = useRef();
- 
-    const products = useSelector((state)=>state.adminProducts.products)
+    const updateCartConfirmRef = useRef();
+
+    const products = useSelector((state) => state.adminProducts.products)
 
     const checkIds = () => {
         //console.log("Products:", products);
@@ -18,12 +20,12 @@ const CartItem = ({item}) => {
             console.error("Products array is undefined or not an array");
             return;
         }
-    
+
         const matchedProduct = products.find(product => product._id === item.productId);
-    
+
         if (matchedProduct) {
             const matchedWeight = matchedProduct.weightStock.find(ws => ws.weight === item.weight);
-    
+
             if (matchedWeight) {
                 console.log("Product ID matches:", matchedProduct._id);
                 console.log("Matching Weight:", matchedWeight.weight);
@@ -35,14 +37,14 @@ const CartItem = ({item}) => {
             console.log("Product ID not found.");
         }
     };
-    
-    //console.log(item);
-    
 
-    useEffect(()=>{
+    //console.log(item);
+
+
+    useEffect(() => {
         checkIds();
-    },[products])
-    
+    }, [products])
+
 
     const increment = () => {
         if (quantity < availableQty) {
@@ -51,9 +53,15 @@ const CartItem = ({item}) => {
     }
     const decrement = () => setQuantity(quantity > 0 ? quantity - 1 : 0);
 
-    const openDeleteCartItemModal = ()=>{
-        if(deleteCartItemRef.current){
+    const openDeleteCartItemModal = () => {
+        if (deleteCartItemRef.current) {
             deleteCartItemRef.current.showModal();
+        }
+    }
+
+    const openUpdatecartConfirmMOdal = () => {
+        if (updateCartConfirmRef.current) {
+            updateCartConfirmRef.current.showModal();
         }
     }
 
@@ -83,15 +91,16 @@ const CartItem = ({item}) => {
                         <button onClick={openDeleteCartItemModal} className='absolute top-0 right-0 mt-1 mr-1 text-white bg-red-400 rounded-md hover:bg-red-600 pb-[7px] pl-[5px] p-1 w-4 h-4 flex items-center justify-center'>
                             ×
                         </button>
-                        <div className='absolute btn top-6 right-0 mt-1 mr-0 text-white bg-blue-400 rounded-md hover:bg-blue-600 p-1 w-16 h-8 flex items-center justify-center'>
+                        <div onClick={openUpdatecartConfirmMOdal} className='absolute btn top-6 right-0 mt-1 mr-0 text-white bg-blue-400 rounded-md hover:bg-blue-600 p-1 w-16 h-8 flex items-center justify-center'>
                             Update
                         </div>
                     </div>
 
-                <DeleteCartItemModal deleteCartItemRef={deleteCartItemRef} item={item}/>
+                    <DeleteCartItemModal deleteCartItemRef={deleteCartItemRef} item={item} />
+                    <UpdateCartConfirmModal item={item} updateCartItemRef={updateCartConfirmRef} updatedQty={quantity} />
                 </div>
             </div>
-     
+
         </div>
     );
 };
