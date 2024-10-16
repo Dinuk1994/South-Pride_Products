@@ -19,7 +19,7 @@ const Header = ({cartItems}) => {
       <div className="navbar bg-ShoppingHeader">
         <div className="flex-1">
           <img src={SouthPrideProducts} className="size-12 flex items-center" alt="" />
-          <a className="btn btn-ghost text-xl text-headerText mobile:text-[16px] flex items-center">South Pride Products</a>
+          <a href="/shopping/home" className="btn btn-ghost text-xl text-headerText mobile:text-[16px] flex items-center">South Pride Products</a>
         </div>
         <div className="flex-none">
           <div className="dropdown dropdown-end mr-8 mobile:mr-2">
@@ -37,8 +37,8 @@ const Header = ({cartItems}) => {
               tabIndex={0}
               className="menu menu-sm z-50 dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow">
               <li>
-                <a className="justify-between">
-                  Profile
+                <a href="/shopping/account" className="justify-between">
+                  Account
                   <span className="badge">New</span>
                 </a>
               </li>

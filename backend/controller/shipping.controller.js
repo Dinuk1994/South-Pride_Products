@@ -4,12 +4,13 @@ import ShippingDetails from '../model/shipping.model.js';
 
 export const addShippingDetails = async(req,res)=>{
     try {
-        const {userId ,address, city,phone,postalCode } = req.body;
+        const {userId,fullName ,address, city,phone,postalCode } = req.body;
         if(!userId || !address || !city || !phone || !postalCode) {
             return res.status(400).json({msg : "Invalid data"})
         }
         const newShippingDetails = await new ShippingDetails({
             userId,
+            fullName,
             address,
             city,
             phone,
@@ -43,12 +44,13 @@ export const allShippingDetails = async(req,res)=>{
 export const updateShippingDetails = async(req,res)=>{
     try {
         const userId = req.params.userId
-        const { address, city, phone, postalCode } = req.body;
+        const { address,fullName, city, phone, postalCode } = req.body;
         if(!address || !city || !phone || !postalCode){
             return res.status(400).json({msg : "Invalid data"})
         }
         const updatedShippingDetails = await ShippingDetails.findOneAndUpdate({userId : userId},{          
             address,
+            fullName,
             city,
             phone,
             postalCode

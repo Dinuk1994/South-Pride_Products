@@ -6,6 +6,10 @@ const ShippingSchema = mongoose.Schema({
         ref : "User",
         required : true
     },
+    fullName : {
+        type : String,
+        required : true
+    },
     address : {
         type : String,
         required : true
