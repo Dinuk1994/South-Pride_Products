@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import DeleteCartItemModal from './Modals/DeleteCartItemModal';
 import { UpdateCartConfirmModal } from './Modals/updateCartConfirmModal';
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 
 const CartItem = ({ item }) => {
@@ -88,8 +89,8 @@ const CartItem = ({ item }) => {
                         <label htmlFor="">Rs.{item.salePrice}</label>
                     </div>
                     <div className='relative col-span-2 p-2'>
-                        <button onClick={openDeleteCartItemModal} className='absolute top-0 right-0 mt-1 mr-1 text-white bg-red-400 rounded-md hover:bg-red-600 pb-[7px] pl-[5px] p-1 w-4 h-4 flex items-center justify-center'>
-                            ×
+                        <button onClick={openDeleteCartItemModal} className='absolute top-0 right-0 mt-1 mr-1 text-white bg-red-400 rounded-md hover:bg-red-600 pb-[7px] pl-[5px] p-1 w-5 h-5 flex items-center justify-center'>
+                           <RiDeleteBin5Line className='size-24 mt-[2px]'/>
                         </button>
                         <div onClick={openUpdatecartConfirmMOdal} className='absolute btn top-6 right-0 mt-1 mr-0 text-white bg-blue-400 rounded-md hover:bg-blue-600 p-1 w-16 h-8 flex items-center justify-center'>
                             Update

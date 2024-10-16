@@ -5,6 +5,11 @@ import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import CartItem from "../atoms/Shopping/CartItem";
 const CartDrawer = ({ cartItems}) => {
 
+    const totalPrice = cartItems?.data?.reduce((acc, item) => {
+        return acc + (item.salePrice * item.quantity);
+    }, 0);
+
+
     return (
         <div>
             <div className="drawer drawer-end z-50">
@@ -40,7 +45,7 @@ const CartDrawer = ({ cartItems}) => {
                                     Total Amount
                                 </div>
                                 <div className="col-span-1 flex pr-3 justify-end font-semibold text-lg  text-gray-500">
-                                    $800
+                                    Rs. {totalPrice}
                                 </div>
 
                             </div>
