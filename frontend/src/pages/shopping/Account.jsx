@@ -43,13 +43,13 @@ const Account = () => {
               <div>
                 <label className="text-white text-lg" htmlFor="">Country</label>
                 <select
-                  className="select mt-2 text-gray-600 select-bordered bg-gray-300 w-full max-w-xs"
+                  className="select mt-2 text-gray-600 select-bordered bg-gray-300  w-full max-w-xs"
                   value={selectedCountry}
                   onChange={(e) => setSelectedCountry(e.target.value)}
                 >
                   <option disabled>Sri Lanka</option>
                   {countries.map((country, index) => (
-                    <option key={index} value={country.name.common}>
+                    <option  key={index} value={country.name.common}>
                       {country.name.common}
                     </option>
                   ))}

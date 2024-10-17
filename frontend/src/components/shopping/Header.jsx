@@ -37,9 +37,12 @@ const Header = ({cartItems}) => {
               tabIndex={0}
               className="menu menu-sm z-50 dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow">
               <li>
-                <a href="/shopping/account" className="justify-between">
+              <a  className="justify-between">
                   Account
                   <span className="badge">New</span>
+                </a>
+                <a href="/shopping/account" className="justify-between">
+                  Shipping details
                 </a>
               </li>
               <li><a>Settings</a></li>

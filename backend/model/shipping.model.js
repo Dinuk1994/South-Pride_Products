@@ -15,6 +15,10 @@ const ShippingSchema = mongoose.Schema({
         required : true
         
     },
+    country : {
+        type : String,
+        required : true
+    },
     city : {
         type : String,
         required : true
