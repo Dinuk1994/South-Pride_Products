@@ -138,7 +138,7 @@ const openShippingDetailModal = ()=>{
           </form>
         </div>
       </div>
-        <ShippingDetailEditModal shippingDetailEditRef={shippingDetailEditRef} shippingDetails={shippingDetail}/>
+        <ShippingDetailEditModal shippingDetailEditRef={shippingDetailEditRef} shippingDetails={shippingDetail} user={user}/>
     </div>
   );
 }

@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateShippingDetails } from "../../../api/shippingAPI/updateShippingDetails";
+import DiscardEditShippingDetal from "./DiscardEditShippingDetal";
 
 /* eslint-disable react/prop-types */
-const ShippingDetailEditModal = ({ shippingDetailEditRef, shippingDetails }) => {
+const ShippingDetailEditModal = ({ shippingDetailEditRef, shippingDetails, user }) => {
     const [countries, setCountries] = useState([]);
+    const dispatch = useDispatch();
+    const shippingDetailDiscardRef = useRef();
 
     const [formData, setFormData] = useState({
         fullName: "",
@@ -39,15 +43,34 @@ const ShippingDetailEditModal = ({ shippingDetailEditRef, shippingDetails }) => 
         }
     }, [shippingDetails]);
 
-    const handleUpdateShippingData = (e) => {
+    const handleUpdateShippingData = async (e) => {
         e.preventDefault()
-        console.log(formData?.fullName);
+        await dispatch(updateShippingDetails({ userId: user.id, shippingDetail: formData })).then(() => {
+            shippingDetailEditRef.current.close()
+            setTimeout(() => {              
+                window.location.reload()
+            }, 800)
 
+        })
+        console.log(user.id, formData);
+    }
+
+    const handleDiscardEditShippingData = (e) => {
+        e.preventDefault()
+        if(shippingDetailDiscardRef){
+            shippingDetailDiscardRef.current.showModal()
+        }
+    }
+
+    const closeShippingDetailEditModal = () => {
+        if (shippingDetailEditRef) {
+            shippingDetailEditRef.current.close()
+        }
     }
 
     return (
         <div>
-            <dialog ref={shippingDetailEditRef} id="shipping_detail_edit_modal" className="modal backdrop-blur-md">
+            <dialog ref={shippingDetailEditRef} id="shipping_detail_edit_modal" className="modal backdrop-blur-sm ">
                 <div className="modal-box  max-w-5xl w-[900px] mobile:w-auto bg-purple-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg border border-gray-100 bg-opacity-20">
                     <div className="">
                         <h3 className="font-semibold text-white text-2xl">Edit Shipping Details</h3>
@@ -58,13 +81,14 @@ const ShippingDetailEditModal = ({ shippingDetailEditRef, shippingDetails }) => 
                             </div>
                             <div>
                                 <label className=" text-lg mobile:text-sm  text-white" htmlFor="">Edit postal address </label>
-                                <input value={formData?.address} type="text" className="input mobile:text-sm mt-2 grow input-bordered bg-white w-full " />
+                                <input value={formData?.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} type="text" className="input mobile:text-sm mt-2 grow input-bordered bg-white w-full " />
                             </div>
 
                             <div className="grid grid-cols-2 gap-x-8">
                                 <div className="col-span-1 grid">
                                     <label className=" text-lg mobile:text-sm  text-white" htmlFor="">Edit country </label>
                                     <select
+                                        onChange={(e) => setFormData({ ...formData, country: e.target.value })}
                                         value={formData?.country}
                                         className="select mobile:text-sm mt-2  select-bordered bg-white  w-full "
                                     >
@@ -78,17 +102,17 @@ const ShippingDetailEditModal = ({ shippingDetailEditRef, shippingDetails }) => 
                                 </div>
                                 <div className="col-span-1">
                                     <label className=" text-lg mobile:text-sm  text-white" htmlFor="">Edit contact number</label>
-                                    <input value={formData?.phone} type="number" className="input mobile:text-sm mt-2 grow input-bordered bg-white w-full " />
+                                    <input value={formData?.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} type="number" className="input mobile:text-sm mt-2 grow input-bordered bg-white w-full " />
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-x-8">
                                 <div className="col-span-1">
                                     <label className=" text-lg mobile:text-sm  text-white" htmlFor="">Edit city</label>
-                                    <input value={formData?.city} type="text" className="input mobile:text-sm mt-2 grow input-bordered bg-white w-full " />
+                                    <input value={formData?.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} type="text" className="input mobile:text-sm mt-2 grow input-bordered bg-white w-full " />
                                 </div>
                                 <div className="col-span-1">
                                     <label className=" text-lg mobile:text-sm text-white" htmlFor="">Edit postal code</label>
-                                    <input value={formData?.postalCode} type="number" className="input mobile:text-sm mt-2 grow input-bordered bg-white w-full " />
+                                    <input value={formData?.postalCode} onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })} type="number" className="input mobile:text-sm mt-2 grow input-bordered bg-white w-full " />
                                 </div>
 
 
@@ -97,7 +121,7 @@ const ShippingDetailEditModal = ({ shippingDetailEditRef, shippingDetails }) => 
                         <div className="modal-action">
                             <form>
                                 <div className="flex gap-x-4 mobile:mr-4">
-                                    <button className="btn bg-red-400 hover:bg-red-600 text-white w-[150px]">Discard</button>
+                                    <button onClick={handleDiscardEditShippingData} className="btn bg-red-400 hover:bg-red-600 text-white w-[150px]">Discard</button>
                                     <button onClick={handleUpdateShippingData} className="btn bg-blue-400 hover:bg-blue-600 text-white w-[150px]">Confirm</button>
                                 </div>
                             </form>
@@ -105,6 +129,7 @@ const ShippingDetailEditModal = ({ shippingDetailEditRef, shippingDetails }) => 
                     </div>
                 </div>
             </dialog>
+            <DiscardEditShippingDetal discardRef={shippingDetailDiscardRef} closeModal={closeShippingDetailEditModal}/>
         </div>
     )
 }

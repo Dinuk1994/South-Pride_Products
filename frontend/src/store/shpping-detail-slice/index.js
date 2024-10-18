@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getShippingDetailById } from "../../api/shippingAPI/getShippingDetails";
 import { addShippingDetails } from "../../api/shippingAPI/addShippingDetails";
+import { updateShippingDetails } from "../../api/shippingAPI/updateShippingDetails";
 
 const initialState = {
     shippingDetail : {},
@@ -34,6 +35,18 @@ const shippingDetailSlice = createSlice({
             console.log(action.payload);
         })
         .addCase(addShippingDetails.rejected,(state,action)=>{
+            state.isLoading = false
+            state.error = action.payload
+        })
+        .addCase(updateShippingDetails.pending,(state)=>{
+            state.isLoading = true
+        })
+        .addCase(updateShippingDetails.fulfilled,(state,action)=>{
+            state.isLoading = false
+            state.shippingDetail = action.payload
+            console.log(action.payload);
+        })
+        .addCase(updateShippingDetails.rejected,(state,action)=>{
             state.isLoading = false
             state.error = action.payload
         })
