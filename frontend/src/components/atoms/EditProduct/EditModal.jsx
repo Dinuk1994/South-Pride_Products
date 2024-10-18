@@ -146,8 +146,8 @@ const EditModal = ({ modalRef, closeModal, product }) => {
 
     return (
         <div>
-            <dialog ref={modalRef} id="my_modal_1" className="modal">
-                <div className="modal-box p-8 m-6 border-4 border-green-700 bg-slate-300">
+            <dialog ref={modalRef} id="my_modal_1" className="modal backdrop-blur-sm">
+                <div className="modal-box p-8 m-6  bg-purple-200 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-60 border border-gray-100">
                     <h1 className="flex justify-center text-gray-600 text-3xl font-semibold">Update Product</h1>
                     <form onSubmit={handleSubmit} className="grid grid-col-1 gap-y-2">
                         <label className="mt-3 font-semibold text-gray-500 text-base mobile:text-sm">Product Name</label>

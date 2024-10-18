@@ -28,8 +28,8 @@ const DeleteCartItemModal = ({ deleteCartItemRef, item }) => {
     return (
 
         <div>
-            <dialog ref={deleteCartItemRef} id="confirm_delete_cart_item" className="modal">
-                <div className="modal-box bg-base-200">
+            <dialog ref={deleteCartItemRef} id="confirm_delete_cart_item" className="modal backdrop-blur-sm">
+                <div className="modal-box bg-red-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-60 border border-gray-100">
                     <div className="flex ">
                         <FaQuestionCircle className="size-8 items-center text-red-600" />
                         <h3 className="font-semibold text-lg text-gray-800 ml-5 flex items-center">Do you want to delete {item.productName} ?</h3>

@@ -55,8 +55,8 @@ const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct, deta
     return (
         <div>
             <div>
-                <dialog ref={addToCartRef} id="confirm_modal_1" className="modal">
-                    <div className="modal-box bg-base-200">
+                <dialog ref={addToCartRef} id="confirm_modal_1" className="modal backdrop-blur-sm">
+                    <div className="modal-box  bg-blue-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-60 border border-gray-100">
                         <div className="flex">
                             <FaQuestionCircle className="size-8 items-center text-blue-600" />
                             <h3 className="font-semibold text-lg text-gray-800 ml-5 flex items-center">

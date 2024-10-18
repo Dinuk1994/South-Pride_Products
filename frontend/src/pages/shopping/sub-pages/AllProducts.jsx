@@ -19,7 +19,7 @@ const AllProducts = () => {
 
   return (
     <div className=" p-5 h-screen">
-      <div className="grid grid-cols-4 gap-y-5 mb-5 mobile:grid mobile:grid-cols-2 mobile:justify-between gap-x-6 tablet:grid tablet:grid-cols-2">
+      <div className="grid grid-cols-4 gap-y-5 mb-5 mobile:grid mobile:grid-cols-2 tablet:grid-cols-3 mobile:justify-between gap-x-6 tablet:grid ">
         {
           products && products.length > 0 ? (
             products.map((product) => (

@@ -54,8 +54,8 @@ const DetailModal = ({ detailModal, product ,user }) => {
 
     return (
         <div>
-            <dialog ref={detailModal} id="detail_box" className="modal">
-                <div className="modal-box w-full h-full bg-gray-300 max-w-3xl max-h-[430px]">
+            <dialog ref={detailModal} id="detail_box" className="modal backdrop-blur-sm">
+                <div className="modal-box w-full h-full  rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-60 border border-gray-100 bg-gray-300 max-w-3xl max-h-[430px]">
                     <form method="dialog">
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
@@ -78,7 +78,7 @@ const DetailModal = ({ detailModal, product ,user }) => {
                                         </div>
                                        
                                     </div>
-                                    <p className="text-gray-500  text-pretty max-h-[150px] overflow-y-auto">{product.description}</p>
+                                    <p className="text-gray-600  text-pretty max-h-[150px] overflow-y-auto">{product.description}</p>
                                     <label htmlFor="">Select weight</label>
                                     <div className="grid grid-cols-3">
                                         <div className="col-span-1">

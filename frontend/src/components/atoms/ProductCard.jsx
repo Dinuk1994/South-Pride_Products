@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import EditModal from './EditProduct/EditModal';
 import { useSelector } from 'react-redux';
-import DetailModal from './detailModal';
+import DetailModal from './DetailModal';
 import AddCartConfirmModal from './Shopping/Modals/AddCartConfirmModal';
 
 const ProductCard = ({ product }) => {
@@ -95,7 +95,7 @@ const ProductCard = ({ product }) => {
 
     return (
         <div>
-            <div onClick={openDetailModal} className="card bg-base-200 mobile:-z-10 w-72 mobile:h-80 h-[400px]  mobile:w-48 shadow-xl">
+            <div onClick={openDetailModal} className="card bg-base-200 mobile:-z-10 w-72 mobile:h-80 h-[400px]  mobile:w-48 shadow-xl shadow-gray-500">
                 <figure className="relative h-48 w-full">
                     <img
                         className="w-full h-full object-cover"
@@ -119,7 +119,7 @@ const ProductCard = ({ product }) => {
                         </>
                     )}
                 </figure>
-                <div className="card-body h-auto -mt-7 text-gray-500">
+                <div className="card-body h-auto -mt-7 text-gray-700">
                     <h2 className="card-title text-wrap mobile:text-sm">{product?.productName}</h2>
 
                     <p

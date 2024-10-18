@@ -4,7 +4,7 @@ const ConfirmDeleteModal = ({deleteRef,onConfirmDelete}) => {
     return (
         <div>
             <dialog ref={deleteRef} id="confirm_delete_modal" className="modal">
-                <div className="modal-box bg-base-200">
+                <div className="modal-box bg-red-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-60 border border-gray-100">
                     <div className="flex ">
                         <IoIosWarning className="size-8 items-center text-red-600" />
                         <h3 className="font-semibold text-lg text-gray-800 ml-5 flex items-center">Do you want to delete this product?</h3>

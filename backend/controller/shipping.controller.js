@@ -4,26 +4,32 @@ import ShippingDetails from '../model/shipping.model.js';
 
 export const addShippingDetails = async (req, res) => {
     try {
-        const { userId, country , fullName, address, city, phone, postalCode } = req.body;
+        const { userId, country, fullName, address, city, phone, postalCode } = req.body;
         if (!userId || !address || !country || !city || !phone || !postalCode) {
             return res.status(400).json({ msg: "Invalid data" })
         }
-        const newShippingDetails = await new ShippingDetails({
-            userId,
-            fullName,
-            address,
-            country,
-            city,
-            phone,
-            postalCode
-        })
 
-        if (newShippingDetails) {
-            await newShippingDetails.save();
+        const existingShippingDetails = await ShippingDetails.findOne({ userId });
+
+        if (existingShippingDetails) {
+            return res.status(400).json({ msg: "Shipping details already exists" })
+        } else {
+            const newShippingDetails = await new ShippingDetails({
+                userId,
+                fullName,
+                address,
+                country,
+                city,
+                phone,
+                postalCode
+            })
+
+            if (newShippingDetails) {
+                await newShippingDetails.save();
+            }
+
+            return res.status(200).json({ msg: "Shipping details added successfully" })
         }
-
-        return res.status(200).json({ msg: "Shipping details added successfully" })
-
     } catch (error) {
         return res.status(500).json({ msg: "Internal server error" })
     }
@@ -45,7 +51,7 @@ export const allShippingDetails = async (req, res) => {
 export const updateShippingDetails = async (req, res) => {
     try {
         const userId = req.params.userId
-        const { address, fullName,country, city, phone, postalCode } = req.body;
+        const { address, fullName, country, city, phone, postalCode } = req.body;
         if (!address || !city || !country || !phone || !postalCode) {
             return res.status(400).json({ msg: "Invalid data" })
         }
