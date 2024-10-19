@@ -85,7 +85,7 @@ const openShippingDetailModal = ()=>{
           <form onSubmit={handleShippingData} className="grid gap-y-4 mt-2 px-24 mobile:px-6" action="">
             <div>
               <label className="text-white text-lg" htmlFor="">Full Name </label>
-              <input   type="text" onChange={(e) => setShippingDetail({ ...shippingDetail, fullName: e.target.value })} placeholder={shippingDetail?.fullName || "Fullname"} className="input mt-2 grow input-bordered  w-full " />
+              <input   type="text" onChange={(e) => setShippingDetail({ ...shippingDetail, fullName: e.target.value })} placeholder={shippingDetail?.fullName || "Fullname"} className="input mt-2 grow input-bordered bg-gray-300  w-full " />
             </div>
             <div>
               <label className="text-white text-lg" htmlFor="">Postal Address </label>

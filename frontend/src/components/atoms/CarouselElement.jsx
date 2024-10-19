@@ -8,6 +8,8 @@ import Image6 from '../../assets/Image6.jpg'
 
 import { Carousel } from "flowbite-react";
 
+
+
 export function CarouselElement() {
   return (
     <div className="w-full h-[480px] bg-base-300 mobile:h-64 sm:h-64 xl:h-80 2xl:h-96">

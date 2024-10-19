@@ -3,6 +3,7 @@
 
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import CartItem from "../atoms/Shopping/CartItem";
+
 const CartDrawer = ({ cartItems}) => {
 
     const totalPrice = cartItems?.data?.reduce((acc, item) => {
@@ -24,8 +25,8 @@ const CartDrawer = ({ cartItems}) => {
                 </div>
                 <div className="drawer-side">
                     <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-                    <ul className="menu  text-base-content min-h-full w-[450px] mobile:w-[350px] p-4 bg-slate-300">
-                        <label htmlFor="" className="font-semibold text-2xl mt-2 text-gray-500">Your Cart ({cartItems.data?.length})</label>
+                    <ul className="menu   min-h-full w-[450px] mobile:w-[350px] p-4 bg-green-800 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-30 border border-gray-100">
+                        <label htmlFor="" className="font-semibold text-white  text-2xl mt-2 ">Your Cart ({cartItems.data?.length})</label>
                         <div className="grid gap-y-4 mt-6  w-full">
                             {Array.isArray(cartItems?.data) && cartItems.data.length > 0 ? (
                                 cartItems.data
@@ -41,18 +42,18 @@ const CartDrawer = ({ cartItems}) => {
                         </div>
                         <div className="flex mt-6 gap-y-3">
                             <div className="grid grid-cols-2 w-full">
-                                <div className="col-span-1 flex justify-start font-semibold text-lg text-gray-500">
+                                <div className="col-span-1  flex justify-start font-semibold text-lg text-white">
                                     Total Amount
                                 </div>
-                                <div className="col-span-1 flex pr-3 justify-end font-semibold text-lg  text-gray-500">
+                                <div className="col-span-1 flex pr-3 justify-end font-semibold text-lg  text-white">
                                     Rs. {totalPrice}
                                 </div>
 
                             </div>
                         </div>
-                        <div className="btn btn-ghost bg-blue-400 hover:bg-blue-600 text-white font-semibold text-lg mt-8 shadow-lg shadow-gray-700">
+                        <a href="/shopping/checkout" className="btn btn-ghost bg-blue-400 hover:bg-blue-600 text-white font-semibold text-lg mt-8 shadow-lg shadow-gray-700">
                             Checkout
-                        </div>
+                        </a>
                     </ul>
                 </div>
             </div>

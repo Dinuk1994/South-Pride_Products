@@ -7,7 +7,7 @@ import { addCartItems } from "../../../../api/cartAPI/addCartItems";
 import toast from "react-hot-toast";
 import { getCartItems } from "../../../../api/cartAPI/getCartItems";
 
-const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct, detailModalRef,user }) => {
+const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct, detailModalRef, user }) => {
 
     const cartItems = useSelector((state) => state.cart.cartItems)
 
@@ -36,7 +36,7 @@ const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct, deta
             quantity: quantity
         }
         dispatch(addCartItems(updatedCartItem)).then(() => {
-            dispatch(getCartItems({ id: user.id })); 
+            dispatch(getCartItems({ id: user.id }));
         });
         console.log(updatedCartItem);
         setTimeout(() => {
@@ -57,13 +57,13 @@ const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct, deta
             <div>
                 <dialog ref={addToCartRef} id="confirm_modal_1" className="modal backdrop-blur-sm">
                     <div className="modal-box  bg-blue-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-60 border border-gray-100">
-                        <div className="flex">
-                            <FaQuestionCircle className="size-8 items-center text-blue-600" />
-                            <h3 className="font-semibold text-lg text-gray-800 ml-5 flex items-center">
-                                Do you want to add
-                                <span className="px-2 text-red-500">{product?.productName}</span>
-                                to your cart?
-                            </h3>
+                        <div className="grid gap-2">
+                            <div className="flex justify-center">
+                                <FaQuestionCircle className="size-8  items-center text-blue-600" />
+                            </div>
+                            <label className="font-semibold text-nowrap text-lg ml-2 text-gray-800  flex justify-center">
+                                Do you want to add <span className="px-2 text-red-500">{product?.productName}</span> to your cart?
+                            </label>
                         </div>
 
                         <div className="flex justify-center items-center mt-4">

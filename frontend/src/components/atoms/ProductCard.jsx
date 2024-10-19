@@ -95,7 +95,7 @@ const ProductCard = ({ product }) => {
 
     return (
         <div>
-            <div onClick={openDetailModal} className="card bg-base-200 mobile:-z-10 w-72 mobile:h-80 h-[400px]  mobile:w-48 shadow-xl shadow-gray-500">
+            <div onClick={openDetailModal} className="card bg-base-200 mobile:-z-10 w-72 mobile:h-80 h-[400px]  mobile:w-48 shadow-xl shadow-gray-500 ">
                 <figure className="relative h-48 w-full">
                     <img
                         className="w-full h-full object-cover"

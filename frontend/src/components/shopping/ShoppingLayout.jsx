@@ -26,7 +26,7 @@ const ShoppingLayout = () => {
       <div >
         <Header cartItems={cartItems}/>
       </div>
-      <main className="h-screen ">
+      <main className="h-auto ">
         <Outlet />
       </main>
       <hr className="border-t-2 border-gray-300" />
