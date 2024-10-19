@@ -23,15 +23,13 @@ const CheckOut = () => {
   console.log("Checkout", cartItems);
 
   const totalPrice = cartItems?.data?.reduce((acc, item) => {
-    return acc + (item.salePrice * item.quantity);
-}, 0);
-
-
+    return acc + (parseFloat(item.salePrice) * item.quantity);
+  }, 0).toFixed(2);
 
   return (
     <div className="h-full relative">
 
-      <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${Image})`, filter: 'blur(5px)' }}>
+      <div className="absolute inset-0 bg-cover bg-center -z-20" style={{ backgroundImage: `url(${Image})`, filter: 'blur(5px)' }}>
 
       </div>
       <div className="grid grid-cols-8  mobile:grid-cols-1 ">
@@ -88,11 +86,18 @@ const CheckOut = () => {
 
               </div>
             </div>
+
           </div>
+          <div className="w-full mt-5">
+            <a href="/shopping/shoppingOrders"className="btn btn-ghost text-white text-lg w-full bg-blue-400 hover:bg-blue-600">
+              View My Orders
+            </a>
+          </div>
+
         </div>
         <div className="col-span-5 h-[800px] p-2 mobile:p-1">
           <div className="bg-purple-500 overflow-y-auto rounded-md bg-clip-padding backdrop-filter backdrop-blur-2xl border h-full border-gray-100 bg-opacity-20">
-            <div className="grid px-24 mobile:px-1">
+            <div className="grid mt-5 px-24 mobile:px-1">
               <div className="p-6 grid gap-y-6 ">
                 {Array.isArray(cartItems?.data) && cartItems.data.length > 0 ? (
                   cartItems.data
@@ -103,27 +108,27 @@ const CheckOut = () => {
                         <div className="flex items-center">
                           <BsCartCheckFill className="flex text-green-400 size-8 mobile:size-6" />
                         </div>
-                        <CartItem item={item} />
+                        <CartItem viewMode={true} item={item} />
                       </div>
                     ))
                 ) : (
                   <p>Your cart is empty</p>
                 )}
               </div>
-          
+
               <div className="grid grid-cols-2 mt-5">
                 <div className="col-span-1 flex justify-start">
                   <label className="text-white font-semibold text-2xl pl-20" htmlFor="">Total Amount</label>
                 </div>
                 <div className="col-span-1 flex justify-end pr-9">
-                <label className="text-white font-semibold text-2xl" htmlFor="">Rs. {totalPrice}.00</label>
+                  <label className="text-white font-semibold text-2xl" htmlFor="">Rs. {totalPrice}</label>
                 </div>
               </div>
 
 
               <div className="flex pb-6 mt-7 justify-center ml-12 mobile:ml-0">
                 <div className="btn w-1/2 btn-ghost text-lg mobile:text-sm text-white bg-blue-400 hover:bg-blue-600">
-                  Pay with Paypal
+                  Proceed to Payment
                 </div>
               </div>
             </div>

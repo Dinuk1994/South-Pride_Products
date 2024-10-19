@@ -13,8 +13,6 @@ const ProductCard = ({ product }) => {
     const modalRef = useRef();
     const detailModalRef = useRef();
     const cartConfirmRef = useRef();
-
-
     const user = useSelector((state) => state.auth.user)
 
     const [cartProducts, setCartProducts] = useState({
@@ -83,7 +81,7 @@ const ProductCard = ({ product }) => {
         );
         setSelectedWeight(selectedWeightObject);
     };
-    
+
     useEffect(() => {
         if (selectedProduct && modalRef.current && cartProducts.productId) {
             modalRef.current.showModal();
@@ -183,7 +181,7 @@ const ProductCard = ({ product }) => {
 
             <EditModal modalRef={modalRef} closeModal={closeModal} product={selectedProduct} />
             {
-                user.role === "user" ? (<DetailModal  detailModal={detailModalRef} product={product} user={user} cartProduct={cartProducts}/>) : (null)
+                user.role === "user" ? (<DetailModal detailModal={detailModalRef} product={product} user={user} cartProduct={cartProducts} />) : (null)
             }
             <AddCartConfirmModal addToCartRef={cartConfirmRef} product={product} user={user} cartProduct={cartProducts} />
         </div>

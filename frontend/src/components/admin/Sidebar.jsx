@@ -27,7 +27,7 @@ const Sidebar = () => {
           </a>
         </div>
         <div className="flex justify-center">
-          <a href="/admin/orders" className="btn btn-ghost flex justify-start group w-44">
+          <a href="/admin/adminOrders" className="btn btn-ghost flex justify-start group w-44">
             <MdProductionQuantityLimits className="text-white text-xl group-hover:text-yellow-300" />
             <span className="text-white text-lg font-bold group-hover:text-yellow-300">Orders</span>
           </a>

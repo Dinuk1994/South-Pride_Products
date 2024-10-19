@@ -7,8 +7,8 @@ import CartItem from "../atoms/Shopping/CartItem";
 const CartDrawer = ({ cartItems}) => {
 
     const totalPrice = cartItems?.data?.reduce((acc, item) => {
-        return acc + (item.salePrice * item.quantity);
-    }, 0);
+        return acc + (parseFloat(item.salePrice) * item.quantity);
+    }, 0).toFixed(2);
 
 
     return (

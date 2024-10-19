@@ -7,14 +7,13 @@ import { UpdateCartConfirmModal } from './Modals/updateCartConfirmModal';
 import { RiDeleteBin5Line } from "react-icons/ri";
 
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item ,viewMode}) => {
     const [quantity, setQuantity] = useState(item.quantity);
     const [availableQty, setAvailableQty] = useState()
     const deleteCartItemRef = useRef();
     const updateCartConfirmRef = useRef();
 
     const products = useSelector((state) => state.adminProducts.products)
-
     const checkIds = () => {
         //console.log("Products:", products);
         if (!products || !Array.isArray(products)) {
@@ -79,9 +78,9 @@ const CartItem = ({ item }) => {
                     </div>
                     <div className="col-span-3 flex items-center justify-center mobile:hidden">
                         <div className="flex">
-                            <button onClick={decrement} className=" hover:bg-red-400 bg-gray-400 rounded w-6 h-6 flex items-center justify-center text-xs">-</button>
+                            <button disabled = {viewMode} onClick={decrement} className=" hover:bg-red-400 bg-gray-400 rounded w-6 h-6 flex items-center justify-center text-xs">-</button>
                             <span className="w-10 rounded-md bg-green-400 text-white text-center">{quantity}</span>
-                            <button onClick={increment} className=" hover:bg-blue-400 bg-gray-400 rounded w-6 h-6 flex items-center justify-center text-xs">+</button>
+                            <button disabled = {viewMode} onClick={increment} className=" hover:bg-blue-400 bg-gray-400 rounded w-6 h-6 flex items-center justify-center text-xs">+</button>
                         </div>
                     </div>
                     <div className='col-span-2 mobile:col-span-2 mobile:text-sm  grid font-semibold text-center  items-center '>
@@ -92,7 +91,7 @@ const CartItem = ({ item }) => {
                         <button onClick={openDeleteCartItemModal} className='absolute top-0 right-0 mt-1 mr-1 text-white bg-red-400 rounded-md hover:bg-red-600 pb-[7px] pl-[5px] p-1 w-5 h-5 flex items-center justify-center'>
                            <RiDeleteBin5Line className='size-24 mt-[2px]'/>
                         </button>
-                        <div onClick={openUpdatecartConfirmMOdal} className='absolute btn top-6 right-0 mt-1 mr-0 text-white bg-blue-400 rounded-md hover:bg-blue-600 p-1 w-16 h-8 flex items-center justify-center'>
+                        <div disabled={viewMode} onClick={openUpdatecartConfirmMOdal} className='absolute btn top-6 right-0 mt-1 mr-0 text-white bg-blue-400 rounded-md hover:bg-blue-600 p-1 w-16 h-8 flex items-center justify-center'>
                             Update
                         </div>
                     </div>

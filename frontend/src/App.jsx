@@ -4,7 +4,6 @@ import RegisterElement from "./pages/auth/RegisterElement";
 import Dashboard from "./pages/admin/Dashboard";
 import AdminLayout from "./components/admin/AdminLayout";
 import Features from "./pages/admin/Features";
-import Orders from "./pages/admin/Orders";
 import Products from "./pages/admin/Products";
 import AuthLayout from "./components/auth/AuthLayout";
 import ShoppingLayout from "./components/shopping/ShoppingLayout";
@@ -25,6 +24,8 @@ import Spices from "./pages/shopping/sub-pages/Spices";
 import OtherProducts from "./pages/shopping/sub-pages/OtherProducts";
 import Baking from "./pages/shopping/sub-pages/Baking";
 import Herbs from "./pages/shopping/sub-pages/Herbs";
+import AdminOrders from "./pages/admin/AdminOrders";
+import ShoppingOrders from "./pages/shopping/ShoppingOrders";
 
 export default function App() {
 
@@ -57,7 +58,7 @@ export default function App() {
         }>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="features" element={<Features />} />
-          <Route path="Orders" element={<Orders />} />
+          <Route path="adminOrders" element={<AdminOrders />} />
           <Route path="Products" element={<Products />} />
         </Route>
 
@@ -68,6 +69,7 @@ export default function App() {
         } >
           <Route path="account" element={<Account />} />
           <Route path="checkout" element={<CheckOut />} />
+          <Route path="shoppingOrders" element={<ShoppingOrders />} />
           <Route path="home" element={<Home />}>
             <Route path="all-products" element={<AllProducts />} />
             <Route path="nuts" element={<Nuts />} />
