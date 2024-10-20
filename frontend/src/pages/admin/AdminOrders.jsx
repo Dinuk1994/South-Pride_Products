@@ -1,6 +1,18 @@
+import { useRef } from "react"
+import OrderDetailsModal from "../../components/atoms/Orders/OrderDetailsModal";
+
 
 
 const AdminOrders = () => {
+  const adminOrderDetailRef = useRef();
+
+  const openAdminOrderDetailRef = () =>{
+    if(adminOrderDetailRef.current){
+      adminOrderDetailRef.current.showModal();
+    }
+  }
+
+
   return (
     <div>
       <div className="relative bg-base-300 h-screen bg-cover bg-center">
@@ -29,7 +41,7 @@ const AdminOrders = () => {
                       <td>In Process</td>
                       <td>Rs.1000.00</td>
                       <td>
-                        <div className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
+                        <div onClick={openAdminOrderDetailRef} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
                           Details
                         </div>
                       </td>
@@ -41,7 +53,7 @@ const AdminOrders = () => {
                       <td>In Process</td>
                       <td>Rs.1000.00</td>
                       <td>
-                        <div className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
+                        <div onClick={openAdminOrderDetailRef} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
                           Details
                         </div>
                       </td>
@@ -53,7 +65,7 @@ const AdminOrders = () => {
                       <td>In Process</td>
                       <td>Rs.1000.00</td>
                       <td>
-                        <div className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
+                        <div onClick={openAdminOrderDetailRef} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
                           Details
                         </div>
                       </td>
@@ -66,6 +78,7 @@ const AdminOrders = () => {
           </div>
         </div>
       </div>
+      <OrderDetailsModal adminOrderDetail={adminOrderDetailRef} visible={true}/>
     </div>
   )
 }

@@ -1,7 +1,20 @@
 import { CarouselElement } from "../../components/atoms/CarouselElement";
 import backgroundImage from "../../assets/Shipping-Detail-Image.png";
+import { useRef } from "react";
+import OrderDetailsModal from "../../components/atoms/Orders/OrderDetailsModal";
 
 const ShoppingOrders = () => {
+
+  const adminOrderDetailRef = useRef();
+
+  const openAdminOrderDetailRef = () =>{
+    console.log("Open Order Detail MOdal");
+    
+    if(adminOrderDetailRef.current){
+      adminOrderDetailRef.current.showModal();
+    }
+  }
+
   return (
     <div>
       <CarouselElement />
@@ -31,7 +44,7 @@ const ShoppingOrders = () => {
                       <td>In Process</td>
                       <td>Rs.1000.00</td>
                       <td>
-                        <div className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
+                        <div onClick={openAdminOrderDetailRef} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
                           Details
                         </div>
                       </td>
@@ -43,7 +56,7 @@ const ShoppingOrders = () => {
                       <td>In Process</td>
                       <td>Rs.1000.00</td>
                       <td>
-                        <div className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
+                        <div onClick={openAdminOrderDetailRef} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
                           Details
                         </div>
                       </td>
@@ -55,7 +68,7 @@ const ShoppingOrders = () => {
                       <td>In Process</td>
                       <td>Rs.1000.00</td>
                       <td>
-                        <div className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
+                        <div  onClick={openAdminOrderDetailRef} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
                           Details
                         </div>
                       </td>
@@ -68,6 +81,10 @@ const ShoppingOrders = () => {
           </div>
         </div>
       </div>
+      <div>
+       
+      </div>
+      <OrderDetailsModal adminOrderDetail={adminOrderDetailRef} visible={false}/>
     </div>
   );
 };
