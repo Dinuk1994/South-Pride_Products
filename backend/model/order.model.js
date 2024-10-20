@@ -1,5 +1,50 @@
 import mongoose from "mongoose";
 
+const CartItemShema = new mongoose.Schema({
+    productId: {
+        type: String,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    },
+    salePrice: {
+        type: Number,
+        required: true
+    },
+    quantity: {
+        type: Number,
+        required: true
+    }
+})
+
+const shippingAddressSchema = new mongoose.Schema({
+    address : {
+        type : String,
+        required : true
+    },
+    city : {
+        type : String,
+        required : true
+    },
+    country : {
+        type : String,
+        required : true
+    },
+    postalCode : {
+        type : String,
+        required : true
+    },
+    phone : {
+        type : String,
+        required : true
+    }
+})
 
 const OrderSchema = new mongoose.Schema({
     userId: {
@@ -7,38 +52,43 @@ const OrderSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
-    cart: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Cart",
-        required: true
+    cartItems : [CartItemShema],
+    address : shippingAddressSchema,
+    orderStatus :{
+        type : String,
+        required : true,
+        default : "pending"
     },
-    shippingDetails: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "ShippingDetails",
-        required: true
+    paymentMethod : {
+        type : String,
+        required : true
     },
-    totalAmount: {
-        type: Number,
-        required: true 
+    paymentStatus : {
+        type : String,
+        required : true,
+        default : "pending"
     },
-    paymentMethod: {
-        type: String,
-        required: true,
-        enum: ['credit_card', 'paypal', 'cash_on_delivery'],
-        default: 'cash_on_delivery'
+    totalPrice : {
+        type : Number,
+        required : true
     },
-    status: {
-        type: String,
-        enum: ['pending', 'shipped', 'delivered', 'cancelled'],
-        default: 'pending'
+    orderDate : {
+        type : Date,
+        default : Date.now
     },
-    orderDate: {
-        type: Date,
-        default: Date.now
+    orderUpdateDate : {
+        type : Date,
+        default : Date.now     
     },
-    deliveryDate: {
-        type: Date
+    paymentId : {
+        type : String,
+        required : true
+    },
+    payerId :{
+        type : String,
+        required : true
     }
+  
 }, {
     timestamps: true
 });
