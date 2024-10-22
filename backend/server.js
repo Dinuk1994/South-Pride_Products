@@ -35,7 +35,7 @@ app.use("/api/auth", authRouter)
 app.use("/api/admin",productRouter)
 app.use("/api/cart", cartRouter)
 app.use("/api/shipping",shippingRouter)
-app.use("api/shopping/order",orderRouter)
+app.use("/api/shopping/order",orderRouter)
 
 app.listen(PORT, () => {
     ConnectToDB();

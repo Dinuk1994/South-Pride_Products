@@ -1,5 +1,5 @@
-import Order from "../model/order.model";
-import paypal from "../payments/paypal"
+import Order from "../model/order.model.js";
+import paypal from "../payments/paypal.js"
 export const createOrder = async(req,res)=>{
     try {
         const{userId , cartItems, address, orderStatus , paymentMethod , paymentStatus, totalPrice,orderDate, orderUpdateDate,paymentId,payerId} =req.body ; 
@@ -20,12 +20,12 @@ export const createOrder = async(req,res)=>{
                             name : item.title,
                             sku : item.productId,
                             price : item.salePrice.toFixed(2),
-                            currency : 'LKR',
+                            currency : 'USD',
                             quantity : item.quantity
                         }))
                     },
                     amount : {
-                        currency : "LKR",
+                        currency : "USD",
                         total : totalPrice.toFixed(2)
                     },
                     description : 'Payment for items in cart'
@@ -36,7 +36,7 @@ export const createOrder = async(req,res)=>{
         paypal.payment.create(createPaymentJson,async(error,paymentInfo)=>{
             if(error){
                 console.log(error);
-                return res.status(400).json({msg : "Error while creating paypal payment"})
+                return res.status(400).json({msg : "Error while creating paypal payment",error})
             }else{
                 const newOrder = new Order({
                     userId,

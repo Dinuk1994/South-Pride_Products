@@ -20,7 +20,7 @@ const shippingDetailSlice = createSlice({
         .addCase(getShippingDetailById.fulfilled,(state,action)=>{
             state.isLoading = false
             state.shippingDetail = action.payload
-            console.log(action.payload);           
+       
         })
         .addCase(getShippingDetailById.rejected,(state,action)=>{
             state.isLoading = false
@@ -32,7 +32,7 @@ const shippingDetailSlice = createSlice({
         .addCase(addShippingDetails.fulfilled,(state,action)=>{
             state.isLoading = false
             state.shippingDetail = action.payload
-            console.log(action.payload);
+
         })
         .addCase(addShippingDetails.rejected,(state,action)=>{
             state.isLoading = false
@@ -44,7 +44,7 @@ const shippingDetailSlice = createSlice({
         .addCase(updateShippingDetails.fulfilled,(state,action)=>{
             state.isLoading = false
             state.shippingDetail = action.payload
-            console.log(action.payload);
+     
         })
         .addCase(updateShippingDetails.rejected,(state,action)=>{
             state.isLoading = false

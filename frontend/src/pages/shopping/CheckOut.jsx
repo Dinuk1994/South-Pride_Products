@@ -12,7 +12,7 @@ const CheckOut = () => {
 
   const user = useSelector((state) => state.auth.user)
   const shippingDetail = useSelector((state) => state.shipping.shippingDetail)
-  const cartItems = useSelector((state) => state.cart.cartItems)
+  const itemsInCart = useSelector((state) => state.cart.cartItems)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -20,11 +20,45 @@ const CheckOut = () => {
     dispatch(getCartItems(user.id))
   }, [dispatch, user.id])
 
-  console.log("Checkout", cartItems);
+  console.log("checkOut :" , shippingDetail);
+  
 
-  const totalPrice = cartItems?.data?.reduce((acc, item) => {
+
+  const totalPrice = itemsInCart?.data?.reduce((acc, item) => {
     return acc + (parseFloat(item.salePrice) * item.quantity);
   }, 0).toFixed(2);
+
+
+  const handleCheckOutbtn = async(e) =>{
+      e.preventDefault();
+      const checkOutData = {
+        userId: user.id,
+        cartItems : itemsInCart?.data.map(item =>({
+          productId: item.productId,
+          title : item.productName,
+          image : item.images[0],
+          salePrice : item.salePrice,
+          quantity : item.quantity
+        })),
+        address : {
+          address : shippingDetail?.address,
+          city : shippingDetail?.city,
+          country : shippingDetail?.country,
+          postalCode : shippingDetail?.postalCode,
+          phone : shippingDetail?.phone
+        },
+        orderStatus : "pending",
+        paymentMethod : "paypal",
+        paymentStatus : "pending",
+        totalPrice : totalPrice,
+        orderDate : new Date(),
+        orderUpdateDate : new Date(),
+        paymentId : "",
+        payerId : ""
+      }
+      console.log(checkOutData);
+      
+  }
 
   return (
     <div className="h-full relative">
@@ -99,12 +133,12 @@ const CheckOut = () => {
           <div className="bg-purple-500 overflow-y-auto rounded-md bg-clip-padding backdrop-filter backdrop-blur-2xl border h-full border-gray-100 bg-opacity-20">
             <div className="grid mt-5 px-24 mobile:px-1">
               <div className="p-6 grid gap-y-6 ">
-                {Array.isArray(cartItems?.data) && cartItems.data.length > 0 ? (
-                  cartItems.data
+                {Array.isArray(itemsInCart?.data) && itemsInCart.data.length > 0 ? (
+                  itemsInCart.data
                     .slice()
                     .reverse()
                     .map((item, index) => (
-                      <div key={item.id} className="flex gap-x-5 mobile:gap-x-2">
+                      <div key={item.productId} className="flex gap-x-5 mobile:gap-x-2">
                         <div className="flex items-center">
                           <BsCartCheckFill className="flex text-green-400 size-8 mobile:size-6" />
                         </div>
@@ -127,7 +161,7 @@ const CheckOut = () => {
 
 
               <div className="flex pb-6 mt-7 justify-center ml-12 mobile:ml-0">
-                <div className="btn w-1/2 btn-ghost text-lg mobile:text-sm text-white bg-blue-400 hover:bg-blue-600">
+                <div onClick={handleCheckOutbtn} className="btn w-1/2 btn-ghost text-lg mobile:text-sm text-white bg-blue-400 hover:bg-blue-600">
                   Proceed to Payment
                 </div>
               </div>
