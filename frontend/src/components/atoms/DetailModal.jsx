@@ -1,4 +1,4 @@
- 
+
 /* eslint-disable react/prop-types */
 
 import { useRef, useState } from "react";
@@ -8,20 +8,20 @@ import { IoStarHalf } from "react-icons/io5";
 import AddCartConfirmModal from "./Shopping/Modals/AddCartConfirmModal";
 
 
-const DetailModal = ({ detailModal, product ,user }) => {
+const DetailModal = ({ detailModal, product, user }) => {
     const cartConfirmRef = useRef();
 
     const [selectedWeight, setSelectedWeight] = useState(product.weightStock[0]);
 
-    const [cartProduct,setCartProduct]=useState({    
-        userId : null,
-        productId : null,
-        quantity : null,
-        selectedWeight : null
+    const [cartProduct, setCartProduct] = useState({
+        userId: null,
+        productId: null,
+        quantity: null,
+        selectedWeight: null
     })
 
-    const setCartItem = ()=>{
-        if(user){
+    const setCartItem = () => {
+        if (user) {
             setCartProduct({
                 userId: user?.id,
                 productId: product._id,
@@ -39,15 +39,15 @@ const DetailModal = ({ detailModal, product ,user }) => {
         setSelectedWeight(selectedWeightObject);
     };
 
-    console.log("DetailModal",user?.id);
-    
+    console.log("DetailModal", user?.id);
 
-    const openCartConfirmModal=(e)=>{
-        console.log({"UserID" : user._id});
+
+    const openCartConfirmModal = (e) => {
+        console.log({ "UserID": user._id });
         setCartItem()
         //console.log(cartProduct);
         e.preventDefault()
-        if(cartConfirmRef.current){
+        if (cartConfirmRef.current) {
             cartConfirmRef.current.showModal();
         }
     }
@@ -73,10 +73,10 @@ const DetailModal = ({ detailModal, product ,user }) => {
                                             <IoStar />
                                             <IoStar />
                                             <IoStar />
-                                            <IoStarHalf/>
+                                            <IoStarHalf />
                                             <label className="flex items-center text-sm -mt-1 ml-1 " htmlFor="">(4.5)</label>
                                         </div>
-                                       
+
                                     </div>
                                     <p className="text-gray-600  text-pretty max-h-[150px] overflow-y-auto">{product.description}</p>
                                     <label htmlFor="">Select weight</label>
@@ -100,7 +100,13 @@ const DetailModal = ({ detailModal, product ,user }) => {
 
                                         </div>
                                         <div className="col-span-1  flex items-center">
-                                            <p className="mobile:text-xs text-pretty">Quantity: {selectedWeight.stockQty}</p>
+                                            {
+                                                selectedWeight.stockQty !== 0 ? (
+                                                    <p className="mobile:text-xs text-pretty">Quantity: {selectedWeight.stockQty}</p>
+                                                ) : (
+                                                    <p className="mobile:text-xs text-red-500 font-semibold">Out of Stock</p>
+                                                )
+                                            }
                                         </div>
                                     </div>
                                     <div onClick={openCartConfirmModal} className="btn btn-ghost mt-2 bg-blue-400 hover:bg-blue-600 hover:text-white">
@@ -112,7 +118,7 @@ const DetailModal = ({ detailModal, product ,user }) => {
                     </div>
                 </div>
             </dialog>
-            <AddCartConfirmModal addToCartRef={cartConfirmRef}  detailModalRef={detailModal}  product={product} user={user} cartProduct={cartProduct} />
+            <AddCartConfirmModal addToCartRef={cartConfirmRef} detailModalRef={detailModal} product={product} user={user} cartProduct={cartProduct} />
         </div>
     )
 }
