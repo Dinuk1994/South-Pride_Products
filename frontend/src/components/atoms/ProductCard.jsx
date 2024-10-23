@@ -161,7 +161,13 @@ const ProductCard = ({ product }) => {
                     <div className="grid grid-cols-2 mobile:grid-cols-5">
                         <div className='col-span-1 mobile:col-span-3'>
                             <p className="mobile:text-xs text-pretty ">Price: ${selectedWeight.salePrice}</p>
-                            <p className="mobile:text-xs text-pretty">Quantity: {selectedWeight.stockQty}</p>
+                            {
+                                selectedWeight.stockQty !== 0 ? (
+                                    <p className="mobile:text-xs text-pretty">Quantity: {selectedWeight.stockQty}</p>
+                                ) : (
+                                    <p className="mobile:text-xs text-red-500 font-semibold">Out of Stock</p>
+                                )
+                            }
                         </div>
                         <div className=' col-span-1 '>
                             {user.role === "admin" ? (

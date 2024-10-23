@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import LoginElement from "./pages/auth/LoginElement";
 import RegisterElement from "./pages/auth/RegisterElement";
 import Dashboard from "./pages/admin/Dashboard";
@@ -44,6 +44,7 @@ export default function App() {
   return (
     <div>
       <Routes>
+        <Route path="/" element={<Navigate to="/auth/login" />} />
         <Route path="/auth" element={
           <CheckAuth isAuthenticate={isAuthenticate} user={user}>
             <AuthLayout />

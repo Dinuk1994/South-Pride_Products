@@ -38,76 +38,77 @@ const CheckOut = () => {
     e.preventDefault();
 
     if (!shippingDetail?.address || !shippingDetail?.fullName || !shippingDetail?.city || !shippingDetail?.country || !shippingDetail?.postalCode || !shippingDetail?.phone) {
-        setLoading(false); 
-        toast.error("Please fill in all address details."); 
-        return; 
+      setLoading(false);
+      toast.error("Please fill in all address details.");
+      return;
     }
 
     if (itemsInCart?.length === 0) {
-        setLoading(false);
-        toast.error("Your cart is empty."); 
-        return;
+      setLoading(false);
+      toast.error("Your cart is empty.");
+      return;
     }
-    
+
     setLoading(true);
 
     const checkOutData = {
-        userId: user.id,
-        cartItems: itemsInCart?.data.map(item => ({
-            productId: item.productId,
-            title: item.productName,
-            image: item.images[0],
-            salePrice: item.salePrice,
-            quantity: item.quantity
-        })),
-        address: {
-            address: shippingDetail?.address,
-            city: shippingDetail?.city,
-            country: shippingDetail?.country,
-            postalCode: shippingDetail?.postalCode,
-            phone: shippingDetail?.phone
-        },
-        orderStatus: "pending",
-        paymentMethod: "paypal",
-        paymentStatus: "pending",
-        totalPrice: Number(totalPrice),
-        orderDate: new Date(),
-        orderUpdateDate: new Date(),
-        paymentId: "",
-        payerId: ""
+      userId: user.id,
+      cartItems: itemsInCart?.data.map(item => ({
+        productId: item.productId,
+        title: item.productName,
+        image: item.images[0],
+        salePrice: item.salePrice,
+        quantity: item.quantity,
+        weight : item.weight
+      })),
+      address: {
+        address: shippingDetail?.address,
+        city: shippingDetail?.city,
+        country: shippingDetail?.country,
+        postalCode: shippingDetail?.postalCode,
+        phone: shippingDetail?.phone
+      },
+      orderStatus: "pending",
+      paymentMethod: "paypal",
+      paymentStatus: "pending",
+      totalPrice: Number(totalPrice),
+      orderDate: new Date(),
+      orderUpdateDate: new Date(),
+      paymentId: "",
+      payerId: ""
     };
 
-    console.log("Checkout",checkOutData);
-    console.log("Cart",itemsInCart);
-    
+    console.log("Checkout", checkOutData);
+    console.log("Cart", itemsInCart);
+
 
     try {
-        const data = await dispatch(createOrder(checkOutData)).unwrap();
-        console.log("Order creation response:", data);
+      const data = await dispatch(createOrder(checkOutData)).unwrap();
+      console.log("Order creation response:", data);
 
-        if (data?.msg === "success") {
-            const approvalURL = data?.approvalURL;
-           // console.log("Approval URL:", approvalURL); 
-            setPaymentBegun(true);
-            setTimeout(() => {
-                if (approvalURL) {
-                    window.location.href = approvalURL; 
-                } else {
-                    setPaymentBegun(false);
-                    toast.error("No approval URL returned. Payment initiation failed.");
-                }
-            }, 50); 
-        } else {
+      if (data?.msg === "success") {
+        const approvalURL = data?.approvalURL;
+        // console.log("Approval URL:", approvalURL); 
+        setPaymentBegun(true);
+        setTimeout(() => {
+          if (approvalURL) {
+            window.location.href = approvalURL;
+          } else {
             setPaymentBegun(false);
-            toast.error("Payment initiation failed. Please try again.");
-        }
+            toast.error("No approval URL returned. Payment initiation failed.");
+          }
+        }, 50);
+      } else {
+        setPaymentBegun(false);
+        toast.error("Payment initiation failed. Please try again.");
+      }
     } catch (error) {
-        console.error("Order creation failed", error);
-        toast.error("Failed to create order. Please try again.");
+      console.error("Order creation failed", error);
+      toast.error("Failed to create order. Please try again.");
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-};
+  };
 
 
 
@@ -212,11 +213,15 @@ const CheckOut = () => {
 
 
               <div className="flex pb-6 mt-7 justify-center ml-12 mobile:ml-0">
-                <div onClick={handleCheckOutbtn} disabled={loading} className={`btn w-1/2 btn-ghost text-lg mobile:text-sm text-white bg-blue-400 hover:bg-blue-600 `}>
-                  {loading ? <span className="spinner"></span> : "Proceed to Payment"}
+                <div onClick={handleCheckOutbtn} className="btn w-1/2 btn-ghost text-lg mobile:text-sm text-white bg-blue-400 hover:bg-blue-600 flex items-center justify-center">
+                  {loading ? (
+                    <span className="loading loading-spinner loading-sm mr-2"></span> 
+                  ) : (
+                    <span>Proceed to payment</span>
+                  )}
                 </div>
-
               </div>
+
             </div>
           </div>
         </div>

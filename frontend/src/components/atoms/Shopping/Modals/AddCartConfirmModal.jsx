@@ -30,19 +30,25 @@ const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct, deta
 
     const addCartItem = (e) => {
         e.preventDefault();
-        const { availableQty, ...rest } = cartProduct
-        const updatedCartItem = {
-            ...rest,
-            quantity: quantity
+        if (cartProduct.availableQty !== 0) {
+            const { availableQty, ...rest } = cartProduct
+            const updatedCartItem = {
+                ...rest,
+                quantity: quantity
+            }
+            dispatch(addCartItems(updatedCartItem)).then(() => {
+                dispatch(getCartItems({ id: user.id }));
+            });
+            console.log(updatedCartItem);
+            setTimeout(() => {
+                addToCartRef.current.close()
+                detailModalRef?.current.close()
+            }, 1000)
+        }else{
+            addToCartRef.current.close();
+            toast.error("Sorry Product is out of stock")
         }
-        dispatch(addCartItems(updatedCartItem)).then(() => {
-            dispatch(getCartItems({ id: user.id }));
-        });
-        console.log(updatedCartItem);
-        setTimeout(() => {
-            addToCartRef.current.close()
-            detailModalRef?.current.close()
-        }, 1000)
+
 
     }
 

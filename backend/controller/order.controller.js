@@ -1,10 +1,11 @@
 import Cart from "../model/cart.model.js";
 import cart from "../model/cart.model.js";
 import Order from "../model/order.model.js";
+import Product from "../model/product.model.js";
 import paypal from "../payments/paypal.js"
 export const createOrder = async(req,res)=>{
     try {
-        const{userId , cartItems, address, orderStatus , paymentMethod , paymentStatus, totalPrice,orderDate, orderUpdateDate,paymentId,payerId} =req.body ; 
+        const{userId , weight, cartItems, address, orderStatus , paymentMethod , paymentStatus, totalPrice,orderDate, orderUpdateDate,paymentId,payerId} =req.body ; 
 
         const createPaymentJson = {
             intent : 'sale',
@@ -23,7 +24,11 @@ export const createOrder = async(req,res)=>{
                             sku : item.productId,
                             price : item.salePrice.toFixed(2),
                             currency : 'USD',
-                            quantity : item.quantity
+                            quantity : item.quantity,
+                            weight: {
+                                unit: 'g', 
+                                value: item.weight 
+                            }
                         }))
                     },
                     amount : {
@@ -42,6 +47,7 @@ export const createOrder = async(req,res)=>{
             }else{
                 const newOrder = new Order({
                     userId,
+                    weight,
                     cartItems,
                     address,
                     orderStatus,
@@ -80,6 +86,34 @@ export const capturePayment = async (req, res) => {
         order.paymentId = paymentId;
         order.payerId = payerId;
 
+
+        for (const item of order.cartItems) {
+        
+            const product = await Product.findById(item.productId);
+            // console.log("productFound", product);
+            // console.log("Item", item);
+  
+            if (!product) {
+                return res.status(404).json({ msg: `Product with ID ${item.productId} not found` });
+            }
+
+            product.weightStock = product.weightStock.map(stockItem => {
+                console.log("Checking stock item:", stockItem.weight);
+                if (stockItem.weight === item.weight) {
+                    console.log("Matching stock item:", stockItem.weight, "item weight:", item.weight);
+
+                    if (stockItem.stockQty >= item.quantity) {
+                        stockItem.stockQty -= item.quantity;
+                    } else {
+                        return res.status(400).json({ msg: `Not enough stock for product ${product.productName}` });
+                    }
+                }
+                return stockItem;
+            });
+
+            await product.save();
+        }
+
         const userId = order.userId;
         const cart = await Cart.findOneAndDelete({ userId });
 
@@ -92,5 +126,23 @@ export const capturePayment = async (req, res) => {
 
     } catch (error) {
         return res.status(500).json({ msg: "Internal server error" });
+    }
+}
+
+
+export const findOrdersByUserId = async(req,res)=>{
+    try {
+        const userId = req.params.id
+
+        const orders = await Order.find(userId)
+
+        if(!orders){
+            return res.status(404).json({msg : "Orders not found"})
+        }
+        
+        return res.status(200).json({orders})
+        
+    } catch (error) {
+        return res.status(500).json({msg : "Internal server error"})
     }
 }
