@@ -9,7 +9,7 @@ import { getCartItems } from "../../../../api/cartAPI/getCartItems";
 
 const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct, detailModalRef, user }) => {
 
-    const cartItems = useSelector((state) => state.cart.cartItems)
+    const cartItems = useSelector((state) => state.cart.cartItems);
 
 
     const [quantity, setQuantity] = useState(1);
@@ -30,33 +30,51 @@ const AddCartConfirmModal = ({ addToCartRef, loading, product, cartProduct, deta
 
     const addCartItem = (e) => {
         e.preventDefault();
-        if (cartProduct.availableQty !== 0) {
-            const { availableQty, ...rest } = cartProduct
-            const updatedCartItem = {
-                ...rest,
-                quantity: quantity
-            }
-            dispatch(addCartItems(updatedCartItem)).then(() => {
-                dispatch(getCartItems({ id: user.id }));
-            });
-            console.log(updatedCartItem);
-            setTimeout(() => {
-                addToCartRef.current.close()
-                detailModalRef?.current.close()
-            }, 1000)
-        }else{
+              
+        console.log(cartProduct.selectedWeight);
+        
+        cartItems?.data?.forEach(item => {
+            console.log("Cart Product Weight:", item.weight);
+        });
+      
+        const existingCartItem = cartItems?.data?.find(item =>
+            item.productId === cartProduct.productId && item.weight === cartProduct.selectedWeight
+        );
+
+        if (existingCartItem) {
+            toast.error("This item is already in your cart.");
             addToCartRef.current.close();
-            toast.error("Sorry Product is out of stock")
+            return;
+        } else {
+            if (cartProduct.availableQty > 0) {
+                const { availableQty, ...rest } = cartProduct;
+                const updatedCartItem = {
+                    ...rest,
+                    quantity: quantity 
+                };
+   
+                console.log("Updated Cart Item:", updatedCartItem);
+
+                dispatch(addCartItems(updatedCartItem)).then(() => {
+                    dispatch(getCartItems({ id: user.id }));
+                });
+
+                setTimeout(() => {
+                    addToCartRef.current.close();
+                    detailModalRef?.current.close();
+                }, 1000);
+            } else {
+                addToCartRef.current.close();
+                toast.error("Sorry, product is out of stock.");
+            }
         }
-
-
     }
 
     useEffect(() => {
-        if (cartItems) {
-            console.log({ "cart Items in Drawer": cartItems });
+        if (cartProduct) {
+           // console.log({ "cart Items in Drawer": cartProduct });
         }
-    }, [cartItems]);
+    }, [cartProduct]);
 
     return (
         <div>
