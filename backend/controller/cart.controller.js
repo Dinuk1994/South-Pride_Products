@@ -1,7 +1,8 @@
 import express from "express"
-import Cart from "../model/cart.model.js";
+
 import Product from "../model/product.model.js";
 import User from "../model/user.model.js";
+import Cart from "../model/cart.model.js";
 
 
 export const addToCart = async (req, res) => {
@@ -182,6 +183,23 @@ export const deleteCartItem = async(req,res)=>{
       
    } catch (error) {
       return res.status(500).json({msg : "Internal server error",error})
+   }
+}
+
+export const deleteCart = async(req,res)=>{
+   try {
+      const {userId} = req.params;
+
+      if(!userId){
+         return res.status(404).json({msg : "User Id required"})
+      }
+
+      const cart = await Cart.findOneAndDelete({userId})
+
+      return res.status(200).json({msg : "Cart deleted successfully",cart})
+      
+   } catch (error) {
+      return res.status(500).json({msg : "Internal server error"})
    }
 }
 

@@ -14,7 +14,6 @@ const CheckOut = () => {
 
   const user = useSelector((state) => state.auth.user)
   const shippingDetail = useSelector((state) => state.shipping.shippingDetail)
-  const approvalURL = useSelector((state) => state.shopOrder.approvalURL)
   const itemsInCart = useSelector((state) => state.cart.cartItems)
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
@@ -37,50 +36,74 @@ const CheckOut = () => {
 
   const handleCheckOutbtn = async (e) => {
     e.preventDefault();
-    setLoading(true)
-    const checkOutData = {
-      userId: user.id,
-      cartItems: itemsInCart?.data.map(item => ({
-        productId: item.productId,
-        title: item.productName,
-        image: item.images[0],
-        salePrice: item.salePrice,
-        quantity: item.quantity
-      })),
-      address: {
-        address: shippingDetail?.address,
-        city: shippingDetail?.city,
-        country: shippingDetail?.country,
-        postalCode: shippingDetail?.postalCode,
-        phone: shippingDetail?.phone
-      },
-      orderStatus: "pending",
-      paymentMethod: "paypal",
-      paymentStatus: "pending",
-      totalPrice: Number(totalPrice),
-      orderDate: new Date(),
-      orderUpdateDate: new Date(),
-      paymentId: "",
-      payerId: ""
+
+    if (!shippingDetail?.address || !shippingDetail?.fullName || !shippingDetail?.city || !shippingDetail?.country || !shippingDetail?.postalCode || !shippingDetail?.phone) {
+        setLoading(false); 
+        toast.error("Please fill in all address details."); 
+        return; 
     }
+    
+    setLoading(true);
 
-    console.log(checkOutData);
+    const checkOutData = {
+        userId: user.id,
+        cartItems: itemsInCart?.data.map(item => ({
+            productId: item.productId,
+            title: item.productName,
+            image: item.images[0],
+            salePrice: item.salePrice,
+            quantity: item.quantity
+        })),
+        address: {
+            address: shippingDetail?.address,
+            city: shippingDetail?.city,
+            country: shippingDetail?.country,
+            postalCode: shippingDetail?.postalCode,
+            phone: shippingDetail?.phone
+        },
+        orderStatus: "pending",
+        paymentMethod: "paypal",
+        paymentStatus: "pending",
+        totalPrice: Number(totalPrice),
+        orderDate: new Date(),
+        orderUpdateDate: new Date(),
+        paymentId: "",
+        payerId: ""
+    };
 
-    dispatch(createOrder(checkOutData)).then((data) => {
-      console.log("Completed", data?.payload.msg);
-      if (data?.payload?.msg === "success") {
-        setPaymentBegun(true)
-        if (approvalURL) {
-          window.location.href = approvalURL
+    console.log("Checkout",checkOutData);
+    console.log("Cart",itemsInCart);
+    
+
+    try {
+        const data = await dispatch(createOrder(checkOutData)).unwrap();
+        console.log("Order creation response:", data);
+
+        if (data?.msg === "success") {
+            const approvalURL = data?.approvalURL;
+           // console.log("Approval URL:", approvalURL); 
+            setPaymentBegun(true);
+            setTimeout(() => {
+                if (approvalURL) {
+                    window.location.href = approvalURL; 
+                } else {
+                    setPaymentBegun(false);
+                    toast.error("No approval URL returned. Payment initiation failed.");
+                }
+            }, 100); 
+        } else {
+            setPaymentBegun(false);
+            toast.error("Payment initiation failed. Please try again.");
         }
-      } else {
-        setPaymentBegun(false)
-      }
+    } catch (error) {
+        console.error("Order creation failed", error);
+        toast.error("Failed to create order. Please try again.");
+    } finally {
+        setLoading(false);
+    }
+};
 
-    }).then(() => {
-      setLoading(false)
-    });
-  }
+
 
   return (
     <div className="h-full relative">

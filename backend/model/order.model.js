@@ -52,6 +52,7 @@ const OrderSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
+
     cartItems : [CartItemShema],
     address : shippingAddressSchema,
     orderStatus :{

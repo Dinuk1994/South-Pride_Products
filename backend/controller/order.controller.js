@@ -1,3 +1,5 @@
+import Cart from "../model/cart.model.js";
+import cart from "../model/cart.model.js";
 import Order from "../model/order.model.js";
 import paypal from "../payments/paypal.js"
 export const createOrder = async(req,res)=>{
@@ -67,8 +69,28 @@ export const createOrder = async(req,res)=>{
 
 export const capturePayment = async(req,res)=>{
     try {
-        
-        
+        const {paymentId,orderId,payerId} = req.body;
+
+        const order = await Order.findById(orderId)
+        if(!order){
+            return res.status(404).json({msg : "Order not found"})
+        }
+        order.paymentStatus = "paid";
+        order.orderStatus = "confirmed",
+        order.paymentId = paymentId,
+        order.payerId = payerId
+
+        const userId = order.userId;
+        const cart = await Cart.findOneAndDelete({userId})
+
+        if(!cart){
+            return res.status(404).json({msg : "Cart not found"})
+        }
+    
+        await order.save()
+        return res.status(200).json({msg : "Payment captured successfully"})
+
+       
     } catch (error) {
         return res.status(500).json({msg : "Internal server error"})
     }
