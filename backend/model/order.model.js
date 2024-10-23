@@ -37,11 +37,11 @@ const shippingAddressSchema = new mongoose.Schema({
         required : true
     },
     postalCode : {
-        type : String,
+        type : Number,
         required : true
     },
     phone : {
-        type : String,
+        type : Number,
         required : true
     }
 })
@@ -82,11 +82,11 @@ const OrderSchema = new mongoose.Schema({
     },
     paymentId : {
         type : String,
-        required : true
+       
     },
     payerId :{
         type : String,
-        required : true
+        
     }
   
 }, {

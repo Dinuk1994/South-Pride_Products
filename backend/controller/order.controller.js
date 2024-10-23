@@ -54,7 +54,7 @@ export const createOrder = async(req,res)=>{
 
                 await newOrder.save();
                 const approvalURL = paymentInfo.links.find((link)=>link.rel === 'approval_url').href;
-                res.status(200).json({approvalURL , orderId : newOrder._id})
+                res.status(200).json({approvalURL , orderId : newOrder._id , msg:"success"})
             }
         })
     

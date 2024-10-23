@@ -26,6 +26,7 @@ import Baking from "./pages/shopping/sub-pages/Baking";
 import Herbs from "./pages/shopping/sub-pages/Herbs";
 import AdminOrders from "./pages/admin/AdminOrders";
 import ShoppingOrders from "./pages/shopping/ShoppingOrders";
+import PaymentReturnPage from "./pages/shopping/PaymentReturnPage";
 
 export default function App() {
 
@@ -70,6 +71,7 @@ export default function App() {
           <Route path="account" element={<Account />} />
           <Route path="checkout" element={<CheckOut />} />
           <Route path="shoppingOrders" element={<ShoppingOrders />} />
+          <Route path="paypal-return" element={<PaymentReturnPage />} />
           <Route path="home" element={<Home />}>
             <Route path="all-products" element={<AllProducts />} />
             <Route path="nuts" element={<Nuts />} />

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createOrder } from "../../api/orderAPI/createOrder";
+import toast from "react-hot-toast";
 
 const initialState = {
     approvalURL : null,
@@ -21,6 +22,7 @@ const shoppingOrderSlice = createSlice({
             state.isLoading = false
             state.approvalURL = action.payload.approvalURL
             state.orderId = action.payload.orderId
+            toast.success("Order Created successfull")
         })
         .addCase(createOrder.rejected,(state)=>{
             state.isLoading = false
