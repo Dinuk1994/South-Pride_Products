@@ -146,3 +146,19 @@ export const findOrdersByUserId = async(req,res)=>{
         return res.status(500).json({msg : "Internal server error"})
     }
 }
+
+
+export const getAllOrders = async(req,res)=>{
+    try {
+        const orders = await Order.find()
+
+        if(!orders){
+            return res.status(404).json({msg : "Orders not found"})
+        }
+        
+        return res.status(200).json({orders})
+        
+    } catch (error) {
+        return res.status(500).json({msg : "Internal server error"})
+    }
+}
