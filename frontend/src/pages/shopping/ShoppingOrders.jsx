@@ -1,19 +1,36 @@
 import { CarouselElement } from "../../components/atoms/CarouselElement";
 import backgroundImage from "../../assets/Shipping-Detail-Image.png";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import OrderDetailsModal from "../../components/atoms/Orders/OrderDetailsModal";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrdersByUserId } from "../../api/orderAPI/getOrderByUserId";
 
 const ShoppingOrders = () => {
 
   const adminOrderDetailRef = useRef();
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state.auth.user)
+  const orders = useSelector((state) => state.shopOrder.orders)
+  const [selectedOrderDetail, setSelectedOrderDetail] = useState(null)
 
-  const openAdminOrderDetailRef = () =>{
+
+  const openAdminOrderDetailRef = (order) => {
     console.log("Open Order Detail MOdal");
-    
-    if(adminOrderDetailRef.current){
+    setSelectedOrderDetail(order)
+
+    if (adminOrderDetailRef.current) {
       adminOrderDetailRef.current.showModal();
     }
   }
+
+  useEffect(() => {
+    console.log("Order page", user);
+    dispatch(getOrdersByUserId(user.id))
+
+  }, [dispatch, user])
+
+  console.log("Orders", orders?.orders);
+
 
   return (
     <div>
@@ -37,42 +54,30 @@ const ShoppingOrders = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {/* row 1 */}
-                    <tr>
-                      <th>OR001</th>
-                      <td>10/20/2024</td>
-                      <td>In Process</td>
-                      <td>Rs.1000.00</td>
-                      <td>
-                        <div onClick={openAdminOrderDetailRef} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
-                          Details
-                        </div>
-                      </td>
-                    </tr>
-                    {/* row 2 */}
-                    <tr>
-                      <th>OR002</th>
-                      <td>10/20/2024</td>
-                      <td>In Process</td>
-                      <td>Rs.1000.00</td>
-                      <td>
-                        <div onClick={openAdminOrderDetailRef} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
-                          Details
-                        </div>
-                      </td>
-                    </tr>
-                    {/* row 3 */}
-                    <tr>
-                      <th>OR003</th>
-                      <td>10/20/2024</td>
-                      <td>In Process</td>
-                      <td>Rs.1000.00</td>
-                      <td>
-                        <div  onClick={openAdminOrderDetailRef} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
-                          Details
-                        </div>
-                      </td>
-                    </tr>
+                    {Array.isArray(orders?.orders) && orders?.orders.length > 0 ? (
+                      orders?.orders.map((order, index) => (
+                        <tr key={index}>
+                          <th>{order?._id}</th>
+                          <td>{new Date(order?.orderDate).toLocaleDateString()}</td>
+                          <td>{order?.orderStatus}</td>
+                          <td>Rs. {order?.totalPrice?.toFixed(2)}</td>
+                          <td>
+                            <div
+                              onClick={() => openAdminOrderDetailRef(order)}
+                              className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600"
+                            >
+                              Details
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5" className="text-center">
+                          No orders found.
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -82,9 +87,9 @@ const ShoppingOrders = () => {
         </div>
       </div>
       <div>
-       
+
       </div>
-      <OrderDetailsModal adminOrderDetail={adminOrderDetailRef} visible={false}/>
+      <OrderDetailsModal adminOrderDetail={adminOrderDetailRef} visible={false} order={selectedOrderDetail}/>
     </div>
   );
 };

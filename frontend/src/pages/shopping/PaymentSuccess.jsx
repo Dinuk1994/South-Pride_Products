@@ -1,8 +1,8 @@
 import PaymentSuccessImage from "../../assets/Payment-Success-Image.png"
 import SuccessImage from "../../assets/Success.png"
 
-const PaymentSuccess = () => {
 
+const PaymentSuccess = () => {
 
   return (
     <div className="h-screen relative flex justify-center">
@@ -18,9 +18,12 @@ const PaymentSuccess = () => {
             <div className=" mobile:flex  flex justify-center  mobile:px-6 mt-10">
               <label className="text-white font-semibold text-2xl mobile:text-lg  mobile:text-center" htmlFor="">Your payment for the South-Pride is successfully completed</label>
             </div>
-            <div className="flex justify-center mt-14">
-              <a href="/shopping/shoppingOrders" className="btn btn-ghost bg-blue-400 text-white hover:bg-blue-600">
+            <div className="flex justify-center gap-x-6 mt-14">
+              <a href="/shopping/shoppingOrders" className="btn btn-ghost shadow-lg shadow-slate-600 bg-blue-400 text-white hover:bg-blue-600">
                   View My Orders
+              </a>
+              <a href="/shopping/home" className="btn w-36 btn-ghost shadow-lg shadow-slate-600 bg-blue-400 text-white hover:bg-blue-600">
+                  Home
               </a>
             </div>
           </div>

@@ -1,7 +1,7 @@
 
 /* eslint-disable react/prop-types */
 
-const OrderDetailsModal = ({ adminOrderDetail, visible }) => {
+const OrderDetailsModal = ({ adminOrderDetail, visible, order }) => {
     return (
         <div>
             <dialog ref={adminOrderDetail} id="my_modal_3" className="modal backdrop-blur-sm z-50">
@@ -14,28 +14,28 @@ const OrderDetailsModal = ({ adminOrderDetail, visible }) => {
                             Order ID
                         </div>
                         <div className="flex col-span-1 text-gray-100 justify-end">
-                            OR123
+                            {order?._id}
                         </div>
                         {/* ---------------------------------- */}
                         <div className="flex font-semibold text-gray-100 col-span-1 justify-start">
                             Order Date
                         </div>
                         <div className="flex col-span-1 text-gray-100 justify-end">
-                            10/20/2024
+                            {new Date(order?.orderDate).toLocaleDateString()}
                         </div>
                         {/* ---------------------------------- */}
                         <div className="flex font-semibold text-gray-100 col-span-1 justify-start">
                             Order Price
                         </div>
                         <div className="flex col-span-1 text-gray-100 justify-end">
-                            Rs. 1000.00
+                            Rs.{order?.totalPrice?.toFixed(2)}
                         </div>
                         {/* ---------------------------------- */}
                         <div className="flex mb-2 font-semibold text-gray-100 col-span-1 justify-start">
                             Order Status
                         </div>
                         <div className="flex col-span-1 text-gray-100 justify-end">
-                            In Process
+                            {order?.orderStatus}
                         </div>
 
                         <hr /><hr />
@@ -49,12 +49,24 @@ const OrderDetailsModal = ({ adminOrderDetail, visible }) => {
 
                         </div>
 
-                        <div className="flex mb-2 font-semibold text-gray-300 text-sm col-span-1 justify-start">
-                            Products1
+                        <div className=" mb-2 font-semibold text-gray-300 text-sm col-span-2 justify-start">
+                            {order?.cartItems && order.cartItems.length > 0 ? (
+                                order.cartItems.map((item, index) => (
+                                    <div key={index} className="grid grid-cols-2 w-full">
+                                        <div className="flex col-span-1 justify-start">
+                                            {item?.title}
+                                        </div>
+                                        <div className="flex col-span-1 justify-end">
+                                            Rs. {item?.salePrice?.toFixed(2)}
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="text-gray-300">No items in the cart.</div>
+                            )}
                         </div>
-                        <div className="flex col-span-1 text-gray-300 justify-end">
-                            Rs. 1500.00
-                        </div>
+
+
 
                         <hr /><hr />
 
@@ -65,36 +77,38 @@ const OrderDetailsModal = ({ adminOrderDetail, visible }) => {
                         <div className="flex col-span-1 text-gray-100 justify-end">
 
                         </div>
-
-                        <div className="flex font-semibold text-gray-300 text-sm col-span-1 justify-start">
-                            Kasundara
-                        </div>
-                        <div className="flex col-span-1 text-gray-300 justify-end">
-
-                        </div>
                         <div className="flex font-semibold text-gray-300 text-sm col-span-1 justify-start">
                             Address
                         </div>
-                        <div className="flex col-span-1 text-gray-300 justify-end">
 
+                        <div className="flex text-end col-span-1 text-gray-300 justify-end">
+                            {
+                                order?.address?.address
+                            }
                         </div>
                         <div className="flex font-semibold text-gray-300 text-sm col-span-1 justify-start">
                             Country
                         </div>
                         <div className="flex col-span-1 text-gray-300 justify-end">
-
+                            {
+                                order?.address?.country
+                            }
                         </div>
                         <div className="flex font-semibold text-gray-300 text-sm col-span-1 justify-start">
                             City
                         </div>
                         <div className="flex col-span-1 text-gray-300 justify-end">
-
+                            {
+                                order?.address?.city
+                            }
                         </div>
                         <div className="flex  font-semibold text-gray-300 text-sm col-span-1 justify-start">
                             Pincode
                         </div>
                         <div className="flex col-span-1 text-gray-300 justify-end">
-
+                            {
+                                order?.address?.postalCode
+                            }
                         </div>
                     </div>
 
