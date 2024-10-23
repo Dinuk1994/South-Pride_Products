@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const capturePayment = createAsyncThunk(
     "order/capturePayment", async (paymentData, thunkAPI) => {
         try {
-            const response = await fetch('/api/orders/capture-payment', {
+            const response = await fetch('/api/shopping/order/capture', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -17,6 +17,7 @@ export const capturePayment = createAsyncThunk(
             if(!response.ok){
                 throw new Error(data.error)
             }
+
 
             return data;
             

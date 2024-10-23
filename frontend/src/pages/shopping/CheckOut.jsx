@@ -42,6 +42,12 @@ const CheckOut = () => {
         toast.error("Please fill in all address details."); 
         return; 
     }
+
+    if (itemsInCart?.length === 0) {
+        setLoading(false);
+        toast.error("Your cart is empty."); 
+        return;
+    }
     
     setLoading(true);
 
@@ -90,7 +96,7 @@ const CheckOut = () => {
                     setPaymentBegun(false);
                     toast.error("No approval URL returned. Payment initiation failed.");
                 }
-            }, 100); 
+            }, 50); 
         } else {
             setPaymentBegun(false);
             toast.error("Payment initiation failed. Please try again.");
@@ -191,7 +197,7 @@ const CheckOut = () => {
                       </div>
                     ))
                 ) : (
-                  <p>Your cart is empty</p>
+                  <p className="text-2xl font-semibold text-white">Add Products to your cart</p>
                 )}
               </div>
 

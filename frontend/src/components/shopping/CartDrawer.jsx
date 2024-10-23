@@ -19,14 +19,14 @@ const CartDrawer = ({ cartItems}) => {
                     <label htmlFor="my-drawer-4" className="drawer-button cursor-pointer p-2 ">
                         <div className="indicator -z-10">
                             <MdOutlineLocalGroceryStore className="text-white size-6 " />
-                            <span className="badge badge-sm indicator-item">{cartItems.data?.length}</span>
+                            <span className="badge badge-sm indicator-item">{cartItems.data?.length || "0"}</span>
                         </div>
                     </label>
                 </div>
                 <div className="drawer-side">
                     <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu   min-h-full w-[450px] mobile:w-[350px] p-4 bg-green-800 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-30 border border-gray-100">
-                        <label htmlFor="" className="font-semibold text-white  text-2xl mt-2 ">Your Cart ({cartItems.data?.length})</label>
+                        <label htmlFor="" className="font-semibold text-white  text-2xl mt-2 ">Your Cart ({cartItems.data?.length || "0"})</label>
                         <div className="grid gap-y-4 mt-6  w-full">
                             {Array.isArray(cartItems?.data) && cartItems.data.length > 0 ? (
                                 cartItems.data
@@ -36,7 +36,7 @@ const CartDrawer = ({ cartItems}) => {
                                     <CartItem key={index} item={item} />
                                 ))
                             ) : (
-                                <p>Your cart is empty</p>
+                                <p className="text-white text-xl">Add Products to your cart</p>
                             )}
 
                         </div>
