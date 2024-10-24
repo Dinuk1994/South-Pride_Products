@@ -1,16 +1,15 @@
 import { useRef } from "react"
 import OrderDetailsModal from "../../components/atoms/Orders/OrderDetailsModal";
-
-
-
 const AdminOrders = () => {
-  const adminOrderDetailRef = useRef();
+  const adminOrderDetailRef = useRef()
 
   const openAdminOrderDetailRef = () =>{
     if(adminOrderDetailRef.current){
       adminOrderDetailRef.current.showModal();
     }
   }
+
+  
 
 
   return (

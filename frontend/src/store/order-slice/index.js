@@ -3,6 +3,7 @@ import { createOrder } from "../../api/orderAPI/createOrder";
 import toast from "react-hot-toast";
 import { capturePayment } from "../../api/orderAPI/capturePayment";
 import { getOrdersByUserId } from "../../api/orderAPI/getOrderByUserId";
+import { getAllOrders } from "../../api/orderAPI/getAllOrders";
 
 
 const initialState = {
@@ -54,6 +55,17 @@ const shoppingOrderSlice = createSlice({
             
         })
         .addCase(getOrdersByUserId.rejected,(state)=>{
+            state.isLoading = false
+            state.orderId = null
+        })
+        .addCase(getAllOrders.pending,(state)=>{
+            state.isLoading = true
+        })
+        .addCase(getAllOrders.fulfilled,(state,action)=>{
+            state.isLoading = false
+            state.orders = action.payload
+        })
+        .addCase(getAllOrders.rejected,(state)=>{
             state.isLoading = false
             state.orderId = null
         })
