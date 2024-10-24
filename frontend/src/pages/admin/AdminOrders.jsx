@@ -41,6 +41,7 @@ const AdminOrders = () => {
                   <thead>
                     <tr>
                       <th>Order ID</th>
+                      <th>Customer</th>
                       <th>Order Date</th>
                       <th>Order Status</th>
                       <th>Order Price</th>
@@ -50,7 +51,10 @@ const AdminOrders = () => {
                   <tbody>
                     {
                       Array.isArray(allOrders?.orders) && allOrders?.orders.length > 0 ? (
-                        allOrders?.orders.map((order, index) => (
+                        allOrders?.orders
+                        .slice()
+                        .reverse()
+                        .map((order, index) => (
                           <tr key={index}>
                             <th>{order?._id}</th>
                             <td>{order?.address?.name}</td>

@@ -56,23 +56,26 @@ const ShoppingOrders = () => {
                   </thead>
                   <tbody>
                     {Array.isArray(orders?.orders) && orders?.orders.length > 0 ? (
-                      orders?.orders.map((order, index) => (
-                        <tr key={index}>
-                          <th>{order?._id}</th>
-                          <td>{order?.address?.name}</td>
-                          <td>{new Date(order?.orderDate).toLocaleDateString()}</td>
-                          <td>{order?.orderStatus}</td>
-                          <td>Rs. {order?.totalPrice?.toFixed(2)}</td>
-                          <td>
-                            <div
-                              onClick={() => openAdminOrderDetailRef(order)}
-                              className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600"
-                            >
-                              Details
-                            </div>
-                          </td>
-                        </tr>
-                      ))
+                      orders?.orders
+                        .slice()
+                        .reverse()
+                        .map((order, index) => (
+                          <tr key={index}>
+                            <th>{order?._id}</th>
+                            <td>{order?.address?.name}</td>
+                            <td>{new Date(order?.orderDate).toLocaleDateString()}</td>
+                            <td>{order?.orderStatus}</td>
+                            <td>Rs. {order?.totalPrice?.toFixed(2)}</td>
+                            <td>
+                              <div
+                                onClick={() => openAdminOrderDetailRef(order)}
+                                className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600"
+                              >
+                                Details
+                              </div>
+                            </td>
+                          </tr>
+                        ))
                     ) : (
                       <tr>
                         <td colSpan="5" className="text-center">
@@ -91,7 +94,7 @@ const ShoppingOrders = () => {
       <div>
 
       </div>
-      <OrderDetailsModal adminOrderDetail={adminOrderDetailRef} visible={false} order={selectedOrderDetail}/>
+      <OrderDetailsModal adminOrderDetail={adminOrderDetailRef} visible={false} order={selectedOrderDetail} />
     </div>
   );
 };
