@@ -3,6 +3,7 @@ import { ImageUploader } from "../atoms/ImageUploader";
 import toast from 'react-hot-toast';
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../api/productAPI/addProduct";
+import { allProducts } from "../../api/productAPI/allProducts";
 
 const ProductDrawer = () => {
     const [loading, setLoading] = useState(false);
@@ -91,9 +92,9 @@ const ProductDrawer = () => {
 
             console.log("Final Product Data:", finalProductData);
 
-            await dispatch(addProduct(finalProductData)).then(() => {
-                window.location.href = "/admin/products"
-            });
+            await dispatch(addProduct(finalProductData))
+
+            await dispatch(allProducts())
 
 
             setProductData({

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import toast from "react-hot-toast";
+
 
 export const addProduct = createAsyncThunk(
    "product/addNewProduct", async(newProductData , thunkAPI)=>{
@@ -17,7 +17,7 @@ export const addProduct = createAsyncThunk(
             if(!res.ok){
                 throw new Error(data.error)
             }
-            toast.success("Product added successfull")
+           
             return data
             
         } catch (error) {

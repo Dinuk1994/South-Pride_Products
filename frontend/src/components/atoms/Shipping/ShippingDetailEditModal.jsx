@@ -2,12 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateShippingDetails } from "../../../api/shippingAPI/updateShippingDetails";
 import DiscardEditShippingDetal from "./DiscardEditShippingDetal";
+import { getShippingDetailById } from "../../../api/shippingAPI/getShippingDetails";
+
 
 /* eslint-disable react/prop-types */
 const ShippingDetailEditModal = ({ shippingDetailEditRef, shippingDetails, user }) => {
     const [countries, setCountries] = useState([]);
     const dispatch = useDispatch();
     const shippingDetailDiscardRef = useRef();
+
 
     const [formData, setFormData] = useState({
         fullName: "",
@@ -45,14 +48,14 @@ const ShippingDetailEditModal = ({ shippingDetailEditRef, shippingDetails, user 
 
     const handleUpdateShippingData = async (e) => {
         e.preventDefault()
-        await dispatch(updateShippingDetails({ userId: user.id, shippingDetail: formData })).then(() => {
-            shippingDetailEditRef.current.close()
-            setTimeout(() => {              
-                window.location.reload()
-            }, 800)
+        await dispatch(updateShippingDetails({ userId: user.id, shippingDetail: formData })).then(()=>{
+            setTimeout(()=>{
+                dispatch(getShippingDetailById(user.id))
+                shippingDetailEditRef.current.close()
+            },500)
+        });
+       
 
-        })
-        console.log(user.id, formData);
     }
 
     const handleDiscardEditShippingData = (e) => {

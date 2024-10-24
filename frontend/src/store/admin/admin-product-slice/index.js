@@ -47,7 +47,6 @@ const adminProductSlice = createSlice({
             .addCase(updateProduct.fulfilled,(state,action)=>{
                 state.isLoading = false
                 state.products = action.payload
-                toast.success("Product Updated Successfull")
             })
             .addCase(updateProduct.rejected,(state,action)=>{
                 state.isLoading = false
@@ -59,7 +58,6 @@ const adminProductSlice = createSlice({
             .addCase(removeProduct.fulfilled,(state,action)=>{
                 state.isLoading = false
                 state.products = action.payload
-                toast.success("Product Deleted Successfull")
             })
             .addCase(removeProduct.rejected,(state,action)=>{
                 state.isLoading = false

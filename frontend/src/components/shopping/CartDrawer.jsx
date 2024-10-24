@@ -3,12 +3,17 @@
 
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import CartItem from "../atoms/Shopping/CartItem";
+import { useNavigate } from "react-router-dom";
 
 const CartDrawer = ({ cartItems}) => {
+
+    const navigate = useNavigate()
 
     const totalPrice = cartItems?.data?.reduce((acc, item) => {
         return acc + (parseFloat(item.salePrice) * item.quantity);
     }, 0).toFixed(2);
+
+  
 
 
     return (
@@ -51,7 +56,7 @@ const CartDrawer = ({ cartItems}) => {
 
                             </div>
                         </div>
-                        <a href="/shopping/checkout" className="btn btn-ghost bg-blue-400 hover:bg-blue-600 text-white font-semibold text-lg mt-8 shadow-lg shadow-gray-700">
+                        <a onClick={()=>navigate("/shopping/checkout")}  className="btn btn-ghost bg-blue-400 hover:bg-blue-600 text-white font-semibold text-lg mt-8 shadow-lg shadow-gray-700">
                             Checkout
                         </a>
                     </ul>

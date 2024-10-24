@@ -13,7 +13,8 @@ const CheckAuth = ({ isAuthenticate, user, children }) => {
         if(user?.role === "admin"){
             return <Navigate to='/admin/dashboard' />
         }else{
-           window.location.href = "/shopping/home"
+            //return <Navigate to='/shopping/home' />
+            window.location.href = "/shopping/home"
         }
     }
 

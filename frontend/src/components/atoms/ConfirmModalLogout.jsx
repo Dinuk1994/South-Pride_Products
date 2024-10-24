@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { IoIosWarning } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../api/authApi/logoutUser";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 const ConfirmModalLogout = ({ confirmRef }) => {
 
     const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const ConfirmModalLogout = ({ confirmRef }) => {
     const logout =async () => {
         try {
             await dispatch(logoutUser())       
-            window.location.href = "/auth/login"; 
+            return <Navigate to='/auth/login' />
         } catch (error) {
             toast.error("Failed to logout")
         }

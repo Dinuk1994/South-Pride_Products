@@ -9,6 +9,7 @@ import CartItem from "../../components/atoms/Shopping/CartItem"
 import { BsCartCheckFill } from "react-icons/bs";
 import { createOrder } from "../../api/orderAPI/createOrder"
 import toast from "react-hot-toast"
+import { useNavigate } from "react-router-dom"
 
 const CheckOut = () => {
 
@@ -17,6 +18,7 @@ const CheckOut = () => {
   const itemsInCart = useSelector((state) => state.cart.cartItems)
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const [paymentBegun, setPaymentBegun] = useState(false)
 
@@ -123,7 +125,7 @@ const CheckOut = () => {
         <div className="col-span-3 p-2 mobile:p-5 ">
           <div className=" bg-purple-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-2xl border border-gray-100 bg-opacity-20">
             <div className="p-6">
-              <a href="/shopping/account" className="btn btn-ghost mobile:text-xs shadow-md shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
+              <a onClick={()=>navigate("/shopping/account")}className="btn btn-ghost mobile:text-xs shadow-md shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
                 Add / Edit Address
               </a>
               <div className="grid px-2 text-gray-200">
@@ -176,7 +178,7 @@ const CheckOut = () => {
 
           </div>
           <div className="w-full mt-5">
-            <a href="/shopping/shoppingOrders" className="btn btn-ghost text-white text-lg w-full bg-blue-400 hover:bg-blue-600">
+            <a onClick={()=>navigate("/shopping/shoppingOrders")} className="btn btn-ghost text-white text-lg w-full bg-blue-400 hover:bg-blue-600">
               View My Orders
             </a>
           </div>

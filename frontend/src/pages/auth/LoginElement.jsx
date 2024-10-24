@@ -5,6 +5,7 @@ import { MdEmail } from "react-icons/md";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../api/authApi/loginUser";
+import { useNavigate } from "react-router-dom";
 
 const LoginElement = () => {
 
@@ -14,6 +15,7 @@ const LoginElement = () => {
     })
 
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -25,7 +27,7 @@ const LoginElement = () => {
 
     function submitData(e) {
         e.preventDefault();
-       dispatch(loginUser(loginData))
+        dispatch(loginUser(loginData))
     }
 
     return (
@@ -37,7 +39,7 @@ const LoginElement = () => {
 
                         <InputField name="email" value={loginData.email} onChange={handleChange} className="grow" type="email" image={<MdEmail className="text-gray-500" />} placeholder="Email" />
                         <InputField name="password" value={loginData.password} onChange={handleChange} className="grow" type="password" image={<FaKey className="text-gray-500" />} placeholder="Password" />
-                        <label className="text-white" htmlFor="signin">Don't have an account? <a className="hover:underline ml-2 text-yellow-500" href="register">Register</a></label>
+                        <label className="text-white" htmlFor="signin">Don't have an account? <a onClick={() => navigate("/auth/register")} className="hover:underline ml-2 text-yellow-500" >Register</a></label>
                         <button className="btn btn-active text-lg font-semibold text-white btn-accent hover:bg-green-600">Login</button>
                     </div>
 

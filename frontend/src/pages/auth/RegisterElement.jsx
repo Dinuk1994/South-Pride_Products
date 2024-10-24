@@ -19,6 +19,7 @@ const RegisterElement = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
   function handleChange(e) {
     const { name, value } = e.target;
     setRegisterData((prevData) => ({
@@ -47,7 +48,7 @@ const RegisterElement = () => {
             <InputField name="email" value={registerData.email} onChange={handleChange} className="grow" type="email" image={<MdEmail className="text-gray-500" />} placeholder="Email" />
             <InputField name="password" value={registerData.password} onChange={handleChange} className="grow" type="password" image={<FaKey className="text-gray-500" />} placeholder="Password" />
             <InputField className="grow" type="password" image={<FaKey className="text-gray-500" />} placeholder="Confirm password" />
-            <label className="text-white" htmlFor="signin">Already have an account? <a className="hover:underline ml-2 text-yellow-500" href="login">Login</a></label>
+            <label className="text-white" htmlFor="signin">Already have an account? <a onClick={()=>navigate("/auth/login")} className="hover:underline ml-2 text-yellow-500" >Login</a></label>
             <button className="btn btn-active text-lg font-semibold text-white btn-accent hover:bg-green-600">Register</button>
           </div>
 

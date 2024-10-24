@@ -8,6 +8,7 @@ import { removeProduct } from '../../../api/productAPI/deleteProduct';
 import ConfirmModalUpdate from './ConfirmModalUpdate';
 import DiscardModalUpdate from './DiscardModalUpdate';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
+import { allProducts } from '../../../api/productAPI/allProducts';
 
 const EditModal = ({ modalRef, closeModal, product }) => {
     const [weightStock, setWeightStock] = useState([]);
@@ -107,7 +108,8 @@ const EditModal = ({ modalRef, closeModal, product }) => {
             };
 
             await dispatch(updateProduct({ id: product?._id, newUpdatedData: updatedProductData })).unwrap();
-            toast.success("Product updated successfully");
+     
+            dispatch(allProducts())
 
             setWeightStock([]);
             setImages([]);
@@ -122,7 +124,7 @@ const EditModal = ({ modalRef, closeModal, product }) => {
 
         } finally {
             setLoading(false);
-            window.location.href = "/admin/products"
+            
         }
     };
 
@@ -130,14 +132,13 @@ const EditModal = ({ modalRef, closeModal, product }) => {
         modalRef.current.close();
         e.preventDefault();
         await handleSubmit();
-        window.location.href = "/admin/products";
+    
     };
 
     const deletePrductConfirm = async (e) => {
         e.preventDefault();
-        await dispatch(removeProduct({ id: product._id })).then(() => {
-            window.location.href = "/admin/products";
-        })
+        await dispatch(removeProduct({ id: product._id }))
+        await dispatch(allProducts())
     }
 
     if (!product) {

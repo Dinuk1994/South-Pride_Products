@@ -4,10 +4,11 @@ import SouthPrideProducts from "../../assets/South-Pride-Products.png"
 import { useRef } from "react";
 import ConfirmModalLogout from "../atoms/ConfirmModalLogout";
 import CartDrawer from "./CartDrawer";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const Header = ({ cartItems }) => {
 
   const location = useLocation()
+  const navigate = useNavigate()
 
   const confirmRef = useRef();
 
@@ -25,7 +26,7 @@ const Header = ({ cartItems }) => {
       <div className="navbar bg-ShoppingHeader">
         <div className="flex-1">
           <img src={SouthPrideProducts} className="size-12 flex items-center" alt="" />
-          <a href="/shopping/home" className="btn btn-ghost text-xl text-headerText mobile:text-[16px] flex items-center">South Pride Products</a>
+          <div onClick={()=>navigate("/shopping/home")} className="btn btn-ghost text-xl text-headerText mobile:text-[16px] flex items-center">South Pride Products</div>
         </div>
         <div className="flex-none">
           {!isCheckoutPage && !isAccountPage && (
@@ -45,18 +46,18 @@ const Header = ({ cartItems }) => {
               tabIndex={0}
               className="menu menu-sm z-50 dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow">
               <li>
-                <a className="justify-between">
+                {/* <a className="justify-between">
                   Account
                   <span className="badge">New</span>
-                </a>
-                <a href="/shopping/account" className="justify-between">
+                </a> */}
+                <a onClick={()=>navigate("/shopping/account")} className="justify-between">
                   Shipping details
                 </a>
                 
-                <a href="/shopping/shoppingOrders" className="justify-between">
+                <a onClick={()=>navigate("/shopping/shoppingOrders")} className="justify-between">
                   My orders
                 </a>
-                <a href="/shopping/checkout" className="justify-between">
+                <a onClick={()=>navigate("/shopping/checkout")} className="justify-between">
                   Checkout
                 </a>
               </li>
