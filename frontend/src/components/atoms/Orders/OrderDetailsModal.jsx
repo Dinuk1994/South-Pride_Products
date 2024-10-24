@@ -1,7 +1,32 @@
 
 /* eslint-disable react/prop-types */
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { updateOrderStatus } from "../../../api/orderAPI/updateOrderStatus";
+import { getAllOrders } from "../../../api/orderAPI/getAllOrders";
 
 const OrderDetailsModal = ({ adminOrderDetail, visible, order }) => {
+    const [orderStatus, setOrderStatus] = useState();
+    const dispatch = useDispatch()
+
+    const handleOrderStatus = (e) => {
+        const updatedStatus = e.target.value;
+        setOrderStatus(updatedStatus);
+        console.log(updatedStatus);
+    };
+
+    const submitUpdatedStatus = async (e) => {
+        e.preventDefault();
+        await dispatch(updateOrderStatus({ orderId: order?._id, orderStatus: orderStatus })).then(() => {
+            dispatch(getAllOrders())
+            setTimeout(() => {
+                adminOrderDetail.current.close()
+            }, 800)
+        });
+
+    }
+
+
     return (
         <div>
             <dialog ref={adminOrderDetail} id="my_modal_3" className="modal backdrop-blur-sm z-50">
@@ -54,7 +79,7 @@ const OrderDetailsModal = ({ adminOrderDetail, visible, order }) => {
                                 order.cartItems.map((item, index) => (
                                     <div key={index} className="grid grid-cols-2 w-full">
                                         <div className="flex col-span-1 justify-start">
-                                            {item?.title}
+                                            {item?.title} ({item?.quantity})
                                         </div>
                                         <div className="flex col-span-1 justify-end">
                                             Rs. {item?.salePrice?.toFixed(2)}
@@ -76,6 +101,15 @@ const OrderDetailsModal = ({ adminOrderDetail, visible, order }) => {
                         </div>
                         <div className="flex col-span-1 text-gray-100 justify-end">
 
+                        </div>
+                        <div className="flex font-semibold text-gray-300 text-sm col-span-1 justify-start">
+                            Name
+                        </div>
+
+                        <div className="flex text-end col-span-1 text-gray-300 justify-end">
+                            {
+                                order?.address?.name
+                            }
                         </div>
                         <div className="flex font-semibold text-gray-300 text-sm col-span-1 justify-start">
                             Address
@@ -120,14 +154,18 @@ const OrderDetailsModal = ({ adminOrderDetail, visible, order }) => {
                                 <div className="mt-5">
                                     <label className="font-semibold text-gray-100 " htmlFor=""> Order Status</label>
                                 </div>
-                                <select className="select mt-2 grow select-bordered w-full" defaultValue="Status">
+                                <select
+                                    value={orderStatus}
+                                    onChange={handleOrderStatus}
+                                    className="select mt-2 grow select-bordered w-full" defaultValue="Status">
                                     <option value="Status" disabled>Status</option>
                                     <option value="Pending">Pending</option>
                                     <option value="In Process">In Process</option>
+                                    <option value="Delivering"> Delivering</option>
                                     <option value="Completed">Completed</option>
                                 </select>
 
-                                <div className="btn text-white mt-5 btn-ghost w-full bg-blue-400 hover:bg-blue-600 ">
+                                <div onClick={submitUpdatedStatus} className="btn text-white mt-5 btn-ghost w-full bg-blue-400 hover:bg-blue-600 ">
                                     Update Status
                                 </div>
                             </div>

@@ -47,6 +47,7 @@ const ShoppingOrders = () => {
                   <thead>
                     <tr>
                       <th>Order ID</th>
+                      <th>Name</th>
                       <th>Order Date</th>
                       <th>Order Status</th>
                       <th>Order Price</th>
@@ -58,6 +59,7 @@ const ShoppingOrders = () => {
                       orders?.orders.map((order, index) => (
                         <tr key={index}>
                           <th>{order?._id}</th>
+                          <td>{order?.address?.name}</td>
                           <td>{new Date(order?.orderDate).toLocaleDateString()}</td>
                           <td>{order?.orderStatus}</td>
                           <td>Rs. {order?.totalPrice?.toFixed(2)}</td>

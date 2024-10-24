@@ -4,13 +4,15 @@ import toast from "react-hot-toast";
 import { capturePayment } from "../../api/orderAPI/capturePayment";
 import { getOrdersByUserId } from "../../api/orderAPI/getOrderByUserId";
 import { getAllOrders } from "../../api/orderAPI/getAllOrders";
+import { updateOrderStatus } from "../../api/orderAPI/updateOrderStatus";
 
 
 const initialState = {
     approvalURL : null,
     isLoading : null,
     orderId : null,
-    orders :[]
+    orders :[],
+    orderStatus : {}
 }
 
 
@@ -64,10 +66,22 @@ const shoppingOrderSlice = createSlice({
         .addCase(getAllOrders.fulfilled,(state,action)=>{
             state.isLoading = false
             state.orders = action.payload
+                    
         })
         .addCase(getAllOrders.rejected,(state)=>{
             state.isLoading = false
             state.orderId = null
+        })
+        .addCase(updateOrderStatus.pending,(state)=>{
+            state.isLoading = true
+        })
+        .addCase(updateOrderStatus.fulfilled,(state,action)=>{
+            state.isLoading = false
+            state.orderStatus = action.payload
+            toast.success("Order status updated")
+        })
+        .addCase(updateOrderStatus.rejected,(state)=>{
+            state.isLoading = false
         })
 
     }

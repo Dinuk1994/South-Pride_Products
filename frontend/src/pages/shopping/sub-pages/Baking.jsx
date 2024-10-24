@@ -19,7 +19,7 @@ const Baking = () => {
 
   return (
     <div className="p-5 h-screen">
-      <div className="grid grid-col-4 gap-y-5 mb-5 mobile:grid mobile:grid-cols-2 mobile:justify-between gap-x-6 tablet:grid tablet:grid-cols-2">
+      <div className="grid grid-cols-4 mb-5 gap-y-5 mobile:grid mobile:grid-cols-2 mobile:justify-between gap-x-6 tablet:grid tablet:grid-cols-2">
         {bakingProducts && bakingProducts.length > 0 ? (
           bakingProducts.map((product) => (
             <ProductCard key={product._id} product={product} />

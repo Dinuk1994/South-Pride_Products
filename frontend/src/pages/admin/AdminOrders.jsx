@@ -1,15 +1,30 @@
-import { useRef } from "react"
+/* eslint-disable react/jsx-key */
+import { useEffect, useRef, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import OrderDetailsModal from "../../components/atoms/Orders/OrderDetailsModal";
+import { getAllOrders } from "../../api/orderAPI/getAllOrders";
 const AdminOrders = () => {
   const adminOrderDetailRef = useRef()
+  const dispatch = useDispatch()
+  const [orderDetail , setOrderDetail] = useState(null)
 
-  const openAdminOrderDetailRef = () =>{
-    if(adminOrderDetailRef.current){
+  const allOrders = useSelector((state) => state.shopOrder.orders)
+
+  const openAdminOrderDetailRef = (order) => {
+    if (adminOrderDetailRef.current) {
       adminOrderDetailRef.current.showModal();
+      setOrderDetail(order)
     }
   }
 
-  
+  useEffect(() => {
+    dispatch(getAllOrders())
+  }, [dispatch])
+
+
+
+  console.log("Admin orders", allOrders?.orders);
+
 
 
   return (
@@ -33,42 +48,29 @@ const AdminOrders = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {/* row 1 */}
-                    <tr>
-                      <th>OR001</th>
-                      <td>10/20/2024</td>
-                      <td>In Process</td>
-                      <td>Rs.1000.00</td>
-                      <td>
-                        <div onClick={openAdminOrderDetailRef} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
-                          Details
-                        </div>
-                      </td>
-                    </tr>
-                    {/* row 2 */}
-                    <tr>
-                      <th>OR002</th>
-                      <td>10/20/2024</td>
-                      <td>In Process</td>
-                      <td>Rs.1000.00</td>
-                      <td>
-                        <div onClick={openAdminOrderDetailRef} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
-                          Details
-                        </div>
-                      </td>
-                    </tr>
-                    {/* row 3 */}
-                    <tr>
-                      <th>OR003</th>
-                      <td>10/20/2024</td>
-                      <td>In Process</td>
-                      <td>Rs.1000.00</td>
-                      <td>
-                        <div onClick={openAdminOrderDetailRef} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
-                          Details
-                        </div>
-                      </td>
-                    </tr>
+                    {
+                      Array.isArray(allOrders?.orders) && allOrders?.orders.length > 0 ? (
+                        allOrders?.orders.map((order, index) => (
+                          <tr key={index}>
+                            <th>{order?._id}</th>
+                            <td>{order?.address?.name}</td>
+                            <td>{new Date(order?.orderDate).toLocaleDateString()}</td>
+                            <td>{order?.orderStatus}</td>
+                            <td>Rs. {order?.totalPrice.toFixed(2)}</td>
+                            <td>
+                              <div onClick={()=>openAdminOrderDetailRef(order)} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
+                                Details
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : ( <tr>
+                        <td colSpan="5" className="text-center">
+                          No orders found.
+                        </td>
+                      </tr>)
+                    }
+
                   </tbody>
                 </table>
               </div>
@@ -77,7 +79,7 @@ const AdminOrders = () => {
           </div>
         </div>
       </div>
-      <OrderDetailsModal adminOrderDetail={adminOrderDetailRef} visible={true}/>
+      <OrderDetailsModal adminOrderDetail={adminOrderDetailRef} order={orderDetail} visible={true} />
     </div>
   )
 }

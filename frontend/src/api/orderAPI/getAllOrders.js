@@ -14,6 +14,7 @@ export const getAllOrders = createAsyncThunk(
             if(!res.ok){
                 throw new Error(data.error)
             }
+            //console.log("Api",data);
             
             return data;
             

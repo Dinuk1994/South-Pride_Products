@@ -62,6 +62,7 @@ const CheckOut = () => {
         weight : item.weight
       })),
       address: {
+        name : shippingDetail?.fullName,
         address: shippingDetail?.address,
         city: shippingDetail?.city,
         country: shippingDetail?.country,

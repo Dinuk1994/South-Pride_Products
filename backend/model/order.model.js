@@ -28,6 +28,10 @@ const CartItemShema = new mongoose.Schema({
 })
 
 const shippingAddressSchema = new mongoose.Schema({
+    name : {
+        type : String,
+        required : true
+    },
     address : {
         type : String,
         required : true
@@ -52,7 +56,7 @@ const shippingAddressSchema = new mongoose.Schema({
 
 const OrderSchema = new mongoose.Schema({
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: "User",
         required: true
     },

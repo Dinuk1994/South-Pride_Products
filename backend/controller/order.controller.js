@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Cart from "../model/cart.model.js";
 import cart from "../model/cart.model.js";
 import Order from "../model/order.model.js";
@@ -132,18 +133,19 @@ export const capturePayment = async (req, res) => {
 
 export const findOrdersByUserId = async(req,res)=>{
     try {
-        const userId = req.params.id
+        const { userId } = req.params;
 
-        const orders = await Order.find(userId)
+        const orders = await Order.find({userId});
 
-        if(!orders){
-            return res.status(404).json({msg : "Orders not found"})
+        if (!orders || orders.length === 0) {
+            return res.status(404).json({ msg: "Orders not found" });
         }
-        
-        return res.status(200).json({orders})
-        
+
+        return res.status(200).json({ orders });
+
     } catch (error) {
-        return res.status(500).json({msg : "Internal server error"})
+        console.error("Error finding orders:", error);  
+        return res.status(500).json({ msg: "Internal server error", error: error.message }); 
     }
 }
 
@@ -160,5 +162,28 @@ export const getAllOrders = async(req,res)=>{
         
     } catch (error) {
         return res.status(500).json({msg : "Internal server error"})
+    }
+}
+
+
+export const updateOrderStatus = async(req,res)=>{
+    try {
+        const {orderId} = req.params;
+        const {orderStatus} = req.body;
+
+        const order = await Order.findById(orderId)
+
+        if(!order){
+            return res.status(404).json({msg : "Orders not found"})
+        }
+
+        order.orderStatus = orderStatus;
+
+        await order.save();
+
+        return res.status(200).json({order})
+        
+    } catch (error) {
+        return res.status(500).json({msg : "Internal server error",error})
     }
 }
