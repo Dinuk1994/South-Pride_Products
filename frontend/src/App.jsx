@@ -28,6 +28,7 @@ import AdminOrders from "./pages/admin/AdminOrders";
 import ShoppingOrders from "./pages/shopping/ShoppingOrders";
 import PaymentReturnPage from "./pages/shopping/PaymentReturnPage";
 import PaymentSuccess from "./pages/shopping/PaymentSuccess";
+import Feeback from "./pages/shopping/local-pages/Feeback";
 
 export default function App() {
 
@@ -75,13 +76,14 @@ export default function App() {
           <Route path="shoppingOrders" element={<ShoppingOrders />} />
           <Route path="paypal-return" element={<PaymentReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccess />} />
+          <Route path="feedback" element={<Feeback />} />
           <Route path="home" element={<Home />}>
             <Route path="all-products" element={<AllProducts />} />
             <Route path="nuts" element={<Nuts />} />
             <Route path="spices" element={<Spices />} />
             <Route path="baking" element={<Baking />} />
             <Route path="herbs" element={<Herbs />} />
-            <Route path="other" element={<OtherProducts />} />
+            <Route path="other" element={<OtherProducts />} />      
           </Route>
           <Route path="listing" element={<Listing />} />
         </Route>

@@ -1,4 +1,4 @@
-import React, { useEffect ,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tabs, Tab, useMediaQuery } from "@mui/material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import SouthPrideProductLogo from "../../assets/South-Pride-Products.png"
@@ -40,7 +40,7 @@ const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
-  const [loading , setLoading] = useState (true)
+  const [loading, setLoading] = useState(true)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -54,11 +54,11 @@ const Home = () => {
     dispatch(allProducts())
     setLoading(false)
 
-    
-  }, [navigate,dispatch]);
 
-  if(loading){
-    return <LoadingComponent/>
+  }, [navigate, dispatch]);
+
+  if (loading) {
+    return <LoadingComponent />
   }
 
 
@@ -70,8 +70,8 @@ const Home = () => {
           <div className='btn btn-ghost bg-shoppingBtn hover:bg-hoverShoppingBtn rounded-xl text-white shadow-lg shadow-gray-500'>
             About
           </div>
-          <div className='btn btn-ghost bg-shoppingBtn hover:bg-hoverShoppingBtn rounded-xl text-white shadow-lg shadow-gray-500'>
-            Recepies
+          <div onClick={()=>navigate("/shopping/feedback")} className='btn btn-ghost bg-shoppingBtn hover:bg-hoverShoppingBtn rounded-xl text-white shadow-lg shadow-gray-500'>
+            Your feedback
           </div>
           <div className='btn btn-ghost bg-shoppingBtn hover:bg-hoverShoppingBtn rounded-xl text-white shadow-lg shadow-gray-500'>
             Return Policies
