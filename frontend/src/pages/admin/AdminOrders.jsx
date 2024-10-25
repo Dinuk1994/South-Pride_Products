@@ -1,4 +1,4 @@
- 
+
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import OrderDetailsModal from "../../components/atoms/Orders/OrderDetailsModal";
@@ -6,7 +6,7 @@ import { getAllOrders } from "../../api/orderAPI/getAllOrders";
 const AdminOrders = () => {
   const adminOrderDetailRef = useRef()
   const dispatch = useDispatch()
-  const [orderDetail , setOrderDetail] = useState(null)
+  const [orderDetail, setOrderDetail] = useState(null)
 
   const allOrders = useSelector((state) => state.shopOrder.orders)
 
@@ -52,23 +52,25 @@ const AdminOrders = () => {
                     {
                       Array.isArray(allOrders?.orders) && allOrders?.orders.length > 0 ? (
                         allOrders?.orders
-                        .slice()
-                        .reverse()
-                        .map((order, index) => (
-                          <tr key={index}>
-                            <th>{order?._id}</th>
-                            <td>{order?.address?.name}</td>
-                            <td>{new Date(order?.orderDate).toLocaleDateString()}</td>
-                            <td>{order?.orderStatus}</td>
-                            <td>Rs. {order?.totalPrice.toFixed(2)}</td>
-                            <td>
-                              <div onClick={()=>openAdminOrderDetailRef(order)} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
-                                Details
-                              </div>
-                            </td>
-                          </tr>
-                        ))
-                      ) : ( <tr>
+                          .slice()
+                          .reverse()
+                          .map((order, index) => (
+                            <tr key={index}>
+                              <th>{order?._id}</th>
+                              <td>{order?.address?.name}</td>
+                              <td>{new Date(order?.orderDate).toLocaleDateString()}</td>
+                              <td className={`flex justify-center text-white font-semibold rounded-lg mt-4 ${getStatusClass(order?.orderStatus)}`}>
+                                {order?.orderStatus}
+                              </td>
+                              <td>Rs. {order?.totalPrice.toFixed(2)}</td>
+                              <td>
+                                <div onClick={() => openAdminOrderDetailRef(order)} className="btn btn-ghost shadow-lg shadow-gray-500 bg-green-400 text-white hover:bg-green-600">
+                                  Details
+                                </div>
+                              </td>
+                            </tr>
+                          ))
+                      ) : (<tr>
                         <td colSpan="5" className="text-center">
                           No orders found.
                         </td>
@@ -89,3 +91,21 @@ const AdminOrders = () => {
 }
 
 export default AdminOrders
+
+
+const getStatusClass = (status) => {
+  switch (status) {
+    case 'Delivering':
+      return 'bg-yellow-300';
+    case 'Completed':
+      return 'bg-green-500';
+    case "Confirmed":
+      return 'bg-blue-500';
+    case "In Process":
+      return 'bg-orange-500';
+    case "Pending":
+      return 'bg-gray-500';
+    default:
+      return '';
+  }
+};

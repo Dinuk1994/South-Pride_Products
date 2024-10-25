@@ -64,7 +64,9 @@ const ShoppingOrders = () => {
                             <th>{order?._id}</th>
                             <td>{order?.address?.name}</td>
                             <td>{new Date(order?.orderDate).toLocaleDateString()}</td>
-                            <td>{order?.orderStatus}</td>
+                            <td className={`flex justify-center px-4 text-white font-semibold rounded-lg mt-4 ${getStatusClass(order?.orderStatus)}`}>
+                                {order?.orderStatus}
+                              </td>
                             <td>Rs. {order?.totalPrice?.toFixed(2)}</td>
                             <td>
                               <div
@@ -100,3 +102,21 @@ const ShoppingOrders = () => {
 };
 
 export default ShoppingOrders;
+
+
+const getStatusClass = (status) => {
+  switch (status) {
+    case 'Delivering':
+      return 'bg-yellow-300';
+    case 'Completed':
+      return 'bg-green-500';
+    case "Confirmed":
+      return 'bg-blue-500';
+    case "In Process":
+      return 'bg-orange-500';
+    case "Pending":
+      return 'bg-gray-500';
+    default:
+      return '';
+  }
+};

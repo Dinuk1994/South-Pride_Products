@@ -83,7 +83,7 @@ export const capturePayment = async (req, res) => {
             return res.status(404).json({ msg: "Order not found" });
         }
         order.paymentStatus = "paid";
-        order.orderStatus = "confirmed";
+        order.orderStatus = "Confirmed";
         order.paymentId = paymentId;
         order.payerId = payerId;
 
