@@ -210,7 +210,7 @@ const CheckOut = () => {
                   <label className="text-white font-semibold text-2xl pl-20" htmlFor="">Total Amount</label>
                 </div>
                 <div className="col-span-1 flex justify-end pr-9">
-                  <label className="text-white font-semibold text-2xl" htmlFor="">Rs. {totalPrice}</label>
+                  <label className="text-white font-semibold text-2xl" htmlFor="">Rs. {totalPrice || "0.00"} </label>
                 </div>
               </div>
 

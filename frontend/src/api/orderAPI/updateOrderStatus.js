@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const updateOrderStatus = createAsyncThunk(
     "order/updateOrderStatus", async ({orderId , orderStatus}, thunkAPI) => {
         try {
-            const res = await fetch(`http://localhost:8000/api/shopping/order/updateStatus/${orderId}`,{
+            const res = await fetch(`/api/shopping/order/updateStatus/${orderId}`,{
                 method : "PUT",
                 headers : {
                     "Content-Type" : "application/json"

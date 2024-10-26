@@ -29,7 +29,7 @@ const AdminOrders = () => {
 
   return (
     <div>
-      <div className="relative bg-base-300 h-screen bg-cover bg-center">
+      <div className="relative bg-base-300 h-screen bg-cover bg-center overflow-scroll">
         <div className="flex justify-center py-14 backdrop-blur-xl">
           <div className="grid">
             <label className="text-gray-700 text-2xl" htmlFor=""> Order History</label>

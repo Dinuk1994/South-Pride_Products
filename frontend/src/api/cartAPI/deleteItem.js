@@ -4,7 +4,7 @@ export const deleteItem = createAsyncThunk(
     "cart/deleteItem" ,async({userId , productData},thunkAPI)=>{
         try {
             console.log("Deleting cart item with id:", userId , productData)
-            const res = await fetch(`http://localhost:8000/api/cart/deleteCartItem/${userId}`,{
+            const res = await fetch(`/api/cart/deleteCartItem/${userId}`,{
                 method : "DELETE",
                 headers : {
                     "Content-Type" : "application/json"

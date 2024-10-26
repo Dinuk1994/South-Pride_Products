@@ -4,7 +4,7 @@ export const createOrder = createAsyncThunk(
     "order/createOrder", async (orderData, thunkAPI) => {
         try {
 
-            const res = await fetch("http://localhost:8000/api/shopping/order/create-order", {
+            const res = await fetch("/api/shopping/order/create-order", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

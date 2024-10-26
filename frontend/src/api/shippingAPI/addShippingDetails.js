@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 export const addShippingDetails = createAsyncThunk(
     "shipping/addShippingDetails", async (shippingDetail, thunkAPI) => {
         try {
-            const res = await fetch("http://localhost:8000/api/shipping/add-shipping-details",{
+            const res = await fetch("/api/shipping/add-shipping-details",{
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json"

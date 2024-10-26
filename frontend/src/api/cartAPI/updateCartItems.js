@@ -4,7 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const updateCartItem = createAsyncThunk(
     "cart/updateCartItem", async ({ userId, updatedCartItem }, thunkAPI) => {
         try {
-            const res = await fetch(`http://localhost:8000/api/cart/updateCart/${userId}`, {
+            const res = await fetch(`/api/cart/updateCart/${userId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"

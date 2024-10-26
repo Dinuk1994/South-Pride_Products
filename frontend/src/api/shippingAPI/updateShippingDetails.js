@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 export const updateShippingDetails = createAsyncThunk(
     "shipping/updateShippingDetails", async ({ userId, shippingDetail }, thunkAPI) => {
         try {
-            const res = await fetch(`http://localhost:8000/api/shipping/update-shipping-details/${userId}`, {
+            const res = await fetch(`/api/shipping/update-shipping-details/${userId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
